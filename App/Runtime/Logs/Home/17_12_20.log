@@ -1,0 +1,117 @@
+[ 2017-12-20T14:30:52+08:00 ] 127.0.0.1 /yan/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000830s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000754s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000816s ]
+SQL: SHOW COLUMNS FROM `xq_config` [ RunTime:0.0008s ]
+SQL: SELECT `app_name` FROM `xq_config` LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `xq_setting` [ RunTime:0.0006s ]
+SQL: SELECT * FROM `xq_setting` WHERE ( setting_name = "app_setting" ) LIMIT 1   [ RunTime:0.0003s ]
+NOTIC: [8] Undefined variable: add D:\database\Project\working\company\yan\App\Home\Controller\CommonController.class.php 第 33 行.
+ERR: 1054:Unknown column 'ip' in 'where clause'
+ [ SQL语句 ] : SELECT * FROM `xq_setting` WHERE ( ip = "" ) LIMIT 1  
+ERR: 1054:Unknown column 'ip' in 'where clause'
+ [ SQL语句 ] : SELECT * FROM `xq_setting` WHERE ( ip = "" ) LIMIT 1  
+
+[ 2017-12-20T14:31:26+08:00 ] 127.0.0.1 /yan/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000451s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000576s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000616s ]
+ERR: 1146:Table 'xq.yconfig' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `yconfig`
+ERR: 1146:Table 'xq.yconfig' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `yconfig`
+
+[ 2017-12-20T14:31:38+08:00 ] 127.0.0.1 /yan/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000486s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000604s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000650s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000670s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000715s ]
+
+[ 2017-12-20T14:32:54+08:00 ] 127.0.0.1 /yan/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000449s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000658s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000699s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000652s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000695s ]
+
+[ 2017-12-20T14:32:54+08:00 ] 127.0.0.1 /yan/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000412s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000637s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000673s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000621s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000659s ]
+
+[ 2017-12-20T14:32:54+08:00 ] 127.0.0.1 /yan/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000435s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000695s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000727s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000707s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000745s ]
+
+[ 2017-12-20T14:33:14+08:00 ] 127.0.0.1 /yan/index.php/Home/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000422s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000724s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000769s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000658s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000703s ]
+
+[ 2017-12-20T14:33:32+08:00 ] 127.0.0.1 /yan/index.php/Home/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000339s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000497s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000533s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000569s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000615s ]
+
+[ 2017-12-20T14:33:41+08:00 ] 192.168.0.105 /yan/index.php/Home/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000653s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000507s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000552s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000500s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000547s ]
+
+[ 2017-12-20T14:33:57+08:00 ] 192.168.0.103 /yan/index.php/Home/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000432s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000604s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000636s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000617s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000653s ]
+

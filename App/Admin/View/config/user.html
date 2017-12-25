@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>账户配置</title>
+    <include file="App/Admin/View/component/impot.comp.html" />
+    <link href="__ADIST__/ctos/ctos.css" rel="stylesheet" type="text/css">
+
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
+
+        .admin-head-img {
+            display: block;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 20px auto;
+            box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .o-panel {
+            box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        #admin_name {
+            text-align: center;
+            font-size: 20px;
+            margin: 15px 0;
+            color: #777;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="o-body-pt">
+
+
+        <div class="head-img-box">
+            <img src="__ROOT__{$Think.session.admin_head_img}" class="admin-head-img" id="admin-head-img" alt="">
+            <div id='admin_name'>{$Think.session.admin_name}</div>
+        </div>
+
+
+
+        <div class="o-panel">
+            <div class="o-panel-head">
+                <div class="o-panel-title">
+                    个人信息
+                </div>
+            </div>
+            <div class="o-panel-body">
+
+                <form class="layui-form">
+                    <input type="hidden" name="admin_id" value="{$Think.session.admin_id}">
+                    <div class="form-group">
+                        <label for="admin_id">登录账户</label>
+
+                        <input type="text" disabled value="{$Think.session.admin_id}" autocomplete="off" class="o-form-control" name="admin_name"
+                            placeholder="昵称">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="admin_name">昵称</label>
+                        <input type="text" lay-verify='required' value="{$Think.session.admin_name}" autocomplete="off" class="o-form-control" name="admin_name"
+                            placeholder="昵称">
+                    </div>
+
+                    <div class="text-right">
+                        <button type="button" class="btn btn-default o-btn" lay-submit lay-filter="admin_name">保存</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="o-panel-footer">
+            </div>
+        </div>
+        <div class="o-panel">
+            <div class="o-panel-head">
+                <div class="o-panel-title">
+                    管理密码
+                </div>
+            </div>
+            <div class="o-panel-body">
+
+                <form class="layui-form">
+                    <input type="hidden" name="admin_id" value="{$Think.session.admin_id}">
+                    <div class="form-group">
+                        <label for="admin_pwd">新的密码</label>
+                        <input type="password" lay-verify='required' autocomplete="off" class="o-form-control" name="admin_pwd" placeholder="新的密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="admin_pwd_2">确认密码</label>
+                        <input type="password" lay-verify='required' autocomplete="off" class="o-form-control" name="admin_pwd_2" placeholder="确认密码">
+                    </div>
+                    <div class="text-right">
+                        <button type="button" class="btn btn-default o-btn" lay-submit lay-filter="admin_pwd">保存</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="o-panel-footer">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var upload;
+
+        layui.use(['form', 'upload'], function () {
+            var form = layui.form;
+            upload = layui.upload;
+
+            form.on('submit(admin_pwd)', function (data) {
+                // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+                // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+                // console.log(data.field); //当前容器的全部表单字段，名值对形式：{name: value}
+
+                if (data.field.admin_pwd !== data.field.admin_pwd_2) {
+
+                    layer.msg('两次输入的密码不一样！', {
+                        anim: 6
+                    });
+                    return;
+                }
+
+
+
+                (function () {
+
+                    var url = '__CONTROLLER__/userConfig';
+                    var obj = data.field;
+                    var fun = function (res) {
+                        w(res);
+                        try {
+                            res = JSON.parse(res);
+                        } catch (error) {
+                            //转换错误
+                            layer.msg('接口错误！', {
+                                amin: 6
+                            });
+                            return
+                        }
+
+                        if (res.res >= 0) {
+                            layer.msg('保存成功~');
+
+                        } else {
+                            layer.msg('保存失败~', {
+                                amin: 6
+                            });
+                        }
+
+                    };
+                    $.post(url, obj, fun);
+
+                }());
+
+
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+            form.on('submit(admin_name)', function (data) {
+                // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+                // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+                // console.log(data.field); //当前容器的全部表单字段，名值对形式：{name: value}
+
+
+                (function () {
+
+                    var url = '__CONTROLLER__/saveName';
+                    var obj = data.field;
+                    var fun = function (res) {
+                        w(res);
+                        try {
+                            res = JSON.parse(res);
+                        } catch (error) {
+                            //转换错误
+                            layer.msg('接口错误！', {
+                                amin: 6
+                            });
+                            return
+                        }
+
+                        if (res.res >= 0) {
+                            layer.msg('保存成功~');
+                            $('#admin_name').text(data.field.admin_name);
+                            top.location.href = top.location.href;
+
+                        } else {
+                            layer.msg('保存失败~', {
+                                amin: 6
+                            });
+                        }
+
+                    };
+                    $.post(url, obj, fun);
+
+                }());
+
+
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#admin-head-img' //绑定元素
+                , url: '__MODULE__/Use/upFile' //上传接口
+                // , accept: 'file' //允许上传的文件类型
+                // , exts: 'csv'
+                // , auto: false
+                , data: {
+                    src: '/admin/admin_head_img/',
+                    del_src: '{$Think.session.admin_head_img}'
+                }
+                , drag: true
+                , done: function (res) {
+                    //上传完毕回调
+                    if (res.code == 0) {
+                        //成功
+                        (function () {
+                            var admin_head_img = res.data.src;
+                            var url = '__CONTROLLER__/saveHeadImg';
+                            var obj = {
+                                admin_id: '{$Think.session.admin_id}',
+                                admin_head_img: admin_head_img
+                            };
+                            var fun = function (res) {
+                                try {
+                                    res = JSON.parse(res);
+                                } catch (error) {
+                                    //转换错误
+                                    layer.msg('异步接口出错！', {
+                                        anim: 6
+                                    });
+                                    return
+                                }
+                                if (res.res > 0) {
+                                    layer.msg('上传成功！');
+                                    top.location.href = top.location.href;
+
+
+                                } else {
+                                    layer.msg('上传失败！', {
+                                        anim: 6
+                                    });
+                                }
+
+                            };
+                            $.post(url, obj, fun);
+
+                        }());
+
+
+                    }
+                }
+                , error: function () {
+                    //请求异常回调
+                    layer.msg('异步接口出错！', {
+                        anim: 6
+                    });
+                }
+            });
+
+
+        });
+
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>

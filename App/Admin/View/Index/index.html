@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>__APPNAME__管理系统</title>
+    <include file="App/Admin/View/component/impot.comp.html" />
+    <link href="__ADIST__/index/index.css" rel="stylesheet" type="text/css">
+
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="o-nav">
+        <div class="o-nav-left">
+
+            <div class="o-nav-item">
+                <a href="javascript:;" data-src='Index/home'>
+                    <i class="fa fa-home fa-fw"></i>
+                    首页
+                </a>
+            </div>
+
+        </div>
+
+
+        <div class="o-nav-right">
+            <div class="o-nav-item">
+                <a href="javascript:;" data-src=''>
+                    <!-- <i class="fa fa-home"></i> -->
+                    <img src="__ROOT__/{$Think.session.admin_head_img}" alt="">{$Think.session.admin_name}
+                    <!-- <span class="spot spot-danger"></span> -->
+                </a>
+                <div class="o-nav-item-s">
+                    <ul>
+                        <li>
+                            <a href="" data-src='Config/user '>
+                                <i class="fa fa-cog fa-fw"></i>
+                                个人设置
+                            </a>
+                        </li>
+                        <li class="line"></li>
+                        <li>
+                            <a href="__MODULE__/Login/sinOut">
+                                <i class="fa fa-sign-out fa-fw"></i>
+                                退出登录
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="o-nav-list">
+
+        <a href="" class="o-nav-logo">
+            <!-- <i class="fa fa-home"></i> -->
+            __APPNAME__
+        </a>
+        <div class="o-nav-item">
+            <a href="" class="">
+                <i class="glyphicon glyphicon-list-alt"></i>
+                项目介绍管理
+            </a>
+            <div class="o-nav-list-s">
+                <ul>
+                    <li>
+                        <a href="javascript:;" data-src='Hosp/showList'>
+                            <i class="fa fa-fw fa-hospital-o"></i>
+                            大医美医院列表
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-src='Project/showList/type/healthy/type_title/大健康'>
+                            <i class="fa fa-fw fa-hospital-o"></i>
+                            大健康项目列表
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="o-nav-item">
+            <a href="" class="">
+                <i class="fa fa-fw fa-book"></i>
+                项目学习管理
+            </a>
+            <div class="o-nav-list-s">
+                <ul>
+                    <li>
+                        <a href="javascript:;" data-src='Project/showList/type/project_learning/type_title/项目学习'>
+                            <i class="fa fa-fw fa-book"></i>
+                            项目学习列表
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="o-nav-item">
+            <a href="" class="">
+                <i class="fa fa-fw fa-book"></i>
+                事业学习列表
+            </a>
+            <div class="o-nav-list-s">
+                <ul>
+                    <li>
+                        <a href="javascript:;" data-src='Project/showList/type/career_learning_1/type_title/事业学习-新人篇'>
+                            <i class="fa fa-fw fa-book"></i>
+                            新人篇
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-src='Project/showList/type/career_learning_2/type_title/事业学习-进阶篇'>
+                            <i class="fa fa-fw fa-book"></i>
+                            进阶篇
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-src='Project/showList/type/career_learning_3/type_title/事业学习-高阶篇'>
+                            <i class="fa fa-fw fa-book"></i>
+                            高阶篇
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="o-nav-item">
+            <a href="" class="">
+                <i class="fa fa-fw fa-user"></i>
+                用户管理
+            </a>
+            <div class="o-nav-list-s">
+                <ul>
+                    <li>
+                        <a href="javascript:;" data-src='User/showList'>
+                            <i class="fa fa-fw fa-user"></i>
+                            用户列表
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="o-nav-item">
+            <a href="" class="">
+                <i class="fa fa-fw fa-thumb-tack"></i>
+                其他管理
+            </a>
+            <div class="o-nav-list-s">
+                <ul>
+                    <li>
+                        <a href="javascript:;" data-src='Notice/showList'>
+                            <i class="fa fa-fw fa-bell"></i>
+                            公告管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-src='Carousel/showList'>
+                            <i class="layui-icon">&#xe634;</i>
+                            轮播管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-src='Paper/edit/super_id/introduce'>
+                            <i class="fa fa-fw fa-user"></i>
+                            公司介绍管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-src='Feedback/showList'>
+                            <i class="glyphicon glyphicon-headphones"></i>
+                            意见反馈列表
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!--  -->
+
+        <hr>
+
+        <if condition='$Think.session.admin_id == "admin" || $Think.session.admin_id == "root"'>
+
+            <div class="o-nav-item" id="vo">
+                <a href="javascript:;">
+                    <i class="fa fa-cogs fa-fw"></i>
+                    系统设置
+                </a>
+                <div class="o-nav-list-s">
+                    <ul>
+                        <li>
+                            <a href="javascript:;" data-src='Config/showList'>
+                                <i class="fa fa-id-card"></i>
+                                管理员管理
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </if>
+        <div class="footer">
+        </div>
+    </div>
+
+    <div class="o-iframe-box">
+        <iframe id="iframe" name="iframe" src="" frameborder="0"></iframe>
+    </div>
+
+
+    <script src="__ADIST__/index/index.js"></script>
+    <script src="__VENDOR__/qrious/qrious.js"></script>
+
+
+    <script>
+
+
+        srcEvent.config.url = "__MODULE__";
+        srcEvent.init();
+        window['a '] = 1;
+
+    </script>
+
+</body>
+
+</html>

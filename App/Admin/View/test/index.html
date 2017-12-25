@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试页面</title>
+    <include file="App/Admin/View/component/importComponent.html" />
+    <style>
+        body {
+            padding: 15px
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="layui-row" style="padding-top:10px">
+
+        <div class="layui-btn-group">
+            <button class="layui-btn layui-btn-sm" id="add">
+                <i class="layui-icon">&#xe654;</i>上传轮播图
+            </button>
+            <button class="layui-btn layui-btn-sm" id="removeAll">
+                <i class="layui-icon">&#xe640;</i>批量删除
+            </button>
+        </div>
+
+
+    </div>
+
+
+    <script>
+        var upload;
+        layui.use(['form', 'upload'], function () {
+            upload = layui.upload;
+            form = layui.form;
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#add' //绑定元素
+                , url: '__MODULE__/Use/upFile' //上传接口
+                // , accept: 'file' //允许上传的文件类型
+                // , exts: 'csv'
+                // , auto: false
+                , data: {
+                    src: '/test/',
+                    del_src: '/Public/Upload//test/2017-12-09/5a2c0163c1f49.jpg'
+                }
+                , drag: true
+                , done: function (res) {
+                    //上传完毕回调
+
+
+                    w(res);
+                    return;
+                    if (res.code == 0) {
+                        //成功
+                        (function () {
+
+                            var url = '__MODULE__/Use/add';
+                            var obj = {
+                                table: 'carousel',
+                                add: {
+                                    nav_id: nav_id,
+                                    carousel_url: res.data.src,
+                                    sort: 0
+                                }
+                            };
+                            var fun = function (res) {
+                                w(res);
+                                try {
+                                    res = JSON.parse(res);
+                                } catch (error) {
+                                    //转换错误
+                                    layer.msg('异步接口出错！', {
+                                        anim: 6
+                                    });
+                                    return
+                                }
+                                if (res.res > 0) {
+                                    layer.msg('上传成功！');
+                                    tableIns.reload();
+                                } else {
+                                    layer.msg('上传失败！', {
+                                        anim: 6
+                                    });
+                                }
+
+                            };
+                            $.post(url, obj, fun);
+
+                        }());
+
+
+                    }
+                }
+                , error: function () {
+                    //请求异常回调
+                }
+            });
+
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>

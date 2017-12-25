@@ -1,0 +1,133 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>404</title>
+    <style>
+        body {
+            background-color: #333333;
+            color: #eee;
+            /* background-color: lightblue; */
+            /* color: #444; */
+        }
+
+        .box {
+            position: fixed;
+            width: 100%;
+            text-align: center;
+            top: 45%;
+            transform: translateY(-50%);
+        }
+
+        .box {
+            font-family: '微软雅黑';
+        }
+
+        .list {
+            text-align: center;
+            font-size: 100px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .item {
+            display: inline-block;
+            margin: 0 1%;
+            transition: all 0.3s;
+            vertical-align: middle;
+        }
+
+        .item.active {
+            font-size: 1em;
+            /* text-shadow: 0 0 5px #fff; */
+        }
+
+        .item.item-1 {
+            font-size: 0.8em;
+            -webkit-filter: blur(2px);
+            -moz-filter: blur(2px);
+            -ms-filter: blur(2px);
+            filter: blur(2px);
+        }
+
+        .item.item-2 {
+            font-size: 0.5em;
+            -webkit-filter: blur(4px);
+            -moz-filter: blur(4px);
+            -ms-filter: blur(4px);
+            filter: blur(4px);
+        }
+
+        .item.item-3 {
+            font-size: 0.3em;
+            -webkit-filter: blur(5px);
+            -moz-filter: blur(5px);
+            -ms-filter: blur(5px);
+            filter: blur(5px);
+        }
+
+        .item:hover {
+            color: #fff;
+            text-shadow: 0 0 20px #fff;
+        }
+
+        .title {
+            font-size: 10px;
+            margin: 10px 0;
+        }
+
+        .app-name {
+            font-size: 10px;
+        }
+
+
+        @media screen and (max-width: 1200px) {
+            .list {
+                font-size: 50px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .list {
+                font-size: 50px;
+            }
+            .item {
+                display: block;
+            }
+            .title {
+                font-size: 10px;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <div class="list">
+            <div class="item item-3">401</div>
+            <div class="item item-2">402</div>
+            <div class="item item-1">403</div>
+            <div class="item active">404</div>
+            <div class="item item-1">405</div>
+            <div class="item item-2">406</div>
+            <div class="item item-3">407</div>
+        </div>
+        <div class="title">
+            您的页面丢失在数据池中
+        </div>
+        <div class="app-name">
+            <?php echo ((isset($颜帮科技) && ($颜帮科技 !== ""))?($颜帮科技):''); ?>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

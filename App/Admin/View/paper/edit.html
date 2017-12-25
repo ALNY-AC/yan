@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <include file="App/Admin/View/component/impot.comp.html" />
+    <link href="__ADIST__/ctos/ctos.css" rel="stylesheet" type="text/css">
+
+    <title>编辑文章</title>
+    <style>
+        body {
+            padding: 0 100px;
+            padding-bottom: 20%;
+            background-color: #f9f9f9;
+            padding-top: 20px;
+        }
+
+        .o-panel {
+            box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .edui-container {
+            display: inline-block;
+
+        }
+
+        .layui-form-select dl {
+            z-index: 9999;
+        }
+
+        #paper_head_img {
+            border-radius: 5px;
+            margin: 10px 0;
+            width: 100px;
+            height: 100px;
+        }
+
+        .edit-box {
+            /* background-color: #ddd; */
+            /* padding: 10px; */
+            /* height: 300px; */
+            /* box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1); */
+        }
+
+        #container {
+            box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <form class="layui-form">
+
+        <div class="o-panel">
+            <div class="o-panel-head">
+                <div class="o-panel-title">
+                    文章
+                </div>
+            </div>
+            <div class="o-panel-body">
+
+                <input type="hidden" name='super_id' id='super_id' value="{$paper.super_id}">
+
+                <div class="form-group">
+                    <label>标题</label>
+                    <input type="text" lay-verify='required' value="{$paper.paper_title}" autocomplete="off" class="o-form-control" name="paper_title"
+                        placeholder="文章标题">
+                </div>
+                <div class="form-group">
+                    <label>简介</label>
+                    <textarea cols="30" rows="10" class="o-form-control" name="paper_info" placeholder="文章简介（255字以内）">{$paper.paper_info}</textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label> </label>
+                    <button type="button" class="btn btn-default o-btn" lay-submit lay-filter="save">保存</button>
+                    <button type="button" class="btn btn-default o-btn" lay-submit lay-filter="look">预览</button>
+                </div>
+
+            </div>
+            <div class="o-panel-footer">
+            </div>
+        </div>
+        <div class="">
+            <h1>
+                <small>
+                    编辑内容
+                </small>
+            </h1>
+        </div>
+        <div class="edit-box">
+
+            <!-- 加载编辑器的容器 -->
+            <script id="container" name="paper_content" type="text/plain">{$paper.paper_content|htmlspecialchars_decode}</script>
+        </div>
+
+
+    </form>
+
+
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="__VENDOR__/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="__VENDOR__/ueditor/ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+
+
+    <script>
+
+        var ue = UE.getEditor('container', {
+            autoHeight: false
+        });
+
+        var count = 0;
+        layui.use(['form', 'upload'], function () {
+            var form = layui.form;
+
+            form.on('submit(save)', function (data) {
+                // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+                // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+                // console.log(data.field); //当前容器的全部表单字段，名值对形式：{name: value}
+                savepaper(data);
+
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+
+            form.on('submit(look)', function (data) {
+
+                var paper_id = '{$paper.paper_id}';
+                var index = layer.load(2);
+
+                savepaper(data, function (res) {
+                    window.open('__CONTROLLER__/show/paper_id/' + paper_id);
+                    layer.close(index);
+                });
+
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+        });
+
+
+
+        function savepaper(data, f) {
+
+
+            var length = data.field.paper_title.length;
+            if (length > 255) {
+
+                layer.msg('标题不能大于255个字', {
+                    anim: 6
+                });
+                return;
+            }
+
+
+            var length = data.field.paper_info.length;
+            if (length > 255) {
+
+                layer.msg('简介不能大于255个字', {
+                    anim: 6
+                });
+                return;
+            }
+
+
+
+            var url = '__MODULE__/use/saveField';
+            var obj = {
+                table: 'paper',
+                id: "{$paper.paper_id}",
+                save: data.field
+            };
+            var fun = function (res) {
+                if (f != null) {
+                    f(res);
+                }
+                try {
+                    res = JSON.parse(res);
+
+                    if (res.res >= 0) {
+                        layer.msg('保存成功~');
+
+
+                    } else {
+                        layer.msg('保存失败~', {
+                            amin: 6
+                        });
+                    }
+
+
+                } catch (error) {
+                    //转换错误
+                    layer.msg('接口错误！', {
+                        amin: 6
+                    });
+                    return;
+                }
+
+
+
+            };
+            $.post(url, obj, fun);
+
+
+        }
+
+
+    </script>
+
+
+
+</body>
+
+</html>

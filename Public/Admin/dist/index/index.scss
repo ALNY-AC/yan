@@ -1,0 +1,239 @@
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background-color: transparent;
+}
+
+
+/*定义滚动条轨道 内阴影+圆角*/
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+
+/*定义滑块 内阴影+圆角*/
+
+::-webkit-scrollbar-thumb {
+    background-color: #0aaff1;
+}
+
+body {
+    background-color: #f9f9ff;
+}
+
+.o-nav {
+    position: absolute;
+    width: 100%;
+    background-color: #f9f9f9;
+    line-height: 3.7em;
+    height: 3.7em;
+    font-family: '微软雅黑';
+    padding-left: 200px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    a {
+        color: #777;
+        font-size: .9em;
+    }
+    .o-nav-left {
+        float: left;
+        .o-nav-item-s {
+            ul {
+                left: 10px;
+            }
+        }
+    }
+    .o-nav-right {
+        float: right;
+        .o-nav-item-s {
+            ul {
+                right: 10px;
+            }
+        }
+    }
+    .o-nav-item {
+        position: relative;
+        float: left;
+        transition: all 0.3s;
+        height: 3.7em;
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+        &.active {
+            // border-bottom: solid 5px #ccc;
+        }
+        a {
+            display: block;
+            padding: 0 1em;
+            transition: all 0.2s;
+            &:hover {
+                color: #000;
+            }
+        }
+        .o-nav-item-s {
+            height: 0;
+            .line {
+                height: 1px;
+                background-color: #ddd;
+            }
+        }
+        ul {
+            z-index: 9999999;
+            position: absolute;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: solid 1px #ddd;
+            border-radius: 5px;
+            width: 150px;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            box-shadow: 0px 3px 20px 0 rgba(0, 0, 0, 0.1);
+            background-color: rgba($color: #fff, $alpha: 0.9);
+            li {
+                &:hover {
+                    a {
+                        color: #777;
+                        background-color: #eee;
+                    }
+                }
+            }
+        }
+        &:hover {
+            border-bottom-width: 0;
+            .o-nav-item-s {
+                padding-top: 10px;
+                height: auto;
+            }
+            ul {
+                height: auto;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.o-nav-list {
+    width: 200px;
+    background-color: #2a2a2a;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    transition: all 0.3s;
+    vertical-align: middle;
+    z-index: 3;
+    overflow: auto;
+    padding-top: 60px;
+    padding-bottom: 200px;
+    a {
+        color: #ccc;
+    }
+    hr {
+        background-color: #222;
+    }
+    ul,
+    li {
+        padding: 0;
+        margin: 0;
+    }
+    .o-nav-logo {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 200px;
+        font-weight: bold;
+        color: #fff;
+        font-size: 15px;
+        height: 51.8px;
+        line-height: 51.8px;
+        padding-left: 30px;
+        box-shadow: -1px 2px 5px rgba(0, 0, 0, 0.5);
+        background-color: #2a2a2a;
+    }
+    .o-nav-item {
+        font-size: 14px;
+        a:not(.o-nav-logo) {
+            i {
+                padding-right: 5px;
+            }
+            display: block;
+            padding: 10px 0 10px 30px;
+            transition: background-color 0.3s;
+            &:hover {
+                background-color: #444;
+            }
+        }
+        .o-nav-list-s {
+            background-color: #111;
+            height: 0;
+            overflow: hidden;
+            a {
+                padding: 10px 0;
+                padding-left: 40px;
+                &.active {
+                    background-color: #444;
+                }
+            }
+        }
+        &.active {
+            border-left: solid 3px #eee;
+            &>a {
+                padding-left: 27px;
+            }
+            .o-nav-list-s {
+                height: auto;
+            }
+        }
+    }
+    .footer {
+        width: 200px;
+        display: block;
+        text-align: center;
+        border-top: solid 1px #222;
+        background-color: #2a2a2a;
+        position: fixed;
+        bottom: 0;
+        font-size: 5px;
+        padding: 5px 0;
+        * {
+            color: #aaa;
+        }
+    }
+}
+
+.o-iframe-box {
+    position: absolute;
+    top: 3.7em;
+    bottom: 0;
+    right: 0;
+    left: 200px;
+    z-index: 1;
+    iframe {
+        position: absolute;
+        width: 100%;
+        height: 99%;
+    }
+}
+
+.spot {
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: #000000;
+    width: 10px;
+    height: 10px;
+    &.spot-danger {
+        background-color: #d9534f;
+    }
+}

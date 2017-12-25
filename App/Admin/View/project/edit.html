@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <include file="App/Admin/View/component/impot.comp.html" />
+    <link href="__ADIST__/ctos/ctos.css" rel="stylesheet" type="text/css">
+
+    <title>编辑项目</title>
+    <style>
+        body {
+            padding: 0 100px;
+            background-color: #f9f9f9;
+        }
+
+        .o-panel {
+            box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .edui-container {
+            display: inline-block;
+
+        }
+
+        .layui-form-select dl {
+            z-index: 9999;
+        }
+
+        #project_head_img {
+            border-radius: 5px;
+            margin: 10px 0;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="o-panel">
+        <div class="o-panel-head">
+            <div class="o-panel-title">
+                编辑项目
+            </div>
+        </div>
+        <div class="o-panel-body">
+
+            <form class="layui-form">
+
+                <input type="hidden" name='super_id' id='super_id' value="{$project.super_id}">
+                <input type="hidden" name='type' id='type' value="{$project.type}">
+
+                <div class="form-group">
+                    <label>项目名</label>
+                    <input type="text" lay-verify='required' value="{$project.project_title}" autocomplete="off" class="o-form-control" name="project_title"
+                        placeholder="项目名">
+                </div>
+                <div class="form-group">
+                    <label>项目头像</label>
+                    <button type='button' class="layui-btn layui-black" id="upload">
+                        <i class="layui-icon">&#xe67c;</i>
+                        上传项目头像
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label> </label>
+                    <img src="__ROOT__/{$project.project_head}" alt="" id="project_head_img" name="project_head">
+                    <input type="hidden" name="project_head" value='{$project.project_head}' id="project_head">
+                </div>
+
+                <div class="form-group">
+                    <label>项目简介</label>
+                    <textarea cols="30" rows="10" class="o-form-control" name="project_info" placeholder="项目简介（255字以内）">{$project.project_info}</textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label> </label>
+                    <button type="button" class="btn btn-default o-btn" lay-submit lay-filter="save">保存</button>
+                </div>
+
+
+            </form>
+
+        </div>
+        <div class="o-panel-footer">
+        </div>
+    </div>
+
+
+    <script src="__ADIST__/linkage/linkage.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+
+
+        layui.use(['form', 'upload'], function () {
+            var form = layui.form;
+            upload = layui.upload;
+
+            form.on('submit(save)', function (data) {
+                // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+                // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+                // console.log(data.field); //当前容器的全部表单字段，名值对形式：{name: value}
+
+                saveproject(data);
+
+
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#upload' //绑定元素
+                , url: '__MODULE__/Use/upFile' //上传接口
+                // , accept: 'file' //允许上传的文件类型
+                // , exts: 'csv'
+                // , auto: false
+                , data: {
+                    src: '/project/img/',
+                    del_src: '{$project.project_head}'
+                }
+                , drag: true
+                , done: function (res) {
+                    //上传完毕回调
+
+                    this.data.del_src = res.data.src;
+
+                    if (res.code == 0) {
+                        //成功
+                        $('#project_head_img').attr('src', '__ROOT__/' + res.data.src);
+                        $('#project_head').val(res.data.src);
+
+                    }
+                }
+                , error: function () {
+                    //请求异常回调
+                    layer.msg('异步接口出错！', {
+                        anim: 6
+                    });
+                }
+            });
+
+
+        });
+
+
+
+        function saveproject(data) {
+
+
+            var length = data.field.project_title.length;
+            if (length > 255) {
+
+                layer.msg('标题不能大于255个字', {
+                    anim: 6
+                });
+                return;
+            }
+
+
+            var length = data.field.project_info.length;
+            if (length > 255) {
+
+                layer.msg('简介不能大于255个字', {
+                    anim: 6
+                });
+                return;
+            }
+
+
+
+            var url = '__MODULE__/use/saveField';
+            var obj = {
+                table: 'project',
+                id: "{$project.project_id}",
+                save: data.field
+            };
+            var fun = function (res) {
+                try {
+                    res = JSON.parse(res);
+
+                    if (res.res >= 0) {
+                        layer.msg('保存成功~');
+
+                    } else {
+                        layer.msg('保存失败~', {
+                            amin: 6
+                        });
+                    }
+
+
+                } catch (error) {
+                    //转换错误
+                    layer.msg('接口错误！', {
+                        amin: 6
+                    });
+                    return;
+                }
+
+
+
+            };
+            $.post(url, obj, fun);
+
+
+        }
+
+
+    </script>
+
+
+
+</body>
+
+</html>
