@@ -18,17 +18,22 @@ use Think\Controller;
 class IndexController extends CommonController {
     public function index() {
         
-   
+        
         $this->display();
         
     }
     
     
-    
-    
-    public function test(){
+    public function server(){
         
-        echo U('index',null,null,true);
+        $res=[];
+        $res['res']=1;
+        $res['url']= 'https://'.$_SERVER['SERVER_NAME'].(__ROOT__?__ROOT__.'/':'/');
+        
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========
+        
     }
     
     
