@@ -198,6 +198,9 @@ class UseController extends CommonController{
         $paper_id=I('paper_id');
         $super_id=I('super_id');
         
+        dump($paper_id);
+        dump($super_id);
+        die;
         $model=M('paper');
         $where=[];
         
