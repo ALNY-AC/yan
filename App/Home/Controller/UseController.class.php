@@ -68,6 +68,15 @@ class UseController extends CommonController{
         
         $user=$model->where($where)->select();
         
+        //转换头像https
+        $user_haed  = $user['user_haed'];
+        $ishttp=strpos($user_haed,"https") ===-1;
+        if($ishttp){
+            $head='https://'.$_SERVER['SERVER_NAME'].(__ROOT__?__ROOT__.'/':'/').$user_haed;
+        }
+        $user['user_haed']=$user_haed;
+        
+        
         //=========判断=========
         if($user){
             $res['res']=count($user);
@@ -227,10 +236,25 @@ class UseController extends CommonController{
         $where['openid']=$openid;
         $link=$model->where($where)->order('add_time desc')->select();
         
+        
+        
         //=========判断=========
         if($link){
             $res['res']=count($link);
             $res['msg']=$link;
+            
+            
+            foreach ($link as $key => $value) {
+                //转换头像https
+                $user_haed  = $value['user_haed'];
+                $ishttp=strpos($user_haed,"https") ===-1;
+                if($ishttp){
+                    $head='https://'.$_SERVER['SERVER_NAME'].(__ROOT__?__ROOT__.'/':'/').$user_haed;
+                }
+                $link[$key]['user_haed']=$user_haed;
+            }
+            
+            
         }else{
             $res['res']=-1;
             $res['msg']=$link;
