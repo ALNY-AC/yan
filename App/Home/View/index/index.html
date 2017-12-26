@@ -218,7 +218,7 @@
         }
 
         .line-box:before {
-            content: "";
+            content: " ";
         }
 
 
@@ -237,10 +237,6 @@
 
 
 
-        .code-ul-1 li:hover {
-            background-color: #333;
-        }
-
 
         .code-ul-1 li {
             display: block;
@@ -248,8 +244,27 @@
             width: 100%;
             font-size: 14px;
             line-height: 20px;
+            transition: all 0.2s;
+            border-right-width: 0px;
 
         }
+
+        .code-ul-1 li:hover {
+            background-color: #333;
+            border-right: solid 5px #587c0c;
+            border-left-width: 10px !important;
+            margin-left: -4px;
+            right: 0;
+            padding-left: 7px;
+        }
+
+        .code-ul-1 li:hover::after {
+            position: absolute;
+            right: 0;
+            border-right: solid 5px #587c0c;
+            content: " ";
+        }
+
 
         .code-ul-2 {
             /* 序号 */
@@ -266,7 +281,7 @@
 
         .code-ul-2 li {
             line-height: 20px;
-            border-right: 3px solid #0c7d9d;
+            /* border-right: 3px solid #0c7d9d; */
         }
 
         .code-ul-2 li .i {
@@ -278,13 +293,32 @@
         }
 
         .item.item-nav {
+            display: block;
             position: relative;
             background-color: rgba(128, 128, 128, 0.2);
             padding: 5px;
-            box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.2);
+            /* box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.2); */
             color: #ffffff;
             margin-top: 10px;
             font-weight: bold;
+        }
+
+        .item.item-nav:hover .fa-log:before,
+        .item.item-nav.active .fa-log:before {
+            content: " ";
+        }
+
+        .item.item-nav:before {
+            font-weight: 400;
+            position: absolute;
+            /* content: "\f02d"; */
+            content: "\f1b2";
+
+            padding-left: 3px;
+        }
+
+        .code-ul-1 li.active {
+            background-color: #333333;
         }
     </style>
 </head>
@@ -299,9 +333,9 @@
             CTOS接口测试工具
         </div>
 
-        <div v-bind:class="[{active:item.is_active},{'item-nav':item.type=='nav'},'item']" v-for='(item,index) in items' @click='show(item,index)'
+        <div v-bind:class="[{active:item.is_active},{'item-nav fa':item.type=='nav'},'item']" v-for='(item,index) in items' @click='show(item,index)'
             @mouseover='hover(item,index)' target="_blank">
-            <i v-bind:class="[{'fa-spin':!item.is_active},'fa fa-fw fa-log']"></i>
+            <i v-bind:class="[{'fa-spin':!item.is_active && item.type!='nav'},'fa fa-fw fa-log']"></i>
             {{item.title}}
         </div>
 
@@ -671,7 +705,7 @@
             var $ul1 = $('<ul/>').addClass('code-ul-1');
             for (let i = 0; i < res.length; i++) {
                 const item = res[i];
-                $ul1.append(`<li>${item}</li>`);
+                $ul1.append(`<li style='border-left: 3px solid #0c7d9d;'>${item}</li>`);
             }
 
 
@@ -685,6 +719,11 @@
             return $box;
 
         }
+
+        $(document).on('click', '.code-ul-1 li', function () {
+            $('.code-ul-1 li').removeClass('active');
+            $(this).addClass('active');
+        });
 
 
     </script>
