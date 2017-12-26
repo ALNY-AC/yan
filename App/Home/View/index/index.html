@@ -503,8 +503,16 @@
                         title: '取个人信息',
                         is_active: false
                     },
-
-
+                    {
+                        href: '{:U("use/myCode","openid=110")}',
+                        where: {
+                            openid: '110'
+                        },
+                        type: 'open',
+                        title: '取个人二维码',
+                        is_active: false,
+                        ajax: false
+                    },
                     {
                         href: '{:U("Use/linkList","",null,true)}',
                         where: {
@@ -643,8 +651,6 @@
         if (aApp.items[localStorage.ajaxIndex].type != 'open') {
             aApp.show(aApp.items[localStorage.ajaxIndex], localStorage.ajaxIndex);
         }
-
-
 
         function psCode(res) {
 
