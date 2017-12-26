@@ -61,11 +61,11 @@ class UseController extends CommonController{
             
         }
         
-        $user=$model->select($where);
+        $user=$model->where($where)->select();
         
         //=========判断=========
         if($user){
-            $res['res']=1;
+            $res['res']=count($user);
             $res['msg']=$user;
         }else{
             $res['res']=-1;
