@@ -30,15 +30,14 @@ class UseController extends CommonController{
         // $url= "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$secret&js_code=$code&grant_type=authorization_code";
         
         
-        $res=    baseAuth();
-        //=========输出json=========
-        echo json_encode($res);
-        //=========输出json=========
+        $userTocken=    baseAuth();
         
-        return;
-        $openid=I('openid');
-        $user_head=I('user_head');
-        $user_name=I('user_name');
+        $openid=$userTocken['openid'];
+        
+        $userInfo=I('userInfo');
+        
+        $user_head=$userInfo('avatarUrl');
+        $user_name=$userInfo('nickName');
         
         $model=M('user');
         $where=[];
