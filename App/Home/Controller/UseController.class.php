@@ -362,6 +362,7 @@ class UseController extends CommonController{
         $save['edit_time']=time();
         //=========sql区
         $result=$model->where($where)->save($save);
+        $res['res']=$model->_sql();
         //=========保存数据end=========
         //=========判断=========
         if($result!==false){
