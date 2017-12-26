@@ -218,7 +218,7 @@
         }
 
         .line-box:before {
-            content: "result";
+            content: "";
         }
 
 
@@ -310,11 +310,13 @@
     <div class="code-view">
 
         <div class="code code-1">
-            <div class="line-box"></div>
+            <div class="line-box">
+                url
+            </div>
             <pre></pre>
         </div>
         <div class="code code-2">
-            <div class="line-box"></div>
+            <div class="line-box">result</div>
             <pre></pre>
         </div>
 
@@ -515,6 +517,22 @@
                         is_active: false,
                         ajax: false
                     },
+                    {
+                        title: 'web-view接口',
+                        type: 'nav'
+                    },
+                    {
+                        href: "{:U('Use/showPaper','paper_id=67d7f00aee287d14339293e770f10459',null,true)}",
+                        where: {
+                            openid: '上线的id',
+                            openid_m: '自己的id'
+                        },
+                        title: '成为某某某的下线',
+                        type: 'open',
+                        is_active: false,
+                        ajax: false
+                    },
+                    // 
 
                 ]
             },
@@ -531,7 +549,7 @@
 
                     var url = item.href;
                     var where = item.where;
-                    // window.open(url);    
+
                     where['debug'] = this.debug;
 
                     var formatWhere = formatJson(where);
@@ -543,7 +561,10 @@
                     $('.code-1 pre').html($ul);
 
                     localStorage.ajaxIndex = index;
-
+                    if (item.type == 'open') {
+                        window.open(url);
+                        return;
+                    }
                     if (item.ajax || item.ajax == null) {
 
                         $.get(url, where, function (res) {
@@ -577,7 +598,10 @@
             }
         });
 
-        aApp.show(aApp.items[localStorage.ajaxIndex], localStorage.ajaxIndex);
+        if (aApp.items[localStorage.ajaxIndex].type != 'open') {
+            aApp.show(aApp.items[localStorage.ajaxIndex], localStorage.ajaxIndex);
+        }
+
 
 
         function psCode(res) {
