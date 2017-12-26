@@ -487,7 +487,7 @@ class UseController extends CommonController{
     public function feedback(){
         
         //=========保存数据=========
-        $model=M('user');
+        $model=M('feedback');
         //=========条件区
         //=========保存数据区
         
