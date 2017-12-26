@@ -67,6 +67,8 @@
             top: 37px;
             bottom: 0;
             overflow: auto;
+            transition: all 0.3s;
+
         }
 
         .item {
@@ -75,7 +77,7 @@
             outline-color: rgb(63, 63, 70);
             color: #cccccc;
             font-size: 14px;
-
+            white-space: nowrap;
         }
 
         .item .fa-log {
@@ -131,6 +133,7 @@
             top: 0;
             bottom: 0;
             right: 0;
+            transition: all 0.3s;
         }
 
         .code-view:after {
@@ -319,6 +322,14 @@
 
         .code-ul-1 li.active {
             background-color: #333333;
+        }
+
+        .item-box.w {
+            width: 0;
+        }
+
+        .code-view.w {
+            left: 0;
         }
     </style>
 </head>
@@ -725,6 +736,20 @@
             $(this).addClass('active');
         });
 
+        $(document).on('keyup', function (e) {
+
+            if (e.key == 'c') {
+                $('.item-box').toggleClass('w');
+                $('.code-view').toggleClass('w');
+                localStorage.isw = localStorage.isw == 'w' ? 'no' : 'w'
+            }
+
+        });
+
+        if (localStorage.isw == 'w') {
+            $('.item-box').addClass('w');
+            $('.code-view').addClass('w');
+        }
 
     </script>
 
