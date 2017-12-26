@@ -491,7 +491,7 @@ class UseController extends CommonController{
         //=========条件区
         //=========保存数据区
         
-        $add=I('post.add');
+        $add=I('post.');
         $add['feedback_id']=md5('feedback'.time().__KEY__.rand());//id
         $add['add_time']=time();
         $add['edit_time']=time();
