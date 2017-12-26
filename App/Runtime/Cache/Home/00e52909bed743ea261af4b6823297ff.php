@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="__VENDOR__/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/yan/Public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
     <title>测试</title>
     <style>
@@ -321,19 +321,19 @@
         </div>
 
     </div>
-    <script src='__VENDOR__/vue/vue.js'></script>
-    <script src='__VENDOR__/jquery/jquery.js'></script>
-    <script src='__HDIST__/index/index.js'></script>
+    <script src='/yan/Public/vendor/vue/vue.js'></script>
+    <script src='/yan/Public/vendor/jquery/jquery.js'></script>
+    <script src='/yan/Public/Home/dist/index/index.js'></script>
 
-    <script src="__VENDOR__/bootstrap/js/bootstrap.min.js"></script>
-    <link href="__VENDOR__/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="/yan/Public/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/yan/Public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <script>
 
 
 
-        var useUrl = '{:U("Use/get","",null,true)}';
-        var getPaper = '{:U("Use/getPaper","",null,true)}';
+        var useUrl = '<?php echo U("Use/get","",null,true);?>';
+        var getPaper = '<?php echo U("Use/getPaper","",null,true);?>';
 
 
         var aApp = new Vue({
@@ -345,7 +345,7 @@
                 items: [
 
                     {
-                        href: '{:U("Index/server","",null,true)}',
+                        href: '<?php echo U("Index/server","",null,true);?>',
                         where: {
                         },
                         title: '取服务器地址',
@@ -495,7 +495,7 @@
 
 
                     {
-                        href: '{:U("Use/linkList","",null,true)}',
+                        href: '<?php echo U("Use/linkList","",null,true);?>',
                         where: {
                             info: '不传参数，直接返回自己下线的列表，但是要求要开始登录过',
                         },
@@ -508,7 +508,7 @@
                         type: 'nav'
                     },
                     {
-                        href: '{:U("Use/link","",null,true)}',
+                        href: '<?php echo U("Use/link","",null,true);?>',
                         where: {
                             openid: '上线的id',
                             openid_m: '自己的id'
@@ -522,11 +522,11 @@
                         type: 'nav'
                     },
                     {
-                        href: "{:U('Use/showPaper','paper_id=67d7f00aee287d14339293e770f10459',null,true)}",
+                        href: "<?php echo U('Use/showPaper','paper_id=67d7f00aee287d14339293e770f10459',null,true);?>",
                         where: {
                             url: '直接的url'
                         },
-                        title: '查看文章',
+                        title: '查看文档',
                         type: 'open',
                         is_active: false,
                         ajax: false
