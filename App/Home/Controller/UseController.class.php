@@ -36,8 +36,8 @@ class UseController extends CommonController{
         
         $userInfo=I('userInfo');
         
-        $user_head=$userInfo('avatarUrl');
-        $user_name=$userInfo('nickName');
+        $user_head=$userInfo['avatarUrl'];
+        $user_name=$userInfo['nickName'];
         
         $model=M('user');
         $where=[];
