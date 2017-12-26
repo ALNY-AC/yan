@@ -36,6 +36,11 @@ class UseController extends CommonController{
         
         $userInfo=I('userInfo');
         
+        if(gettype($userInfo)=='string'){
+            $userInfo = htmlspecialchars_decode($userInfo);
+            $userInfo = json_decode($userInfo,true);
+        }
+        
         $user_head=$userInfo['avatarUrl'];
         $user_name=$userInfo['nickName'];
         
