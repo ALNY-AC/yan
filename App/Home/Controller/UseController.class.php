@@ -193,11 +193,20 @@ class UseController extends CommonController{
     }
     //显示文章
     public function showPaper(){
+        
+        
         $paper_id=I('paper_id');
+        $super_id=I('super_id');
         
         $model=M('paper');
         $where=[];
-        $where['paper_id']=$paper_id;
+        
+        if($paper_id){
+            $where['paper_id']=$paper_id;
+        }else{
+            $where['super_id']=$super_id;
+        }
+        
         $paper=$model->where($where)->find();
         $paper['add_time']=date('Y-m-d H:i:s', $paper['add_time']);
         
