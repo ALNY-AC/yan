@@ -225,19 +225,41 @@ function set_mkdir($src) {
     }
 }
 
-function getIp() {
-    if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
-        $ip = getenv("HTTP_CLIENT_IP");
-    else
-        if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
-            $ip = getenv("HTTP_X_FORWARDED_FOR");
-        else
-            if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
-                $ip = getenv("REMOTE_ADDR");
-            else
-                if (isset ($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
-                    $ip = $_SERVER['REMOTE_ADDR'];
-                else
-                    $ip = "unknown";
-                return ($ip);
-            }
+// function getIp() {
+//     if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+//         $ip = getenv("HTTP_CLIENT_IP");
+//     else
+//         if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+//             $ip = getenv("HTTP_X_FORWARDED_FOR");
+//         else
+//             if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+//                 $ip = getenv("REMOTE_ADDR");
+//             else
+//                 if (isset ($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+//                     $ip = $_SERVER['REMOTE_ADDR'];
+//                 else
+//                     $ip = "unknown";
+//                 return ($ip) ;
+//             }
+
+//组装模糊查询语句
+function getLinkQuery($key){
+    
+    //将空格转化为%
+    $key= preg_replace("/[\s]+/is","%",$key);
+    
+    //根据分隔符出数组
+    $arr = explode('%',$key);
+    
+    foreach ($arr as $key => $value) {
+        $arr[$key]="%$value%";
+    }
+    
+    $where= array(
+    'like',
+    $arr,
+    'OR'
+    );
+    
+    return $where;
+}

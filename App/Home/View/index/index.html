@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="__VENDOR__/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
-    <title>测试</title>
+    <title>CTOS接口测试中心</title>
     <style>
         /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 
@@ -351,7 +351,10 @@
                         title: '取服务器地址',
                         is_active: true
                     },
-
+                    {
+                        title: '首页相关接口',
+                        type: 'nav'
+                    },
                     {
                         href: useUrl,
                         where: {
@@ -369,6 +372,14 @@
                             table: 'carousel'
                         },
                         title: '取轮播图',
+                        is_active: false
+                    },
+                    {
+                        href: '{:U("Use/getPaperUp","",null,true)}',
+                        where: {
+
+                        },
+                        title: '取推荐文章',
                         is_active: false
                     },
                     {
@@ -518,6 +529,23 @@
                         ajax: false
                     },
                     {
+                        href: '{:U("Use/upFile","",null,true)}',
+                        where: {
+                            // file: '上线的id',
+                        },
+                        title: '上传文件',
+                        is_active: false,
+                        ajax: false
+                    },
+                    {
+                        href: '{:U("Use/queryPaper","",null,true)}',
+                        where: {
+                            key: '美容 公告',
+                        },
+                        title: '搜索',
+                        is_active: false,
+                    },
+                    {
                         title: 'web-view接口',
                         type: 'nav'
                     },
@@ -549,7 +577,6 @@
                     var url = item.href;
                     var where = item.where;
 
-                    where['debug'] = this.debug;
 
                     var formatWhere = formatJson(where);
 

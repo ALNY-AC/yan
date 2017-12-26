@@ -143,7 +143,7 @@ class UseController extends CommonController{
             $where['paper_type']=$paper_type;
         }
         
-        $result = $model->where($where)->select();
+        $result = $model->field('paper_title,paper_id,paper_info,paper_head,add_time')->where($where)->select();
         //时间转换
         $result=toTime($result,'Y-m-d');
         
@@ -240,6 +240,182 @@ class UseController extends CommonController{
         //=========输出json=========
         echo json_encode($res);
         //=========输出json=========
+        
+    }
+    
+    
+    
+    /**
+    * 统一上传接口
+    * 上传单个文件
+    */
+    
+    public function upFile(){
+        
+        if (IS_POST) {
+            
+            $file = $_FILES['file'];
+            
+            if (!$file['error']) {
+                //定义配置
+                
+                $cfg = [];
+                //默认是管理上传路径
+                //如果传了路径就使用传来的路径
+                if(empty(I('post.src'))){
+                    //默认路径
+                    $cfg['rootPath']=WORKING_PATH . __UPLOAD__ADMIN__;
+                }else{
+                    //传来的路径
+                    
+                    $cfg['rootPath']=WORKING_PATH .'/Public/Upload/wx/' ;
+                    //创建目录
+                    set_mkdir(WORKING_PATH .'/Public/Upload/wx/');
+                    // $cfg['autoSub']=false;
+                    // $cfg['hash']=false;
+                    // $cfg['saveName']='';
+                }
+                
+                if(!empty(I('post.del_src'))){
+                    if(I('post.del_src')!==''){
+                        
+                        if(I('post.del_src')!=='/'){
+                            //删除
+                            $src=WORKING_PATH.'/'.I('post.del_src');
+                            $state=delFile($src);
+                        }
+                        
+                    }
+                }
+                
+                $cfg['exts']=array('jpg', 'gif', 'png', 'jpeg');//设置附件上传类型
+                
+                //实例化上传类
+                $upload = new \Think\Upload($cfg);
+                //开始上传
+                $info = $upload -> uploadOne($file);
+                //判断是否上传成功
+                if ($info) {
+                    //图片地址
+                    
+                    $img_url = UPLOAD_ROOT_PATH . 'wx/' . $info['savepath'] . $info['savename'];
+                    
+                    $result['code'] = 0;
+                    $result['msg'] = '成功';
+                    $result['data'] = array();
+                    $result['data']['src'] = $img_url;
+                    
+                } else {
+                    $result['code'] = 'error';
+                    $result['msg'] = '失败，上传错误';
+                    $result['cfg'] = $cfg;
+                }
+                
+            } else {
+                $result['code'] = 'error';
+                $result['msg'] = '失败，文件错误';
+                $result['info'] = $file;
+            }
+            echo json_encode($result);
+        } else {
+            $url = U('Index/index');
+            echo "<script>top.location.href='$url'</script>";
+        }
+    }
+    
+    //设置用户字段
+    function saveUser(){
+        if(IS_POST){
+            
+            //=========保存数据=========
+            $model=M('user');
+            //=========条件区
+            $where=[];
+            $where['openid']=I('openid');
+            //=========保存数据区
+            $save=I('save');
+            $save['edit_time']=time();
+            //=========sql区
+            $result=$model->where($where)->save($save);
+            //=========保存数据end=========
+            //=========判断=========
+            if($result!==false){
+                $res['res']=1;
+                $res['msg']=$result;
+            }else{
+                $res['res']=-1;
+                $res['msg']=$result;
+            }
+            //=========判断end=========
+            
+            //=========输出json=========
+            echo json_encode($res);
+            //=========输出json=========
+        }
+    }
+    
+    //搜索
+    public function queryPaper(){
+        
+        $key=I('key');
+        
+        $model=M('paper');
+        $where=[];
+        $where['paper_title'] =getLinkQuery($key);
+        
+        
+        $paper=$model->field('paper_title,paper_id,paper_info,paper_head,add_time')->where($where)->select();
+        
+        //=========判断=========
+        if($paper){
+            $res['res']=count($paper);
+            $res['msg']=$paper;
+        }else{
+            $res['res']=-1;
+            $res['msg']=$paper;
+        }
+        //=========判断end=========
+        
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========
+        
+    }
+    
+    //获得首页推荐的文章
+    public function getPaperUp(){
+        
+        $model=M('paper');
+        $result=$model->field('paper_title,paper_id,paper_info,paper_head,add_time')->order('add_time desc')->select();
+        $arr=[];
+        
+        for ($i=0; $i < count($result); $i++) {
+            
+            if($i %3==0 && $i!==0){
+                $_arr=[];
+                $_arr[2]=$result[$i];
+                $_arr[1]=$result[$i-1];
+                $_arr[0]=$result[$i-2];
+                $_arr= toTime( $_arr,'Y-m-d');
+                $arr[]=$_arr;
+            }
+            
+        }
+        
+        
+        //=========判断=========
+        if($arr){
+            $res['res']=count($arr);
+            $res['msg']=$arr;
+        }else{
+            $res['res']=-1;
+            $res['msg']=$arr;
+        }
+        //=========判断end=========
+        
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========`
         
     }
     
