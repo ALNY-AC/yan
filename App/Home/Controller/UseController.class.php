@@ -408,9 +408,6 @@ class UseController extends CommonController{
     //关注某人（成为谁谁谁的下线）
     public function link(){
         
-        // dump(I('get'));
-        echo 1;
-        die;
         
         $openid=I('openid');//这个是想关注的用户的id
         $openid_m=I('openid_m');//这个是自己的id
