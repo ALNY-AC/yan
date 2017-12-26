@@ -351,34 +351,31 @@ class UseController extends CommonController{
     //设置用户字段
     function saveUser(){
         
-        if(IS_POST){
-            
-            
-            //=========保存数据=========
-            $model=M('user');
-            //=========条件区
-            $where=[];
-            $where['openid']=I('openid');
-            //=========保存数据区
-            $save=I('save');
-            $save['edit_time']=time();
-            //=========sql区
-            $result=$model->where($where)->save($save);
-            //=========保存数据end=========
-            //=========判断=========
-            if($result!==false){
-                $res['res']=1;
-                $res['msg']=$result;
-            }else{
-                $res['res']=-1;
-                $res['msg']=$result;
-            }
-            //=========判断end=========
-            
-            //=========输出json=========
-            echo json_encode($res);
-            //=========输出json=========
+        
+        //=========保存数据=========
+        $model=M('user');
+        //=========条件区
+        $where=[];
+        $where['openid']=I('openid');
+        //=========保存数据区
+        $save=I('save');
+        $save['edit_time']=time();
+        //=========sql区
+        $result=$model->where($where)->save($save);
+        //=========保存数据end=========
+        //=========判断=========
+        if($result!==false){
+            $res['res']=1;
+            $res['msg']=$result;
+        }else{
+            $res['res']=-1;
+            $res['msg']=$result;
         }
+        //=========判断end=========
+        
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========
     }
     
     //搜索
