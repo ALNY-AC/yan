@@ -356,9 +356,9 @@ class UseController extends CommonController{
         $model=M('user');
         //=========条件区
         $where=[];
-        $where['openid']=I('openid');
+        $where['openid']=I('post.openid');
         //=========保存数据区
-        $save=I('save');
+        $save=I('post.save');
         $save['edit_time']=time();
         //=========sql区
         $result=$model->where($where)->save($save);
