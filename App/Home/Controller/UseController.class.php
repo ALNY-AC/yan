@@ -231,11 +231,15 @@ class UseController extends CommonController{
         
         //获得自己的粉丝列表
         $openid=I('openid');
-        $model=M('link');
+        $model=M('follow');
         $where=[];
-        $where['openid']=$openid;
-        $link=$model->where($where)->order('add_time desc')->select();
-        
+        $where['t1.openid']=$openid;
+        $link=$model
+        ->field('t1.*,t2.*')
+        ->table('y_follow as t1,y_user as t2')
+        ->where('t1.openid_m = t2.openid')
+        ->where($where)
+        ->order('t1.add_time desc')->select();
         
         
         //=========判断=========
@@ -285,35 +289,14 @@ class UseController extends CommonController{
                 //定义配置
                 
                 $cfg = [];
-                //默认是管理上传路径
-                //如果传了路径就使用传来的路径
-                if(empty(I('post.src'))){
-                    //默认路径
-                    $cfg['rootPath']=WORKING_PATH . __UPLOAD__ADMIN__;
-                }else{
-                    //传来的路径
-                    
-                    $cfg['rootPath']=WORKING_PATH .'/Public/Upload/wx/' ;
-                    //创建目录
-                    set_mkdir(WORKING_PATH .'/Public/Upload/wx/');
-                    // $cfg['autoSub']=false;
-                    // $cfg['hash']=false;
-                    // $cfg['saveName']='';
-                }
                 
-                if(!empty(I('post.del_src'))){
-                    if(I('post.del_src')!==''){
-                        
-                        if(I('post.del_src')!=='/'){
-                            //删除
-                            $src=WORKING_PATH.'/'.I('post.del_src');
-                            $state=delFile($src);
-                        }
-                        
-                    }
-                }
+                $cfg['rootPath']=WORKING_PATH .UPLOAD_ROOT_PATH.'wx/' ;
+                set_mkdir(WORKING_PATH .UPLOAD_ROOT_PATH.'wx/' );
                 
-                $cfg['exts']=array('jpg', 'gif', 'png', 'jpeg');//设置附件上传类型
+                
+                
+                
+                // $cfg['exts']=array('jpg', 'gif', 'png', 'jpeg');//设置附件上传类型
                 
                 //实例化上传类
                 $upload = new \Think\Upload($cfg);
@@ -359,12 +342,14 @@ class UseController extends CommonController{
         $where['openid']=I('post.openid');
         //=========保存数据区
         
-        $save=I('post.save');
+        $post=I('post.');
         
-        if(gettype($save)=='string'){
-            $save = htmlspecialchars_decode($save);
-            $save = json_decode($save,true);
-        }
+        $save=$post['save'];
+        
+        
+        $save = htmlspecialchars_decode($save);
+        $save = json_decode($save,true);
+        
         
         $save['edit_time']=time();
         //=========sql区
@@ -473,10 +458,10 @@ class UseController extends CommonController{
         $openid_m=I('openid_m');//这个是自己的id
         
         //=========添加数据=========
-        $model=M('link');
+        $model=M('follow');
         //=========添加数据区
         $add=[];
-        $add['follow_id']=md5('follow'.__KEY__.rand());//id
+        $add['follow_id']=md5('follow'.time().__KEY__.rand());//id
         $add['openid']=$openid;//想要关注用户的id
         $add['openid_m']=$openid_m;//自己的id
         $add['add_time']=time();
@@ -486,6 +471,39 @@ class UseController extends CommonController{
         //=========判断=========
         if($result){
             $res['res']=1;
+        }else{
+            $res['res']=-1;
+            $res['msg']=$result;
+        }
+        //=========判断end=========
+        
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========
+        
+    }
+    
+    //问题反馈
+    public function feedback(){
+        
+        //=========保存数据=========
+        $model=M('user');
+        //=========条件区
+        //=========保存数据区
+        
+        $add=I('post.add');
+        $add['feedback_id']=md5('feedback'.time().__KEY__.rand());//id
+        $add['add_time']=time();
+        $add['edit_time']=time();
+        
+        //=========sql区
+        $result=$model->add($add);
+        $res['sql']=$model->_sql();
+        //=========保存数据end=========
+        //=========判断=========
+        if($result!==false){
+            $res['res']=1;
+            $res['msg']=$result;
         }else{
             $res['res']=-1;
             $res['msg']=$result;
