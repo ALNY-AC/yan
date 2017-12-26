@@ -18,10 +18,23 @@ namespace Home\Controller;
 use Think\Controller;
 class UseController extends CommonController{
     
-    
-    
     public function login(){
         
+        $res=    baseAuth();
+        
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========
+        
+        // $code=I('code');
+        
+        // $appid='wxf7a00ad5cbe5f514';
+        // $secret='3d036697d1e220c8536fb2db312980fe';
+        // $url= "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$secret&js_code=$code&grant_type=authorization_code";
+        
+        
+        
+        return;
         $openid=I('openid');
         $user_head=I('user_head');
         $user_name=I('user_name');

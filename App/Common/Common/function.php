@@ -61,30 +61,29 @@ function _request($curl,$https=true,$method='GET',$data=null){
 * @param  string $openid [description]
 * @return [type]         [description]
 */
-function baseAuth($redirect_url){
+function baseAuth(){
     
-    $appid='wx9b7ab18e61268efb';
-    $appsecret='bcd46807674b9448617438256db6cada';
-    //===
-    // $appid='wxc5919bd34da8b695';
-    // $appsecret='87e678bca54b92f8c7213e1ba9f12963';
     
     
     //1.准备scope为 snsapi_base 网页授权页面 snsapi_userinfo
     
-    $baseurl = urlencode($redirect_url);
-    $snsapi_base_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$baseurl.'&response_type=code&scope=snsapi_userinfo&state=YQJ#wechat_redirect';
+    // $baseurl = urlencode($redirect_url);
+    // $snsapi_base_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$baseurl.'&response_type=code&scope=snsapi_userinfo&state=YQJ#wechat_redirect';
     
-    //2.静默授权,获取code
-    //页面跳转至redirect_uri/?code=CODE&state=STATE
-    $code = $_GET['code'];
-    if( !isset($code) ){
-        header('Location:'.$snsapi_base_url);
-    }
+    // //2.静默授权,获取code
+    // //页面跳转至redirect_uri/?code=CODE&state=STATE
+    // if( !isset($code) ){
+    //     header('Location:'.$snsapi_base_url);
+    // }
     
     
     //3.通过code换取网页授权access_token和openid
-    $curl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$appsecret.'&code='.$code.'&grant_type=authorization_code';
+    // $curl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$appsecret.'&code='.$code.'&grant_type=authorization_code';
+    $code=I('code');
+    $appid='wxf7a00ad5cbe5f514';
+    $secret='3d036697d1e220c8536fb2db312980fe';
+    $url= "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$secret&js_code=$code&grant_type=authorization_code";
+    
     $content =_request($curl);
     $result = json_decode($content,true);
     
