@@ -525,6 +525,7 @@
                             openid_m: '自己的id'
                         },
                         title: '成为某某某的下线',
+                        type: 'open',
                         is_active: false,
                         ajax: false
                     },
@@ -544,6 +545,21 @@
                         },
                         title: '搜索',
                         is_active: false,
+                    },
+                    {
+                        href: '{:U("Use/saveUser","",null,true)}',
+                        where: {
+                            '请求类型': 'post',
+                            '备注': 'save中可以任意一个或多个。',
+                            openid: '110',
+                            save: {
+                                user_name: '想要修改的昵称。',
+                                user_head: '想要修改的头像，由上传接口返回。',
+                            }
+                        },
+                        title: '修改用户信息',
+                        is_active: false,
+                        ajax: false
                     },
                     {
                         title: 'web-view接口',

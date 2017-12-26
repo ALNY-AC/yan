@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的二维码</title>
+</head>
+
+<body>
+
+    <canvas id='mycode'></canvas>
+
+
+    <script src="__VENDOR__/qrious/qrious.js"></script>
+    <script>
+        var url = '{$url}';
+
+
+        var q = new QRious({
+            background: 'transparent',
+            foreground: '#333',
+            element: document.getElementById('mycode'),
+            value: url,
+            size: 200
+        });
+
+        console.warn(url);
+
+
+    </script>
+
+</body>
+
+</html>

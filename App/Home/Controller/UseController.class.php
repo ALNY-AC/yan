@@ -177,44 +177,14 @@ class UseController extends CommonController{
         $where=[];
         $where['paper_id']=$paper_id;
         $paper=$model->where($where)->find();
-        $paper['add_time']=data('Y-m-d H:i:s', $paper['add_time']);
+        $paper['add_time']=date('Y-m-d H:i:s', $paper['add_time']);
         
         $this->assign('paper',$paper);
         $this->display();
         
     }
     
-    //关注某人（成为谁谁谁的下线）
-    public function link(){
-        
-        $openid=I('openid');//这个是想关注的用户的id
-        $openid_m=I('openid_m');//这个是自己的id
-        
-        //=========添加数据=========
-        $model=M('link');
-        //=========添加数据区
-        $add=[];
-        $add['follow_id']=md5('follow'.__KEY__.rand());//id
-        $add['openid']=$openid;//想要关注用户的id
-        $add['openid_m']=$openid_m;//自己的id
-        $add['add_time']=time();
-        $add['edit_time']=time();
-        //=========sql区
-        $result=$model->add($add);
-        //=========判断=========
-        if($result){
-            $res['res']=1;
-        }else{
-            $res['res']=-1;
-            $res['msg']=$result;
-        }
-        //=========判断end=========
-        
-        //=========输出json=========
-        echo json_encode($res);
-        //=========输出json=========
-        
-    }
+    
     
     //获得自己的粉丝列表（下线列表）
     public function linkList(){
@@ -325,7 +295,9 @@ class UseController extends CommonController{
     
     //设置用户字段
     function saveUser(){
+        
         if(IS_POST){
+            
             
             //=========保存数据=========
             $model=M('user');
@@ -419,4 +391,54 @@ class UseController extends CommonController{
         
     }
     
+    public function myCode(){
+        
+        $openid = I('openid');
+        
+        $url = U("Use/link","openid=$openid",null,true);
+        
+        $this->assign('url',$url);
+        $this->assign('openid',$openid);
+        
+        
+        $this->display();
+        
+    }
+    
+    
+    //关注某人（成为谁谁谁的下线）
+    public function link(){
+        
+        // dump(I('get'));
+        echo 1;
+        die;
+        
+        $openid=I('openid');//这个是想关注的用户的id
+        $openid_m=I('openid_m');//这个是自己的id
+        
+        //=========添加数据=========
+        $model=M('link');
+        //=========添加数据区
+        $add=[];
+        $add['follow_id']=md5('follow'.__KEY__.rand());//id
+        $add['openid']=$openid;//想要关注用户的id
+        $add['openid_m']=$openid_m;//自己的id
+        $add['add_time']=time();
+        $add['edit_time']=time();
+        //=========sql区
+        $result=$model->add($add);
+        //=========判断=========
+        if($result){
+            $res['res']=1;
+        }else{
+            $res['res']=-1;
+            $res['msg']=$result;
+        }
+        //=========判断end=========
+        
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========
+        
+    }
 }
