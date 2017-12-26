@@ -31,6 +31,21 @@
             background-color: #777;
         }
 
+        ::selection {
+            background: #9cdcfe;
+            /* color: #555; */
+        }
+
+        ::-moz-selection {
+            background: #9cdcfe;
+            /* color: #555; */
+        }
+
+        ::-webkit-selection {
+            background: #9cdcfe;
+            /* color: #555; */
+        }
+
         * {
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
@@ -44,21 +59,23 @@
         }
 
         .item-box {
-            background-color: #2a2a2a;
-            padding: 20px;
+            background-color: rgb(37, 37, 38);
             color: #eee;
             width: 300px;
             position: fixed;
             left: 0;
-            top: 0;
+            top: 37px;
             bottom: 0;
-            border-right: solid 1px #111;
             overflow: auto;
         }
 
         .item {
-            padding: 10px;
+            padding: 5px;
             cursor: pointer;
+            outline-color: rgb(63, 63, 70);
+            color: #cccccc;
+            font-size: 14px;
+
         }
 
         .item .fa-log {
@@ -66,8 +83,9 @@
         }
 
         .item:hover {
-            outline: solid 1px #eee;
+            /* outline: solid 1px rgb(63, 63, 70); */
             transition: all 0.3s;
+            background-color: #2a2d2e;
         }
 
         .item:hover .fa-log:before,
@@ -78,8 +96,9 @@
 
         .item.active {
             transition: all 0.3s;
-            background-color: #eee;
-            color: #333;
+            /* background-color: rgb(63, 63, 70); */
+            background-color: #2a2d2e;
+            color: #eee;
         }
 
 
@@ -121,36 +140,151 @@
         }
 
         .code {
+            position: relative;
             width: 50%;
             float: left;
             height: 100%;
-            padding: 10px;
-            overflow: auto;
+            background-color: rgb(30, 30, 30);
+            z-index: 1;
         }
 
 
 
         .code-1 {
+            width: 40%;
             position: relative;
-            border-right: solid 1px #222;
+            border-right: solid 1px rgb(64, 64, 64);
             display: table;
         }
 
-        .code-2 {}
+        .code-2 {
+            width: 60%;
+        }
+
 
         hr {
             border: none;
             height: 1px;
-            background-color: #222;
+            background-color: rgb(64, 64, 64);
             box-shadow: none;
         }
 
         pre {
-            font-family: '微软雅黑';
             background-color: transparent;
-            color: #eee;
+            color: #d7ba7d;
             border: none;
-            line-height: 1.5;
+            padding: 41px 0;
+            border-radius: 0;
+            overflow: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 8px 15px;
+            width: 300px;
+            background-color: #383838;
+            font-size: 15px;
+            /* border-bottom: solid 1px rgb(64, 64, 64); */
+            /* box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.3); */
+        }
+
+        .box * {
+            font-size: 10px;
+        }
+
+        .line-box {
+            /* border-bottom: solid 1px rgb(64, 64, 64); */
+            padding: 8px 15px;
+            font-size: 14px;
+            color: #ccc;
+            z-index: 9999;
+            background-color: rgb(30, 30, 30);
+            position: absolute;
+            width: 100%;
+            box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .line-box:before {
+            content: " ";
+
+        }
+
+        .line-box:before {
+            content: "result";
+        }
+
+
+        .code-ul-1 {
+            /* 代码 */
+            /* float: left; */
+            display: inline-block;
+            vertical-align: top;
+            position: absolute;
+            right: 0;
+            left: 53px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+
+
+        .code-ul-1 li:hover {
+            background-color: #333;
+        }
+
+
+        .code-ul-1 li {
+            display: block;
+            padding: 0 10px;
+            width: 100%;
+            font-size: 14px;
+            line-height: 20px;
+
+        }
+
+        .code-ul-2 {
+            /* 序号 */
+            /* float: left; */
+            display: inline-block;
+            vertical-align: top;
+            position: absolute;
+            bottom: 0;
+            top: 41px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .code-ul-2 li {
+            line-height: 20px;
+            border-right: 3px solid #0c7d9d;
+        }
+
+        .code-ul-2 li .i {
+            display: inline-block;
+            width: 50px;
+            text-align: right;
+            color: #5a5a5a;
+            padding-right: 10px;
+        }
+
+        .item.item-nav {
+            position: relative;
+            background-color: rgba(128, 128, 128, 0.2);
+            padding: 5px;
+            box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            margin-top: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -161,14 +295,12 @@
     <div id="aApp" class="item-box">
         <!-- <input type="text" class="input" v-model='url'> -->
 
-        <label>测试：
-            <input type="checkbox" v-model='debug'>
-        </label>
-        <label>格式化json：
-            <input type="checkbox" v-model='form'>
-        </label>
-        <div v-bind:class="[{active:item.is_active},'item']" v-for='(item,index) in items' @click='show(item,index)' @mouseover='hover(item,index)'
-            target="_blank">
+        <div class="box">
+            CTOS接口测试工具
+        </div>
+
+        <div v-bind:class="[{active:item.is_active},{'item-nav':item.type=='nav'},'item']" v-for='(item,index) in items' @click='show(item,index)'
+            @mouseover='hover(item,index)' target="_blank">
             <i v-bind:class="[{'fa-spin':!item.is_active},'fa fa-fw fa-log']"></i>
             {{item.title}}
         </div>
@@ -178,9 +310,11 @@
     <div class="code-view">
 
         <div class="code code-1">
+            <div class="line-box"></div>
             <pre></pre>
         </div>
         <div class="code code-2">
+            <div class="line-box"></div>
             <pre></pre>
         </div>
 
@@ -195,6 +329,7 @@
     <script>
 
 
+
         var useUrl = '{:U("Use/get","",null,true)}';
         var getPaper = '{:U("Use/getPaper","",null,true)}';
 
@@ -206,6 +341,7 @@
                 form: true,
                 url: '',
                 items: [
+
                     {
                         href: '{:U("Index/server","",null,true)}',
                         where: {
@@ -213,6 +349,7 @@
                         title: '取服务器地址',
                         is_active: true
                     },
+
                     {
                         href: useUrl,
                         where: {
@@ -231,6 +368,10 @@
                         },
                         title: '取轮播图',
                         is_active: false
+                    },
+                    {
+                        title: '取列表',
+                        type: 'nav'
                     },
                     {
                         href: useUrl,
@@ -263,6 +404,10 @@
                         },
                         title: '取大健康项目列表',
                         is_active: false
+                    },
+                    {
+                        title: '项目学习类接口',
+                        type: 'nav'
                     },
                     {
                         href: useUrl,
@@ -309,14 +454,16 @@
                         is_active: false
                     },
                     {
-                        href: useUrl,
+                        title: '其他接口',
+                        type: 'nav'
+                    },
+                    {
+                        href: getPaper,
                         where: {
-                            table: 'user',
-                            where: {
-                                openid: '110'
-                            }
+                            table: 'paper',
+                            paper_type: 'notice'
                         },
-                        title: '取个人信息',
+                        title: '通过 [ paper_type ] 取公告',
                         is_active: false
                     },
                     {
@@ -329,13 +476,34 @@
                         is_active: false
                     },
                     {
-                        href: getPaper,
+                        title: '用户个人相关接口',
+                        type: 'nav'
+                    },
+                    {
+                        href: useUrl,
                         where: {
-                            table: 'paper',
-                            paper_type: 'notice'
+                            table: 'user',
+                            where: {
+                                openid: '110'
+                            }
                         },
-                        title: '通过 [ paper_type ] 取公告',
+                        title: '取个人信息',
                         is_active: false
+                    },
+
+
+                    {
+                        href: '{:U("Use/linkList","",null,true)}',
+                        where: {
+                            info: '不传参数，直接返回自己下线的列表，但是要求要开始登录过',
+                        },
+                        title: '取自己下线的列表',
+                        is_active: false,
+                        ajax: false
+                    },
+                    {
+                        title: '功能接口',
+                        type: 'nav'
                     },
                     {
                         href: '{:U("Use/link","",null,true)}',
@@ -347,21 +515,15 @@
                         is_active: false,
                         ajax: false
                     },
-                    {
-                        href: '{:U("Use/linkList","",null,true)}',
-                        where: {
-                            info: '不传参数，直接返回自己下线的列表，但是要求要开始登录过',
-                        },
-                        title: '取自己下线的列表',
-                        is_active: false,
-                        ajax: false
-                    },
+
                 ]
             },
             methods: {
 
                 show: function (item, index) {
                     var _this = this;
+                    $('.code-1 pre').empty();
+                    $('.code-2 pre').empty();
 
                     this.removeActive();
 
@@ -369,17 +531,16 @@
 
                     var url = item.href;
                     var where = item.where;
-                    // window.open(url);
+                    // window.open(url);    
                     where['debug'] = this.debug;
 
                     var formatWhere = formatJson(where);
 
-                    $('.code-1 pre').empty();
-                    $('.code-2 pre').empty();
+                    $('.code-1 .line-box').html(url);
+                    // $('.code-1 pre').append(formatWhere);
 
-                    $('.code-1 pre').append(url);
-                    $('.code-1 pre').append('<hr/>');
-                    $('.code-1 pre').append(formatWhere);
+                    var $ul = psCode(formatWhere);
+                    $('.code-1 pre').html($ul);
 
                     localStorage.ajaxIndex = index;
 
@@ -389,8 +550,11 @@
 
                             if (_this.form) {
                                 res = formatJson(JSON.parse(res));
+                                var $ul = psCode(res);
+                                $('.code-2 pre').html($ul);
                             }
-                            $('.code-2 pre').html(res);
+
+                            // $('.code-2 pre').html(res);
 
                         });
 
@@ -416,7 +580,29 @@
         aApp.show(aApp.items[localStorage.ajaxIndex], localStorage.ajaxIndex);
 
 
+        function psCode(res) {
 
+
+            res = res.split("\r\n")
+            var $box = $('<div/>');
+
+            var $ul1 = $('<ul/>').addClass('code-ul-1');
+            for (let i = 0; i < res.length; i++) {
+                const item = res[i];
+                $ul1.append(`<li>${item}</li>`);
+            }
+
+
+            var $ul2 = $('<ul/>').addClass('code-ul-2');
+            for (let i = 0; i < res.length; i++) {
+                $ul2.append(`<li><span class='i'>${i + 1}</span></li>`);
+            }
+
+            $box.append($ul2);
+            $box.append($ul1);
+            return $box;
+
+        }
 
 
     </script>
