@@ -55,6 +55,13 @@
                 width: auto;
             }
         }
+
+        .view-img {}
+
+        .view-img img {
+            max-width: 100%;
+            /* border-radius: 3px; */
+        }
     </style>
 </head>
 
@@ -76,6 +83,9 @@
         <div class="view-body">
             <div class="view-info">
                 {$paper.paper_info}
+            </div>
+            <div class="view-img">
+                <img src="__ROOT__/{$paper.paper_head}">
             </div>
             <div class="view-content">
                 {$paper.paper_content|htmlspecialchars_decode}
