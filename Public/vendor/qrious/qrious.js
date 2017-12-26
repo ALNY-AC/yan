@@ -18,9 +18,10 @@
  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.QRious = factory());
-}(this, (function () { 'use strict';
+    typeof define === 'function' && define.amd ? define(factory) :
+      (global.QRious = factory());
+}(this, (function () {
+  'use strict';
 
   /*
    * Copyright (C) 2017 Alasdair Mercer, !ninja
@@ -50,7 +51,7 @@
    * @private
    * @constructor
    */
-  var Constructor = /* istanbul ignore next */ function() {};
+  var Constructor = /* istanbul ignore next */ function () { };
   /**
    * A reference to <code>Object.prototype.hasOwnProperty</code>.
    *
@@ -128,7 +129,7 @@
     if (typeof constructor !== 'function') {
       statics = prototype;
       prototype = constructor;
-      constructor = function() {
+      constructor = function () {
         return superConstructor.apply(this, arguments);
       };
     }
@@ -181,7 +182,7 @@
    * @public
    * @constructor
    */
-  function Nevis() {}
+  function Nevis() { }
   Nevis.class_ = 'Nevis';
   Nevis.super_ = Object;
 
@@ -229,7 +230,7 @@
    * @class
    * @extends Nevis
    */
-  var Renderer = lite.extend(function(qrious, element, enabled) {
+  var Renderer = lite.extend(function (qrious, element, enabled) {
     /**
      * The {@link QRious} instance.
      *
@@ -259,129 +260,129 @@
     this.enabled = Boolean(enabled);
   }, {
 
-    /**
-     * Draws the specified QR code <code>frame</code> on the underlying element.
-     *
-     * Implementations of {@link Renderer} <b>must</b> override this method with their own specific logic.
-     *
-     * @param {Frame} frame - the {@link Frame} to be drawn
-     * @return {void}
-     * @protected
-     * @abstract
-     * @memberof Renderer#
-     */
-    draw: function(frame) {},
+      /**
+       * Draws the specified QR code <code>frame</code> on the underlying element.
+       *
+       * Implementations of {@link Renderer} <b>must</b> override this method with their own specific logic.
+       *
+       * @param {Frame} frame - the {@link Frame} to be drawn
+       * @return {void}
+       * @protected
+       * @abstract
+       * @memberof Renderer#
+       */
+      draw: function (frame) { },
 
-    /**
-     * Returns the element onto which this {@link Renderer} is rendering the QR code.
-     *
-     * If this method is called while this {@link Renderer} is disabled, it will be immediately enabled and rendered
-     * before the element is returned.
-     *
-     * @return {*} The element.
-     * @public
-     * @memberof Renderer#
-     */
-    getElement: function() {
-      if (!this.enabled) {
-        this.enabled = true;
-        this.render();
-      }
+      /**
+       * Returns the element onto which this {@link Renderer} is rendering the QR code.
+       *
+       * If this method is called while this {@link Renderer} is disabled, it will be immediately enabled and rendered
+       * before the element is returned.
+       *
+       * @return {*} The element.
+       * @public
+       * @memberof Renderer#
+       */
+      getElement: function () {
+        if (!this.enabled) {
+          this.enabled = true;
+          this.render();
+        }
 
-      return this.element;
-    },
+        return this.element;
+      },
 
-    /**
-     * Calculates the size (in pixel units) to represent an individual module within the QR code based on the
-     * <code>frame</code> provided.
-     *
-     * Any configured padding will be excluded from the returned size.
-     *
-     * The returned value will be at least one, even in cases where the size of the QR code does not fit its contents.
-     * This is done so that the inevitable clipping is handled more gracefully since this way at least something is
-     * displayed instead of just a blank space filled by the background color.
-     *
-     * @param {Frame} frame - the {@link Frame} from which the module size is to be derived
-     * @return {number} The pixel size for each module in the QR code which will be no less than one.
-     * @protected
-     * @memberof Renderer#
-     */
-    getModuleSize: function(frame) {
-      var qrious = this.qrious;
-      var padding = qrious.padding || 0;
-      var pixels = Math.floor((qrious.size - (padding * 2)) / frame.width);
+      /**
+       * Calculates the size (in pixel units) to represent an individual module within the QR code based on the
+       * <code>frame</code> provided.
+       *
+       * Any configured padding will be excluded from the returned size.
+       *
+       * The returned value will be at least one, even in cases where the size of the QR code does not fit its contents.
+       * This is done so that the inevitable clipping is handled more gracefully since this way at least something is
+       * displayed instead of just a blank space filled by the background color.
+       *
+       * @param {Frame} frame - the {@link Frame} from which the module size is to be derived
+       * @return {number} The pixel size for each module in the QR code which will be no less than one.
+       * @protected
+       * @memberof Renderer#
+       */
+      getModuleSize: function (frame) {
+        var qrious = this.qrious;
+        var padding = qrious.padding || 0;
+        var pixels = Math.floor((qrious.size - (padding * 2)) / frame.width);
 
-      return Math.max(1, pixels);
-    },
+        return Math.max(1, pixels);
+      },
 
-    /**
-     * Calculates the offset/padding (in pixel units) to be inserted before the QR code based on the <code>frame</code>
-     * provided.
-     *
-     * The returned value will be zero if there is no available offset or if the size of the QR code does not fit its
-     * contents. It will never be a negative value. This is done so that the inevitable clipping appears more naturally
-     * and it is not clipped from all directions.
-     *
-     * @param {Frame} frame - the {@link Frame} from which the offset is to be derived
-     * @return {number} The pixel offset for the QR code which will be no less than zero.
-     * @protected
-     * @memberof Renderer#
-     */
-    getOffset: function(frame) {
-      var qrious = this.qrious;
-      var padding = qrious.padding;
+      /**
+       * Calculates the offset/padding (in pixel units) to be inserted before the QR code based on the <code>frame</code>
+       * provided.
+       *
+       * The returned value will be zero if there is no available offset or if the size of the QR code does not fit its
+       * contents. It will never be a negative value. This is done so that the inevitable clipping appears more naturally
+       * and it is not clipped from all directions.
+       *
+       * @param {Frame} frame - the {@link Frame} from which the offset is to be derived
+       * @return {number} The pixel offset for the QR code which will be no less than zero.
+       * @protected
+       * @memberof Renderer#
+       */
+      getOffset: function (frame) {
+        var qrious = this.qrious;
+        var padding = qrious.padding;
 
-      if (padding != null) {
-        return padding;
-      }
+        if (padding != null) {
+          return padding;
+        }
 
-      var moduleSize = this.getModuleSize(frame);
-      var offset = Math.floor((qrious.size - (moduleSize * frame.width)) / 2);
+        var moduleSize = this.getModuleSize(frame);
+        var offset = Math.floor((qrious.size - (moduleSize * frame.width)) / 2);
 
-      return Math.max(0, offset);
-    },
+        return Math.max(0, offset);
+      },
 
-    /**
-     * Renders a QR code on the underlying element based on the <code>frame</code> provided.
-     *
-     * @param {Frame} frame - the {@link Frame} to be rendered
-     * @return {void}
-     * @public
-     * @memberof Renderer#
-     */
-    render: function(frame) {
-      if (this.enabled) {
-        this.resize();
-        this.reset();
-        this.draw(frame);
-      }
-    },
+      /**
+       * Renders a QR code on the underlying element based on the <code>frame</code> provided.
+       *
+       * @param {Frame} frame - the {@link Frame} to be rendered
+       * @return {void}
+       * @public
+       * @memberof Renderer#
+       */
+      render: function (frame) {
+        if (this.enabled) {
+          this.resize();
+          this.reset();
+          this.draw(frame);
+        }
+      },
 
-    /**
-     * Resets the underlying element, effectively clearing any previously rendered QR code.
-     *
-     * Implementations of {@link Renderer} <b>must</b> override this method with their own specific logic.
-     *
-     * @return {void}
-     * @protected
-     * @abstract
-     * @memberof Renderer#
-     */
-    reset: function() {},
+      /**
+       * Resets the underlying element, effectively clearing any previously rendered QR code.
+       *
+       * Implementations of {@link Renderer} <b>must</b> override this method with their own specific logic.
+       *
+       * @return {void}
+       * @protected
+       * @abstract
+       * @memberof Renderer#
+       */
+      reset: function () { },
 
-    /**
-     * Ensures that the size of the underlying element matches that defined on the associated {@link QRious} instance.
-     *
-     * Implementations of {@link Renderer} <b>must</b> override this method with their own specific logic.
-     *
-     * @return {void}
-     * @protected
-     * @abstract
-     * @memberof Renderer#
-     */
-    resize: function() {}
+      /**
+       * Ensures that the size of the underlying element matches that defined on the associated {@link QRious} instance.
+       *
+       * Implementations of {@link Renderer} <b>must</b> override this method with their own specific logic.
+       *
+       * @return {void}
+       * @protected
+       * @abstract
+       * @memberof Renderer#
+       */
+      resize: function () { }
 
-  });
+    });
 
   var Renderer_1 = Renderer;
 
@@ -397,7 +398,7 @@
     /**
      * @override
      */
-    draw: function(frame) {
+    draw: function (frame) {
       var i, j;
       var qrious = this.qrious;
       var moduleSize = this.getModuleSize(frame);
@@ -419,7 +420,7 @@
     /**
      * @override
      */
-    reset: function() {
+    reset: function () {
       var qrious = this.qrious;
       var context = this.element.getContext('2d');
       var size = qrious.size;
@@ -434,7 +435,7 @@
     /**
      * @override
      */
-    resize: function() {
+    resize: function () {
       var element = this.element;
 
       element.width = element.height = this.qrious.size;
@@ -466,7 +467,7 @@
      * @memberof Alignment
      */
     BLOCK: [
-      0,  11, 15, 19, 23, 27, 31,
+      0, 11, 15, 19, 23, 27, 31,
       16, 18, 20, 22, 24, 26, 28, 20, 22, 24, 24, 26, 28, 28, 22, 24, 24,
       26, 26, 28, 28, 24, 24, 26, 26, 26, 28, 28, 24, 26, 26, 26, 28, 28
     ]
@@ -500,46 +501,46 @@
      * @memberof ErrorCorrection
      */
     BLOCKS: [
-      1,  0,  19,  7,     1,  0,  16,  10,    1,  0,  13,  13,    1,  0,  9,   17,
-      1,  0,  34,  10,    1,  0,  28,  16,    1,  0,  22,  22,    1,  0,  16,  28,
-      1,  0,  55,  15,    1,  0,  44,  26,    2,  0,  17,  18,    2,  0,  13,  22,
-      1,  0,  80,  20,    2,  0,  32,  18,    2,  0,  24,  26,    4,  0,  9,   16,
-      1,  0,  108, 26,    2,  0,  43,  24,    2,  2,  15,  18,    2,  2,  11,  22,
-      2,  0,  68,  18,    4,  0,  27,  16,    4,  0,  19,  24,    4,  0,  15,  28,
-      2,  0,  78,  20,    4,  0,  31,  18,    2,  4,  14,  18,    4,  1,  13,  26,
-      2,  0,  97,  24,    2,  2,  38,  22,    4,  2,  18,  22,    4,  2,  14,  26,
-      2,  0,  116, 30,    3,  2,  36,  22,    4,  4,  16,  20,    4,  4,  12,  24,
-      2,  2,  68,  18,    4,  1,  43,  26,    6,  2,  19,  24,    6,  2,  15,  28,
-      4,  0,  81,  20,    1,  4,  50,  30,    4,  4,  22,  28,    3,  8,  12,  24,
-      2,  2,  92,  24,    6,  2,  36,  22,    4,  6,  20,  26,    7,  4,  14,  28,
-      4,  0,  107, 26,    8,  1,  37,  22,    8,  4,  20,  24,    12, 4,  11,  22,
-      3,  1,  115, 30,    4,  5,  40,  24,    11, 5,  16,  20,    11, 5,  12,  24,
-      5,  1,  87,  22,    5,  5,  41,  24,    5,  7,  24,  30,    11, 7,  12,  24,
-      5,  1,  98,  24,    7,  3,  45,  28,    15, 2,  19,  24,    3,  13, 15,  30,
-      1,  5,  107, 28,    10, 1,  46,  28,    1,  15, 22,  28,    2,  17, 14,  28,
-      5,  1,  120, 30,    9,  4,  43,  26,    17, 1,  22,  28,    2,  19, 14,  28,
-      3,  4,  113, 28,    3,  11, 44,  26,    17, 4,  21,  26,    9,  16, 13,  26,
-      3,  5,  107, 28,    3,  13, 41,  26,    15, 5,  24,  30,    15, 10, 15,  28,
-      4,  4,  116, 28,    17, 0,  42,  26,    17, 6,  22,  28,    19, 6,  16,  30,
-      2,  7,  111, 28,    17, 0,  46,  28,    7,  16, 24,  30,    34, 0,  13,  24,
-      4,  5,  121, 30,    4,  14, 47,  28,    11, 14, 24,  30,    16, 14, 15,  30,
-      6,  4,  117, 30,    6,  14, 45,  28,    11, 16, 24,  30,    30, 2,  16,  30,
-      8,  4,  106, 26,    8,  13, 47,  28,    7,  22, 24,  30,    22, 13, 15,  30,
-      10, 2,  114, 28,    19, 4,  46,  28,    28, 6,  22,  28,    33, 4,  16,  30,
-      8,  4,  122, 30,    22, 3,  45,  28,    8,  26, 23,  30,    12, 28, 15,  30,
-      3,  10, 117, 30,    3,  23, 45,  28,    4,  31, 24,  30,    11, 31, 15,  30,
-      7,  7,  116, 30,    21, 7,  45,  28,    1,  37, 23,  30,    19, 26, 15,  30,
-      5,  10, 115, 30,    19, 10, 47,  28,    15, 25, 24,  30,    23, 25, 15,  30,
-      13, 3,  115, 30,    2,  29, 46,  28,    42, 1,  24,  30,    23, 28, 15,  30,
-      17, 0,  115, 30,    10, 23, 46,  28,    10, 35, 24,  30,    19, 35, 15,  30,
-      17, 1,  115, 30,    14, 21, 46,  28,    29, 19, 24,  30,    11, 46, 15,  30,
-      13, 6,  115, 30,    14, 23, 46,  28,    44, 7,  24,  30,    59, 1,  16,  30,
-      12, 7,  121, 30,    12, 26, 47,  28,    39, 14, 24,  30,    22, 41, 15,  30,
-      6,  14, 121, 30,    6,  34, 47,  28,    46, 10, 24,  30,    2,  64, 15,  30,
-      17, 4,  122, 30,    29, 14, 46,  28,    49, 10, 24,  30,    24, 46, 15,  30,
-      4,  18, 122, 30,    13, 32, 46,  28,    48, 14, 24,  30,    42, 32, 15,  30,
-      20, 4,  117, 30,    40, 7,  47,  28,    43, 22, 24,  30,    10, 67, 15,  30,
-      19, 6,  118, 30,    18, 31, 47,  28,    34, 34, 24,  30,    20, 61, 15,  30
+      1, 0, 19, 7, 1, 0, 16, 10, 1, 0, 13, 13, 1, 0, 9, 17,
+      1, 0, 34, 10, 1, 0, 28, 16, 1, 0, 22, 22, 1, 0, 16, 28,
+      1, 0, 55, 15, 1, 0, 44, 26, 2, 0, 17, 18, 2, 0, 13, 22,
+      1, 0, 80, 20, 2, 0, 32, 18, 2, 0, 24, 26, 4, 0, 9, 16,
+      1, 0, 108, 26, 2, 0, 43, 24, 2, 2, 15, 18, 2, 2, 11, 22,
+      2, 0, 68, 18, 4, 0, 27, 16, 4, 0, 19, 24, 4, 0, 15, 28,
+      2, 0, 78, 20, 4, 0, 31, 18, 2, 4, 14, 18, 4, 1, 13, 26,
+      2, 0, 97, 24, 2, 2, 38, 22, 4, 2, 18, 22, 4, 2, 14, 26,
+      2, 0, 116, 30, 3, 2, 36, 22, 4, 4, 16, 20, 4, 4, 12, 24,
+      2, 2, 68, 18, 4, 1, 43, 26, 6, 2, 19, 24, 6, 2, 15, 28,
+      4, 0, 81, 20, 1, 4, 50, 30, 4, 4, 22, 28, 3, 8, 12, 24,
+      2, 2, 92, 24, 6, 2, 36, 22, 4, 6, 20, 26, 7, 4, 14, 28,
+      4, 0, 107, 26, 8, 1, 37, 22, 8, 4, 20, 24, 12, 4, 11, 22,
+      3, 1, 115, 30, 4, 5, 40, 24, 11, 5, 16, 20, 11, 5, 12, 24,
+      5, 1, 87, 22, 5, 5, 41, 24, 5, 7, 24, 30, 11, 7, 12, 24,
+      5, 1, 98, 24, 7, 3, 45, 28, 15, 2, 19, 24, 3, 13, 15, 30,
+      1, 5, 107, 28, 10, 1, 46, 28, 1, 15, 22, 28, 2, 17, 14, 28,
+      5, 1, 120, 30, 9, 4, 43, 26, 17, 1, 22, 28, 2, 19, 14, 28,
+      3, 4, 113, 28, 3, 11, 44, 26, 17, 4, 21, 26, 9, 16, 13, 26,
+      3, 5, 107, 28, 3, 13, 41, 26, 15, 5, 24, 30, 15, 10, 15, 28,
+      4, 4, 116, 28, 17, 0, 42, 26, 17, 6, 22, 28, 19, 6, 16, 30,
+      2, 7, 111, 28, 17, 0, 46, 28, 7, 16, 24, 30, 34, 0, 13, 24,
+      4, 5, 121, 30, 4, 14, 47, 28, 11, 14, 24, 30, 16, 14, 15, 30,
+      6, 4, 117, 30, 6, 14, 45, 28, 11, 16, 24, 30, 30, 2, 16, 30,
+      8, 4, 106, 26, 8, 13, 47, 28, 7, 22, 24, 30, 22, 13, 15, 30,
+      10, 2, 114, 28, 19, 4, 46, 28, 28, 6, 22, 28, 33, 4, 16, 30,
+      8, 4, 122, 30, 22, 3, 45, 28, 8, 26, 23, 30, 12, 28, 15, 30,
+      3, 10, 117, 30, 3, 23, 45, 28, 4, 31, 24, 30, 11, 31, 15, 30,
+      7, 7, 116, 30, 21, 7, 45, 28, 1, 37, 23, 30, 19, 26, 15, 30,
+      5, 10, 115, 30, 19, 10, 47, 28, 15, 25, 24, 30, 23, 25, 15, 30,
+      13, 3, 115, 30, 2, 29, 46, 28, 42, 1, 24, 30, 23, 28, 15, 30,
+      17, 0, 115, 30, 10, 23, 46, 28, 10, 35, 24, 30, 19, 35, 15, 30,
+      17, 1, 115, 30, 14, 21, 46, 28, 29, 19, 24, 30, 11, 46, 15, 30,
+      13, 6, 115, 30, 14, 23, 46, 28, 44, 7, 24, 30, 59, 1, 16, 30,
+      12, 7, 121, 30, 12, 26, 47, 28, 39, 14, 24, 30, 22, 41, 15, 30,
+      6, 14, 121, 30, 6, 34, 47, 28, 46, 10, 24, 30, 2, 64, 15, 30,
+      17, 4, 122, 30, 29, 14, 46, 28, 49, 10, 24, 30, 24, 46, 15, 30,
+      4, 18, 122, 30, 13, 32, 46, 28, 48, 14, 24, 30, 42, 32, 15, 30,
+      20, 4, 117, 30, 40, 7, 47, 28, 43, 22, 24, 30, 10, 67, 15, 30,
+      19, 6, 118, 30, 18, 31, 47, 28, 34, 34, 24, 30, 20, 61, 15, 30
     ],
 
     /**
@@ -682,7 +683,7 @@
    * @class
    * @extends Nevis
    */
-  var Frame = lite.extend(function(options) {
+  var Frame = lite.extend(function (options) {
     var dataBlock, eccBlock, index, neccBlock1, neccBlock2;
     var valueLength = options.value.length;
 
@@ -756,797 +757,797 @@
     this._finish();
   }, {
 
-    _addAlignment: function(x, y) {
-      var i;
-      var buffer = this.buffer;
-      var width = this.width;
+      _addAlignment: function (x, y) {
+        var i;
+        var buffer = this.buffer;
+        var width = this.width;
 
-      buffer[x + (width * y)] = 1;
+        buffer[x + (width * y)] = 1;
 
-      for (i = -2; i < 2; i++) {
-        buffer[x + i + (width * (y - 2))] = 1;
-        buffer[x - 2 + (width * (y + i + 1))] = 1;
-        buffer[x + 2 + (width * (y + i))] = 1;
-        buffer[x + i + 1 + (width * (y + 2))] = 1;
-      }
-
-      for (i = 0; i < 2; i++) {
-        this._setMask(x - 1, y + i);
-        this._setMask(x + 1, y - i);
-        this._setMask(x - i, y - 1);
-        this._setMask(x + i, y + 1);
-      }
-    },
-
-    _appendData: function(data, dataLength, ecc, eccLength) {
-      var bit, i, j;
-      var polynomial = this._polynomial;
-      var stringBuffer = this._stringBuffer;
-
-      for (i = 0; i < eccLength; i++) {
-        stringBuffer[ecc + i] = 0;
-      }
-
-      for (i = 0; i < dataLength; i++) {
-        bit = Galois_1.LOG[stringBuffer[data + i] ^ stringBuffer[ecc]];
-
-        if (bit !== 255) {
-          for (j = 1; j < eccLength; j++) {
-            stringBuffer[ecc + j - 1] = stringBuffer[ecc + j] ^
-              Galois_1.EXPONENT[Frame._modN(bit + polynomial[eccLength - j])];
-          }
-        } else {
-          for (j = ecc; j < ecc + eccLength; j++) {
-            stringBuffer[j] = stringBuffer[j + 1];
-          }
+        for (i = -2; i < 2; i++) {
+          buffer[x + i + (width * (y - 2))] = 1;
+          buffer[x - 2 + (width * (y + i + 1))] = 1;
+          buffer[x + 2 + (width * (y + i))] = 1;
+          buffer[x + i + 1 + (width * (y + 2))] = 1;
         }
 
-        stringBuffer[ecc + eccLength - 1] = bit === 255 ? 0 : Galois_1.EXPONENT[Frame._modN(bit + polynomial[0])];
-      }
-    },
+        for (i = 0; i < 2; i++) {
+          this._setMask(x - 1, y + i);
+          this._setMask(x + 1, y - i);
+          this._setMask(x - i, y - 1);
+          this._setMask(x + i, y + 1);
+        }
+      },
 
-    _appendEccToData: function() {
-      var i;
-      var data = 0;
-      var dataBlock = this._dataBlock;
-      var ecc = this._calculateMaxLength();
-      var eccBlock = this._eccBlock;
+      _appendData: function (data, dataLength, ecc, eccLength) {
+        var bit, i, j;
+        var polynomial = this._polynomial;
+        var stringBuffer = this._stringBuffer;
 
-      for (i = 0; i < this._neccBlock1; i++) {
-        this._appendData(data, dataBlock, ecc, eccBlock);
-
-        data += dataBlock;
-        ecc += eccBlock;
-      }
-
-      for (i = 0; i < this._neccBlock2; i++) {
-        this._appendData(data, dataBlock + 1, ecc, eccBlock);
-
-        data += dataBlock + 1;
-        ecc += eccBlock;
-      }
-    },
-
-    _applyMask: function(mask) {
-      var r3x, r3y, x, y;
-      var buffer = this.buffer;
-      var width = this.width;
-
-      switch (mask) {
-      case 0:
-        for (y = 0; y < width; y++) {
-          for (x = 0; x < width; x++) {
-            if (!((x + y) & 1) && !this._isMasked(x, y)) {
-              buffer[x + (y * width)] ^= 1;
-            }
-          }
+        for (i = 0; i < eccLength; i++) {
+          stringBuffer[ecc + i] = 0;
         }
 
-        break;
-      case 1:
-        for (y = 0; y < width; y++) {
-          for (x = 0; x < width; x++) {
-            if (!(y & 1) && !this._isMasked(x, y)) {
-              buffer[x + (y * width)] ^= 1;
+        for (i = 0; i < dataLength; i++) {
+          bit = Galois_1.LOG[stringBuffer[data + i] ^ stringBuffer[ecc]];
+
+          if (bit !== 255) {
+            for (j = 1; j < eccLength; j++) {
+              stringBuffer[ecc + j - 1] = stringBuffer[ecc + j] ^
+                Galois_1.EXPONENT[Frame._modN(bit + polynomial[eccLength - j])];
             }
-          }
-        }
-
-        break;
-      case 2:
-        for (y = 0; y < width; y++) {
-          for (r3x = 0, x = 0; x < width; x++, r3x++) {
-            if (r3x === 3) {
-              r3x = 0;
-            }
-
-            if (!r3x && !this._isMasked(x, y)) {
-              buffer[x + (y * width)] ^= 1;
-            }
-          }
-        }
-
-        break;
-      case 3:
-        for (r3y = 0, y = 0; y < width; y++, r3y++) {
-          if (r3y === 3) {
-            r3y = 0;
-          }
-
-          for (r3x = r3y, x = 0; x < width; x++, r3x++) {
-            if (r3x === 3) {
-              r3x = 0;
-            }
-
-            if (!r3x && !this._isMasked(x, y)) {
-              buffer[x + (y * width)] ^= 1;
-            }
-          }
-        }
-
-        break;
-      case 4:
-        for (y = 0; y < width; y++) {
-          for (r3x = 0, r3y = (y >> 1) & 1, x = 0; x < width; x++, r3x++) {
-            if (r3x === 3) {
-              r3x = 0;
-              r3y = !r3y;
-            }
-
-            if (!r3y && !this._isMasked(x, y)) {
-              buffer[x + (y * width)] ^= 1;
-            }
-          }
-        }
-
-        break;
-      case 5:
-        for (r3y = 0, y = 0; y < width; y++, r3y++) {
-          if (r3y === 3) {
-            r3y = 0;
-          }
-
-          for (r3x = 0, x = 0; x < width; x++, r3x++) {
-            if (r3x === 3) {
-              r3x = 0;
-            }
-
-            if (!((x & y & 1) + !(!r3x | !r3y)) && !this._isMasked(x, y)) {
-              buffer[x + (y * width)] ^= 1;
-            }
-          }
-        }
-
-        break;
-      case 6:
-        for (r3y = 0, y = 0; y < width; y++, r3y++) {
-          if (r3y === 3) {
-            r3y = 0;
-          }
-
-          for (r3x = 0, x = 0; x < width; x++, r3x++) {
-            if (r3x === 3) {
-              r3x = 0;
-            }
-
-            if (!((x & y & 1) + (r3x && r3x === r3y) & 1) && !this._isMasked(x, y)) {
-              buffer[x + (y * width)] ^= 1;
-            }
-          }
-        }
-
-        break;
-      case 7:
-        for (r3y = 0, y = 0; y < width; y++, r3y++) {
-          if (r3y === 3) {
-            r3y = 0;
-          }
-
-          for (r3x = 0, x = 0; x < width; x++, r3x++) {
-            if (r3x === 3) {
-              r3x = 0;
-            }
-
-            if (!((r3x && r3x === r3y) + (x + y & 1) & 1) && !this._isMasked(x, y)) {
-              buffer[x + (y * width)] ^= 1;
-            }
-          }
-        }
-
-        break;
-      }
-    },
-
-    _calculateMaxLength: function() {
-      return (this._dataBlock * (this._neccBlock1 + this._neccBlock2)) + this._neccBlock2;
-    },
-
-    _calculatePolynomial: function() {
-      var i, j;
-      var eccBlock = this._eccBlock;
-      var polynomial = this._polynomial;
-
-      polynomial[0] = 1;
-
-      for (i = 0; i < eccBlock; i++) {
-        polynomial[i + 1] = 1;
-
-        for (j = i; j > 0; j--) {
-          polynomial[j] = polynomial[j] ? polynomial[j - 1] ^
-            Galois_1.EXPONENT[Frame._modN(Galois_1.LOG[polynomial[j]] + i)] : polynomial[j - 1];
-        }
-
-        polynomial[0] = Galois_1.EXPONENT[Frame._modN(Galois_1.LOG[polynomial[0]] + i)];
-      }
-
-      // Use logs for generator polynomial to save calculation step.
-      for (i = 0; i <= eccBlock; i++) {
-        polynomial[i] = Galois_1.LOG[polynomial[i]];
-      }
-    },
-
-    _checkBadness: function() {
-      var b, b1, h, x, y;
-      var bad = 0;
-      var badness = this._badness;
-      var buffer = this.buffer;
-      var width = this.width;
-
-      // Blocks of same colour.
-      for (y = 0; y < width - 1; y++) {
-        for (x = 0; x < width - 1; x++) {
-          // All foreground colour.
-          if ((buffer[x + (width * y)] &&
-            buffer[x + 1 + (width * y)] &&
-            buffer[x + (width * (y + 1))] &&
-            buffer[x + 1 + (width * (y + 1))]) ||
-            // All background colour.
-            !(buffer[x + (width * y)] ||
-            buffer[x + 1 + (width * y)] ||
-            buffer[x + (width * (y + 1))] ||
-            buffer[x + 1 + (width * (y + 1))])) {
-            bad += Frame.N2;
-          }
-        }
-      }
-
-      var bw = 0;
-
-      // X runs.
-      for (y = 0; y < width; y++) {
-        h = 0;
-
-        badness[0] = 0;
-
-        for (b = 0, x = 0; x < width; x++) {
-          b1 = buffer[x + (width * y)];
-
-          if (b === b1) {
-            badness[h]++;
           } else {
-            badness[++h] = 1;
+            for (j = ecc; j < ecc + eccLength; j++) {
+              stringBuffer[j] = stringBuffer[j + 1];
+            }
           }
 
-          b = b1;
-          bw += b ? 1 : -1;
+          stringBuffer[ecc + eccLength - 1] = bit === 255 ? 0 : Galois_1.EXPONENT[Frame._modN(bit + polynomial[0])];
+        }
+      },
+
+      _appendEccToData: function () {
+        var i;
+        var data = 0;
+        var dataBlock = this._dataBlock;
+        var ecc = this._calculateMaxLength();
+        var eccBlock = this._eccBlock;
+
+        for (i = 0; i < this._neccBlock1; i++) {
+          this._appendData(data, dataBlock, ecc, eccBlock);
+
+          data += dataBlock;
+          ecc += eccBlock;
         }
 
-        bad += this._getBadness(h);
-      }
+        for (i = 0; i < this._neccBlock2; i++) {
+          this._appendData(data, dataBlock + 1, ecc, eccBlock);
 
-      if (bw < 0) {
-        bw = -bw;
-      }
+          data += dataBlock + 1;
+          ecc += eccBlock;
+        }
+      },
 
-      var count = 0;
-      var big = bw;
-      big += big << 2;
-      big <<= 1;
+      _applyMask: function (mask) {
+        var r3x, r3y, x, y;
+        var buffer = this.buffer;
+        var width = this.width;
 
-      while (big > width * width) {
-        big -= width * width;
-        count++;
-      }
+        switch (mask) {
+          case 0:
+            for (y = 0; y < width; y++) {
+              for (x = 0; x < width; x++) {
+                if (!((x + y) & 1) && !this._isMasked(x, y)) {
+                  buffer[x + (y * width)] ^= 1;
+                }
+              }
+            }
 
-      bad += count * Frame.N4;
+            break;
+          case 1:
+            for (y = 0; y < width; y++) {
+              for (x = 0; x < width; x++) {
+                if (!(y & 1) && !this._isMasked(x, y)) {
+                  buffer[x + (y * width)] ^= 1;
+                }
+              }
+            }
 
-      // Y runs.
-      for (x = 0; x < width; x++) {
-        h = 0;
+            break;
+          case 2:
+            for (y = 0; y < width; y++) {
+              for (r3x = 0, x = 0; x < width; x++ , r3x++) {
+                if (r3x === 3) {
+                  r3x = 0;
+                }
 
-        badness[0] = 0;
+                if (!r3x && !this._isMasked(x, y)) {
+                  buffer[x + (y * width)] ^= 1;
+                }
+              }
+            }
 
-        for (b = 0, y = 0; y < width; y++) {
-          b1 = buffer[x + (width * y)];
+            break;
+          case 3:
+            for (r3y = 0, y = 0; y < width; y++ , r3y++) {
+              if (r3y === 3) {
+                r3y = 0;
+              }
 
-          if (b === b1) {
-            badness[h]++;
-          } else {
-            badness[++h] = 1;
+              for (r3x = r3y, x = 0; x < width; x++ , r3x++) {
+                if (r3x === 3) {
+                  r3x = 0;
+                }
+
+                if (!r3x && !this._isMasked(x, y)) {
+                  buffer[x + (y * width)] ^= 1;
+                }
+              }
+            }
+
+            break;
+          case 4:
+            for (y = 0; y < width; y++) {
+              for (r3x = 0, r3y = (y >> 1) & 1, x = 0; x < width; x++ , r3x++) {
+                if (r3x === 3) {
+                  r3x = 0;
+                  r3y = !r3y;
+                }
+
+                if (!r3y && !this._isMasked(x, y)) {
+                  buffer[x + (y * width)] ^= 1;
+                }
+              }
+            }
+
+            break;
+          case 5:
+            for (r3y = 0, y = 0; y < width; y++ , r3y++) {
+              if (r3y === 3) {
+                r3y = 0;
+              }
+
+              for (r3x = 0, x = 0; x < width; x++ , r3x++) {
+                if (r3x === 3) {
+                  r3x = 0;
+                }
+
+                if (!((x & y & 1) + !(!r3x | !r3y)) && !this._isMasked(x, y)) {
+                  buffer[x + (y * width)] ^= 1;
+                }
+              }
+            }
+
+            break;
+          case 6:
+            for (r3y = 0, y = 0; y < width; y++ , r3y++) {
+              if (r3y === 3) {
+                r3y = 0;
+              }
+
+              for (r3x = 0, x = 0; x < width; x++ , r3x++) {
+                if (r3x === 3) {
+                  r3x = 0;
+                }
+
+                if (!((x & y & 1) + (r3x && r3x === r3y) & 1) && !this._isMasked(x, y)) {
+                  buffer[x + (y * width)] ^= 1;
+                }
+              }
+            }
+
+            break;
+          case 7:
+            for (r3y = 0, y = 0; y < width; y++ , r3y++) {
+              if (r3y === 3) {
+                r3y = 0;
+              }
+
+              for (r3x = 0, x = 0; x < width; x++ , r3x++) {
+                if (r3x === 3) {
+                  r3x = 0;
+                }
+
+                if (!((r3x && r3x === r3y) + (x + y & 1) & 1) && !this._isMasked(x, y)) {
+                  buffer[x + (y * width)] ^= 1;
+                }
+              }
+            }
+
+            break;
+        }
+      },
+
+      _calculateMaxLength: function () {
+        return (this._dataBlock * (this._neccBlock1 + this._neccBlock2)) + this._neccBlock2;
+      },
+
+      _calculatePolynomial: function () {
+        var i, j;
+        var eccBlock = this._eccBlock;
+        var polynomial = this._polynomial;
+
+        polynomial[0] = 1;
+
+        for (i = 0; i < eccBlock; i++) {
+          polynomial[i + 1] = 1;
+
+          for (j = i; j > 0; j--) {
+            polynomial[j] = polynomial[j] ? polynomial[j - 1] ^
+              Galois_1.EXPONENT[Frame._modN(Galois_1.LOG[polynomial[j]] + i)] : polynomial[j - 1];
           }
 
-          b = b1;
+          polynomial[0] = Galois_1.EXPONENT[Frame._modN(Galois_1.LOG[polynomial[0]] + i)];
         }
 
-        bad += this._getBadness(h);
-      }
+        // Use logs for generator polynomial to save calculation step.
+        for (i = 0; i <= eccBlock; i++) {
+          polynomial[i] = Galois_1.LOG[polynomial[i]];
+        }
+      },
 
-      return bad;
-    },
+      _checkBadness: function () {
+        var b, b1, h, x, y;
+        var bad = 0;
+        var badness = this._badness;
+        var buffer = this.buffer;
+        var width = this.width;
 
-    _convertBitStream: function(length) {
-      var bit, i;
-      var ecc = this._ecc;
-      var version = this._version;
+        // Blocks of same colour.
+        for (y = 0; y < width - 1; y++) {
+          for (x = 0; x < width - 1; x++) {
+            // All foreground colour.
+            if ((buffer[x + (width * y)] &&
+              buffer[x + 1 + (width * y)] &&
+              buffer[x + (width * (y + 1))] &&
+              buffer[x + 1 + (width * (y + 1))]) ||
+              // All background colour.
+              !(buffer[x + (width * y)] ||
+                buffer[x + 1 + (width * y)] ||
+                buffer[x + (width * (y + 1))] ||
+                buffer[x + 1 + (width * (y + 1))])) {
+              bad += Frame.N2;
+            }
+          }
+        }
 
-      // Convert string to bit stream. 8-bit data to QR-coded 8-bit data (numeric, alphanumeric, or kanji not supported).
-      for (i = 0; i < length; i++) {
-        ecc[i] = this._value.charCodeAt(i);
-      }
+        var bw = 0;
 
-      var stringBuffer = this._stringBuffer = ecc.slice();
-      var maxLength = this._calculateMaxLength();
+        // X runs.
+        for (y = 0; y < width; y++) {
+          h = 0;
 
-      if (length >= maxLength - 2) {
-        length = maxLength - 2;
+          badness[0] = 0;
+
+          for (b = 0, x = 0; x < width; x++) {
+            b1 = buffer[x + (width * y)];
+
+            if (b === b1) {
+              badness[h]++;
+            } else {
+              badness[++h] = 1;
+            }
+
+            b = b1;
+            bw += b ? 1 : -1;
+          }
+
+          bad += this._getBadness(h);
+        }
+
+        if (bw < 0) {
+          bw = -bw;
+        }
+
+        var count = 0;
+        var big = bw;
+        big += big << 2;
+        big <<= 1;
+
+        while (big > width * width) {
+          big -= width * width;
+          count++;
+        }
+
+        bad += count * Frame.N4;
+
+        // Y runs.
+        for (x = 0; x < width; x++) {
+          h = 0;
+
+          badness[0] = 0;
+
+          for (b = 0, y = 0; y < width; y++) {
+            b1 = buffer[x + (width * y)];
+
+            if (b === b1) {
+              badness[h]++;
+            } else {
+              badness[++h] = 1;
+            }
+
+            b = b1;
+          }
+
+          bad += this._getBadness(h);
+        }
+
+        return bad;
+      },
+
+      _convertBitStream: function (length) {
+        var bit, i;
+        var ecc = this._ecc;
+        var version = this._version;
+
+        // Convert string to bit stream. 8-bit data to QR-coded 8-bit data (numeric, alphanumeric, or kanji not supported).
+        for (i = 0; i < length; i++) {
+          ecc[i] = this._value.charCodeAt(i);
+        }
+
+        var stringBuffer = this._stringBuffer = ecc.slice();
+        var maxLength = this._calculateMaxLength();
+
+        if (length >= maxLength - 2) {
+          length = maxLength - 2;
+
+          if (version > 9) {
+            length--;
+          }
+        }
+
+        // Shift and re-pack to insert length prefix.
+        var index = length;
 
         if (version > 9) {
-          length--;
-        }
-      }
+          stringBuffer[index + 2] = 0;
+          stringBuffer[index + 3] = 0;
 
-      // Shift and re-pack to insert length prefix.
-      var index = length;
+          while (index--) {
+            bit = stringBuffer[index];
 
-      if (version > 9) {
-        stringBuffer[index + 2] = 0;
-        stringBuffer[index + 3] = 0;
+            stringBuffer[index + 3] |= 255 & (bit << 4);
+            stringBuffer[index + 2] = bit >> 4;
+          }
 
-        while (index--) {
-          bit = stringBuffer[index];
+          stringBuffer[2] |= 255 & (length << 4);
+          stringBuffer[1] = length >> 4;
+          stringBuffer[0] = 0x40 | (length >> 12);
+        } else {
+          stringBuffer[index + 1] = 0;
+          stringBuffer[index + 2] = 0;
 
-          stringBuffer[index + 3] |= 255 & (bit << 4);
-          stringBuffer[index + 2] = bit >> 4;
-        }
+          while (index--) {
+            bit = stringBuffer[index];
 
-        stringBuffer[2] |= 255 & (length << 4);
-        stringBuffer[1] = length >> 4;
-        stringBuffer[0] = 0x40 | (length >> 12);
-      } else {
-        stringBuffer[index + 1] = 0;
-        stringBuffer[index + 2] = 0;
+            stringBuffer[index + 2] |= 255 & (bit << 4);
+            stringBuffer[index + 1] = bit >> 4;
+          }
 
-        while (index--) {
-          bit = stringBuffer[index];
-
-          stringBuffer[index + 2] |= 255 & (bit << 4);
-          stringBuffer[index + 1] = bit >> 4;
+          stringBuffer[1] |= 255 & (length << 4);
+          stringBuffer[0] = 0x40 | (length >> 4);
         }
 
-        stringBuffer[1] |= 255 & (length << 4);
-        stringBuffer[0] = 0x40 | (length >> 4);
-      }
+        // Fill to end with pad pattern.
+        index = length + 3 - (version < 10);
 
-      // Fill to end with pad pattern.
-      index = length + 3 - (version < 10);
-
-      while (index < maxLength) {
-        stringBuffer[index++] = 0xec;
-        stringBuffer[index++] = 0x11;
-      }
-    },
-
-    _getBadness: function(length) {
-      var i;
-      var badRuns = 0;
-      var badness = this._badness;
-
-      for (i = 0; i <= length; i++) {
-        if (badness[i] >= 5) {
-          badRuns += Frame.N1 + badness[i] - 5;
+        while (index < maxLength) {
+          stringBuffer[index++] = 0xec;
+          stringBuffer[index++] = 0x11;
         }
-      }
+      },
 
-      // FBFFFBF as in finder.
-      for (i = 3; i < length - 1; i += 2) {
-        if (badness[i - 2] === badness[i + 2] &&
-          badness[i + 2] === badness[i - 1] &&
-          badness[i - 1] === badness[i + 1] &&
-          badness[i - 1] * 3 === badness[i] &&
-          // Background around the foreground pattern? Not part of the specs.
-          (badness[i - 3] === 0 || i + 3 > length ||
-          badness[i - 3] * 3 >= badness[i] * 4 ||
-          badness[i + 3] * 3 >= badness[i] * 4)) {
-          badRuns += Frame.N3;
-        }
-      }
+      _getBadness: function (length) {
+        var i;
+        var badRuns = 0;
+        var badness = this._badness;
 
-      return badRuns;
-    },
-
-    _finish: function() {
-      // Save pre-mask copy of frame.
-      this._stringBuffer = this.buffer.slice();
-
-      var currentMask, i;
-      var bit = 0;
-      var mask = 30000;
-
-      /*
-       * Using for instead of while since in original Arduino code if an early mask was "good enough" it wouldn't try for
-       * a better one since they get more complex and take longer.
-       */
-      for (i = 0; i < 8; i++) {
-        // Returns foreground-background imbalance.
-        this._applyMask(i);
-
-        currentMask = this._checkBadness();
-
-        // Is current mask better than previous best?
-        if (currentMask < mask) {
-          mask = currentMask;
-          bit = i;
-        }
-
-        // Don't increment "i" to a void redoing mask.
-        if (bit === 7) {
-          break;
-        }
-
-        // Reset for next pass.
-        this.buffer = this._stringBuffer.slice();
-      }
-
-      // Redo best mask as none were "good enough" (i.e. last wasn't bit).
-      if (bit !== i) {
-        this._applyMask(bit);
-      }
-
-      // Add in final mask/ECC level bytes.
-      mask = ErrorCorrection_1.FINAL_FORMAT[bit + (this._level - 1 << 3)];
-
-      var buffer = this.buffer;
-      var width = this.width;
-
-      // Low byte.
-      for (i = 0; i < 8; i++, mask >>= 1) {
-        if (mask & 1) {
-          buffer[width - 1 - i + (width * 8)] = 1;
-
-          if (i < 6) {
-            buffer[8 + (width * i)] = 1;
-          } else {
-            buffer[8 + (width * (i + 1))] = 1;
+        for (i = 0; i <= length; i++) {
+          if (badness[i] >= 5) {
+            badRuns += Frame.N1 + badness[i] - 5;
           }
         }
-      }
 
-      // High byte.
-      for (i = 0; i < 7; i++, mask >>= 1) {
-        if (mask & 1) {
-          buffer[8 + (width * (width - 7 + i))] = 1;
-
-          if (i) {
-            buffer[6 - i + (width * 8)] = 1;
-          } else {
-            buffer[7 + (width * 8)] = 1;
+        // FBFFFBF as in finder.
+        for (i = 3; i < length - 1; i += 2) {
+          if (badness[i - 2] === badness[i + 2] &&
+            badness[i + 2] === badness[i - 1] &&
+            badness[i - 1] === badness[i + 1] &&
+            badness[i - 1] * 3 === badness[i] &&
+            // Background around the foreground pattern? Not part of the specs.
+            (badness[i - 3] === 0 || i + 3 > length ||
+              badness[i - 3] * 3 >= badness[i] * 4 ||
+              badness[i + 3] * 3 >= badness[i] * 4)) {
+            badRuns += Frame.N3;
           }
         }
-      }
-    },
 
-    _interleaveBlocks: function() {
-      var i, j;
-      var dataBlock = this._dataBlock;
-      var ecc = this._ecc;
-      var eccBlock = this._eccBlock;
-      var k = 0;
-      var maxLength = this._calculateMaxLength();
-      var neccBlock1 = this._neccBlock1;
-      var neccBlock2 = this._neccBlock2;
-      var stringBuffer = this._stringBuffer;
+        return badRuns;
+      },
 
-      for (i = 0; i < dataBlock; i++) {
-        for (j = 0; j < neccBlock1; j++) {
-          ecc[k++] = stringBuffer[i + (j * dataBlock)];
+      _finish: function () {
+        // Save pre-mask copy of frame.
+        this._stringBuffer = this.buffer.slice();
+
+        var currentMask, i;
+        var bit = 0;
+        var mask = 30000;
+
+        /*
+         * Using for instead of while since in original Arduino code if an early mask was "good enough" it wouldn't try for
+         * a better one since they get more complex and take longer.
+         */
+        for (i = 0; i < 8; i++) {
+          // Returns foreground-background imbalance.
+          this._applyMask(i);
+
+          currentMask = this._checkBadness();
+
+          // Is current mask better than previous best?
+          if (currentMask < mask) {
+            mask = currentMask;
+            bit = i;
+          }
+
+          // Don't increment "i" to a void redoing mask.
+          if (bit === 7) {
+            break;
+          }
+
+          // Reset for next pass.
+          this.buffer = this._stringBuffer.slice();
+        }
+
+        // Redo best mask as none were "good enough" (i.e. last wasn't bit).
+        if (bit !== i) {
+          this._applyMask(bit);
+        }
+
+        // Add in final mask/ECC level bytes.
+        mask = ErrorCorrection_1.FINAL_FORMAT[bit + (this._level - 1 << 3)];
+
+        var buffer = this.buffer;
+        var width = this.width;
+
+        // Low byte.
+        for (i = 0; i < 8; i++ , mask >>= 1) {
+          if (mask & 1) {
+            buffer[width - 1 - i + (width * 8)] = 1;
+
+            if (i < 6) {
+              buffer[8 + (width * i)] = 1;
+            } else {
+              buffer[8 + (width * (i + 1))] = 1;
+            }
+          }
+        }
+
+        // High byte.
+        for (i = 0; i < 7; i++ , mask >>= 1) {
+          if (mask & 1) {
+            buffer[8 + (width * (width - 7 + i))] = 1;
+
+            if (i) {
+              buffer[6 - i + (width * 8)] = 1;
+            } else {
+              buffer[7 + (width * 8)] = 1;
+            }
+          }
+        }
+      },
+
+      _interleaveBlocks: function () {
+        var i, j;
+        var dataBlock = this._dataBlock;
+        var ecc = this._ecc;
+        var eccBlock = this._eccBlock;
+        var k = 0;
+        var maxLength = this._calculateMaxLength();
+        var neccBlock1 = this._neccBlock1;
+        var neccBlock2 = this._neccBlock2;
+        var stringBuffer = this._stringBuffer;
+
+        for (i = 0; i < dataBlock; i++) {
+          for (j = 0; j < neccBlock1; j++) {
+            ecc[k++] = stringBuffer[i + (j * dataBlock)];
+          }
+
+          for (j = 0; j < neccBlock2; j++) {
+            ecc[k++] = stringBuffer[(neccBlock1 * dataBlock) + i + (j * (dataBlock + 1))];
+          }
         }
 
         for (j = 0; j < neccBlock2; j++) {
           ecc[k++] = stringBuffer[(neccBlock1 * dataBlock) + i + (j * (dataBlock + 1))];
         }
-      }
 
-      for (j = 0; j < neccBlock2; j++) {
-        ecc[k++] = stringBuffer[(neccBlock1 * dataBlock) + i + (j * (dataBlock + 1))];
-      }
-
-      for (i = 0; i < eccBlock; i++) {
-        for (j = 0; j < neccBlock1 + neccBlock2; j++) {
-          ecc[k++] = stringBuffer[maxLength + i + (j * eccBlock)];
+        for (i = 0; i < eccBlock; i++) {
+          for (j = 0; j < neccBlock1 + neccBlock2; j++) {
+            ecc[k++] = stringBuffer[maxLength + i + (j * eccBlock)];
+          }
         }
-      }
 
-      this._stringBuffer = ecc;
-    },
+        this._stringBuffer = ecc;
+      },
 
-    _insertAlignments: function() {
-      var i, x, y;
-      var version = this._version;
-      var width = this.width;
+      _insertAlignments: function () {
+        var i, x, y;
+        var version = this._version;
+        var width = this.width;
 
-      if (version > 1) {
-        i = Alignment_1.BLOCK[version];
-        y = width - 7;
+        if (version > 1) {
+          i = Alignment_1.BLOCK[version];
+          y = width - 7;
 
-        for (;;) {
-          x = width - 7;
+          for (; ;) {
+            x = width - 7;
 
-          while (x > i - 3) {
-            this._addAlignment(x, y);
+            while (x > i - 3) {
+              this._addAlignment(x, y);
 
-            if (x < i) {
+              if (x < i) {
+                break;
+              }
+
+              x -= i;
+            }
+
+            if (y <= i + 9) {
               break;
             }
 
-            x -= i;
+            y -= i;
+
+            this._addAlignment(6, y);
+            this._addAlignment(y, 6);
+          }
+        }
+      },
+
+      _insertFinders: function () {
+        var i, j, x, y;
+        var buffer = this.buffer;
+        var width = this.width;
+
+        for (i = 0; i < 3; i++) {
+          j = 0;
+          y = 0;
+
+          if (i === 1) {
+            j = width - 7;
+          }
+          if (i === 2) {
+            y = width - 7;
           }
 
-          if (y <= i + 9) {
-            break;
+          buffer[y + 3 + (width * (j + 3))] = 1;
+
+          for (x = 0; x < 6; x++) {
+            buffer[y + x + (width * j)] = 1;
+            buffer[y + (width * (j + x + 1))] = 1;
+            buffer[y + 6 + (width * (j + x))] = 1;
+            buffer[y + x + 1 + (width * (j + 6))] = 1;
           }
 
-          y -= i;
+          for (x = 1; x < 5; x++) {
+            this._setMask(y + x, j + 1);
+            this._setMask(y + 1, j + x + 1);
+            this._setMask(y + 5, j + x);
+            this._setMask(y + x + 1, j + 5);
+          }
 
-          this._addAlignment(6, y);
-          this._addAlignment(y, 6);
+          for (x = 2; x < 4; x++) {
+            buffer[y + x + (width * (j + 2))] = 1;
+            buffer[y + 2 + (width * (j + x + 1))] = 1;
+            buffer[y + 4 + (width * (j + x))] = 1;
+            buffer[y + x + 1 + (width * (j + 4))] = 1;
+          }
         }
-      }
-    },
+      },
 
-    _insertFinders: function() {
-      var i, j, x, y;
-      var buffer = this.buffer;
-      var width = this.width;
+      _insertTimingGap: function () {
+        var x, y;
+        var width = this.width;
 
-      for (i = 0; i < 3; i++) {
-        j = 0;
-        y = 0;
-
-        if (i === 1) {
-          j = width - 7;
-        }
-        if (i === 2) {
-          y = width - 7;
-        }
-
-        buffer[y + 3 + (width * (j + 3))] = 1;
-
-        for (x = 0; x < 6; x++) {
-          buffer[y + x + (width * j)] = 1;
-          buffer[y + (width * (j + x + 1))] = 1;
-          buffer[y + 6 + (width * (j + x))] = 1;
-          buffer[y + x + 1 + (width * (j + 6))] = 1;
+        for (y = 0; y < 7; y++) {
+          this._setMask(7, y);
+          this._setMask(width - 8, y);
+          this._setMask(7, y + width - 7);
         }
 
-        for (x = 1; x < 5; x++) {
-          this._setMask(y + x, j + 1);
-          this._setMask(y + 1, j + x + 1);
-          this._setMask(y + 5, j + x);
-          this._setMask(y + x + 1, j + 5);
+        for (x = 0; x < 8; x++) {
+          this._setMask(x, 7);
+          this._setMask(x + width - 8, 7);
+          this._setMask(x, width - 8);
         }
+      },
 
-        for (x = 2; x < 4; x++) {
-          buffer[y + x + (width * (j + 2))] = 1;
-          buffer[y + 2 + (width * (j + x + 1))] = 1;
-          buffer[y + 4 + (width * (j + x))] = 1;
-          buffer[y + x + 1 + (width * (j + 4))] = 1;
+      _insertTimingRowAndColumn: function () {
+        var x;
+        var buffer = this.buffer;
+        var width = this.width;
+
+        for (x = 0; x < width - 14; x++) {
+          if (x & 1) {
+            this._setMask(8 + x, 6);
+            this._setMask(6, 8 + x);
+          } else {
+            buffer[8 + x + (width * 6)] = 1;
+            buffer[6 + (width * (8 + x))] = 1;
+          }
         }
-      }
-    },
+      },
 
-    _insertTimingGap: function() {
-      var x, y;
-      var width = this.width;
+      _insertVersion: function () {
+        var i, j, x, y;
+        var buffer = this.buffer;
+        var version = this._version;
+        var width = this.width;
 
-      for (y = 0; y < 7; y++) {
-        this._setMask(7, y);
-        this._setMask(width - 8, y);
-        this._setMask(7, y + width - 7);
-      }
+        if (version > 6) {
+          i = Version_1.BLOCK[version - 7];
+          j = 17;
 
-      for (x = 0; x < 8; x++) {
-        this._setMask(x, 7);
-        this._setMask(x + width - 8, 7);
-        this._setMask(x, width - 8);
-      }
-    },
-
-    _insertTimingRowAndColumn: function() {
-      var x;
-      var buffer = this.buffer;
-      var width = this.width;
-
-      for (x = 0; x < width - 14; x++) {
-        if (x & 1) {
-          this._setMask(8 + x, 6);
-          this._setMask(6, 8 + x);
-        } else {
-          buffer[8 + x + (width * 6)] = 1;
-          buffer[6 + (width * (8 + x))] = 1;
-        }
-      }
-    },
-
-    _insertVersion: function() {
-      var i, j, x, y;
-      var buffer = this.buffer;
-      var version = this._version;
-      var width = this.width;
-
-      if (version > 6) {
-        i = Version_1.BLOCK[version - 7];
-        j = 17;
-
-        for (x = 0; x < 6; x++) {
-          for (y = 0; y < 3; y++, j--) {
-            if (1 & (j > 11 ? version >> j - 12 : i >> j)) {
-              buffer[5 - x + (width * (2 - y + width - 11))] = 1;
-              buffer[2 - y + width - 11 + (width * (5 - x))] = 1;
-            } else {
-              this._setMask(5 - x, 2 - y + width - 11);
-              this._setMask(2 - y + width - 11, 5 - x);
+          for (x = 0; x < 6; x++) {
+            for (y = 0; y < 3; y++ , j--) {
+              if (1 & (j > 11 ? version >> j - 12 : i >> j)) {
+                buffer[5 - x + (width * (2 - y + width - 11))] = 1;
+                buffer[2 - y + width - 11 + (width * (5 - x))] = 1;
+              } else {
+                this._setMask(5 - x, 2 - y + width - 11);
+                this._setMask(2 - y + width - 11, 5 - x);
+              }
             }
           }
         }
-      }
-    },
+      },
 
-    _isMasked: function(x, y) {
-      var bit = Frame._getMaskBit(x, y);
+      _isMasked: function (x, y) {
+        var bit = Frame._getMaskBit(x, y);
 
-      return this._mask[bit] === 1;
-    },
+        return this._mask[bit] === 1;
+      },
 
-    _pack: function() {
-      var bit, i, j;
-      var k = 1;
-      var v = 1;
-      var width = this.width;
-      var x = width - 1;
-      var y = width - 1;
+      _pack: function () {
+        var bit, i, j;
+        var k = 1;
+        var v = 1;
+        var width = this.width;
+        var x = width - 1;
+        var y = width - 1;
 
-      // Interleaved data and ECC codes.
-      var length = ((this._dataBlock + this._eccBlock) * (this._neccBlock1 + this._neccBlock2)) + this._neccBlock2;
+        // Interleaved data and ECC codes.
+        var length = ((this._dataBlock + this._eccBlock) * (this._neccBlock1 + this._neccBlock2)) + this._neccBlock2;
 
-      for (i = 0; i < length; i++) {
-        bit = this._stringBuffer[i];
+        for (i = 0; i < length; i++) {
+          bit = this._stringBuffer[i];
 
-        for (j = 0; j < 8; j++, bit <<= 1) {
-          if (0x80 & bit) {
-            this.buffer[x + (width * y)] = 1;
-          }
+          for (j = 0; j < 8; j++ , bit <<= 1) {
+            if (0x80 & bit) {
+              this.buffer[x + (width * y)] = 1;
+            }
 
-          // Find next fill position.
-          do {
-            if (v) {
-              x--;
-            } else {
-              x++;
+            // Find next fill position.
+            do {
+              if (v) {
+                x--;
+              } else {
+                x++;
 
-              if (k) {
-                if (y !== 0) {
-                  y--;
+                if (k) {
+                  if (y !== 0) {
+                    y--;
+                  } else {
+                    x -= 2;
+                    k = !k;
+
+                    if (x === 6) {
+                      x--;
+                      y = 9;
+                    }
+                  }
+                } else if (y !== width - 1) {
+                  y++;
                 } else {
                   x -= 2;
                   k = !k;
 
                   if (x === 6) {
                     x--;
-                    y = 9;
+                    y -= 8;
                   }
                 }
-              } else if (y !== width - 1) {
-                y++;
-              } else {
-                x -= 2;
-                k = !k;
-
-                if (x === 6) {
-                  x--;
-                  y -= 8;
-                }
               }
-            }
 
-            v = !v;
-          } while (this._isMasked(x, y));
+              v = !v;
+            } while (this._isMasked(x, y));
+          }
         }
-      }
-    },
+      },
 
-    _reverseMask: function() {
-      var x, y;
-      var width = this.width;
+      _reverseMask: function () {
+        var x, y;
+        var width = this.width;
 
-      for (x = 0; x < 9; x++) {
-        this._setMask(x, 8);
-      }
+        for (x = 0; x < 9; x++) {
+          this._setMask(x, 8);
+        }
 
-      for (x = 0; x < 8; x++) {
-        this._setMask(x + width - 8, 8);
-        this._setMask(8, x);
-      }
+        for (x = 0; x < 8; x++) {
+          this._setMask(x + width - 8, 8);
+          this._setMask(8, x);
+        }
 
-      for (y = 0; y < 7; y++) {
-        this._setMask(8, y + width - 7);
-      }
-    },
+        for (y = 0; y < 7; y++) {
+          this._setMask(8, y + width - 7);
+        }
+      },
 
-    _setMask: function(x, y) {
-      var bit = Frame._getMaskBit(x, y);
+      _setMask: function (x, y) {
+        var bit = Frame._getMaskBit(x, y);
 
-      this._mask[bit] = 1;
-    },
+        this._mask[bit] = 1;
+      },
 
-    _syncMask: function() {
-      var x, y;
-      var width = this.width;
+      _syncMask: function () {
+        var x, y;
+        var width = this.width;
 
-      for (y = 0; y < width; y++) {
-        for (x = 0; x <= y; x++) {
-          if (this.buffer[x + (width * y)]) {
-            this._setMask(x, y);
+        for (y = 0; y < width; y++) {
+          for (x = 0; x <= y; x++) {
+            if (this.buffer[x + (width * y)]) {
+              this._setMask(x, y);
+            }
           }
         }
       }
-    }
 
-  }, {
+    }, {
 
-    _createArray: function(length) {
-      var i;
-      var array = [];
+      _createArray: function (length) {
+        var i;
+        var array = [];
 
-      for (i = 0; i < length; i++) {
-        array[i] = 0;
-      }
+        for (i = 0; i < length; i++) {
+          array[i] = 0;
+        }
 
-      return array;
-    },
+        return array;
+      },
 
-    _getMaskBit: function(x, y) {
-      var bit;
+      _getMaskBit: function (x, y) {
+        var bit;
 
-      if (x > y) {
-        bit = x;
-        x = y;
-        y = bit;
-      }
+        if (x > y) {
+          bit = x;
+          x = y;
+          y = bit;
+        }
 
-      bit = y;
-      bit += y * y;
-      bit >>= 1;
-      bit += x;
+        bit = y;
+        bit += y * y;
+        bit >>= 1;
+        bit += x;
 
-      return bit;
-    },
+        return bit;
+      },
 
-    _modN: function(x) {
-      while (x >= 255) {
-        x -= 255;
-        x = (x >> 8) + (x & 255);
-      }
+      _modN: function (x) {
+        while (x >= 255) {
+          x -= 255;
+          x = (x >> 8) + (x & 255);
+        }
 
-      return x;
-    },
+        return x;
+      },
 
-    // *Badness* coefficients.
-    N1: 3,
-    N2: 3,
-    N3: 40,
-    N4: 10
+      // *Badness* coefficients.
+      N1: 3,
+      N2: 3,
+      N3: 40,
+      N4: 10
 
-  });
+    });
 
   var Frame_1 = Frame;
 
@@ -1573,21 +1574,21 @@
     /**
      * @override
      */
-    draw: function() {
+    draw: function () {
       this.element.src = this.qrious.toDataURL();
     },
 
     /**
      * @override
      */
-    reset: function() {
+    reset: function () {
       this.element.src = '';
     },
 
     /**
      * @override
      */
-    resize: function() {
+    resize: function () {
       var element = this.element;
 
       element.width = element.height = this.qrious.size;
@@ -1618,7 +1619,7 @@
    * @class
    * @extends Nevis
    */
-  var Option = lite.extend(function(name, modifiable, defaultValue, valueTransformer) {
+  var Option = lite.extend(function (name, modifiable, defaultValue, valueTransformer) {
     /**
      * The name for this {@link Option}.
      *
@@ -1649,27 +1650,27 @@
     this._valueTransformer = valueTransformer;
   }, {
 
-    /**
-     * Transforms the specified <code>value</code> so that it can be applied for this {@link Option}.
-     *
-     * If a value transformer has been specified for this {@link Option}, it will be called upon to transform
-     * <code>value</code>. Otherwise, <code>value</code> will be returned directly.
-     *
-     * @param {*} value - the value to be transformed
-     * @return {*} The transformed value or <code>value</code> if no value transformer is specified.
-     * @public
-     * @memberof Option#
-     */
-    transform: function(value) {
-      var transformer = this._valueTransformer;
-      if (typeof transformer === 'function') {
-        return transformer(value, this);
+      /**
+       * Transforms the specified <code>value</code> so that it can be applied for this {@link Option}.
+       *
+       * If a value transformer has been specified for this {@link Option}, it will be called upon to transform
+       * <code>value</code>. Otherwise, <code>value</code> will be returned directly.
+       *
+       * @param {*} value - the value to be transformed
+       * @return {*} The transformed value or <code>value</code> if no value transformer is specified.
+       * @public
+       * @memberof Option#
+       */
+      transform: function (value) {
+        var transformer = this._valueTransformer;
+        if (typeof transformer === 'function') {
+          return transformer(value, this);
+        }
+
+        return value;
       }
 
-      return value;
-    }
-
-  });
+    });
 
   var Option_1 = Option;
 
@@ -1704,7 +1705,7 @@
      * @static
      * @memberof Utilities
      */
-    abs: function(value) {
+    abs: function (value) {
       return value != null ? Math.abs(value) : null;
     },
 
@@ -1719,7 +1720,7 @@
      * @static
      * @memberof Utilities
      */
-    hasOwn: function(object, name) {
+    hasOwn: function (object, name) {
       return Object.prototype.hasOwnProperty.call(object, name);
     },
 
@@ -1731,7 +1732,7 @@
      * @static
      * @memberof Utilities
      */
-    noop: function() {},
+    noop: function () { },
 
     /**
      * Transforms the specified <code>string</code> to upper case while remaining null-safe.
@@ -1742,7 +1743,7 @@
      * @static
      * @memberof Utilities
      */
-    toUpperCase: function(string) {
+    toUpperCase: function (string) {
       return string != null ? string.toUpperCase() : null;
     }
 
@@ -1760,7 +1761,7 @@
    * @class
    * @extends Nevis
    */
-  var OptionManager = lite.extend(function(options) {
+  var OptionManager = lite.extend(function (options) {
     /**
      * The available options for this {@link OptionManager}.
      *
@@ -1770,217 +1771,217 @@
      */
     this.options = {};
 
-    options.forEach(function(option) {
+    options.forEach(function (option) {
       this.options[option.name] = option;
     }, this);
   }, {
 
-    /**
-     * Returns whether an option with the specified <code>name</code> is available.
-     *
-     * @param {string} name - the name of the {@link Option} whose existence is to be checked
-     * @return {boolean} <code>true</code> if an {@link Option} exists with <code>name</code>; otherwise
-     * <code>false</code>.
-     * @public
-     * @memberof OptionManager#
-     */
-    exists: function(name) {
-      return this.options[name] != null;
-    },
+      /**
+       * Returns whether an option with the specified <code>name</code> is available.
+       *
+       * @param {string} name - the name of the {@link Option} whose existence is to be checked
+       * @return {boolean} <code>true</code> if an {@link Option} exists with <code>name</code>; otherwise
+       * <code>false</code>.
+       * @public
+       * @memberof OptionManager#
+       */
+      exists: function (name) {
+        return this.options[name] != null;
+      },
 
-    /**
-     * Returns the value of the option with the specified <code>name</code> on the <code>target</code> object provided.
-     *
-     * @param {string} name - the name of the {@link Option} whose value on <code>target</code> is to be returned
-     * @param {Object} target - the object from which the value of the named {@link Option} is to be returned
-     * @return {*} The value of the {@link Option} with <code>name</code> on <code>target</code>.
-     * @public
-     * @memberof OptionManager#
-     */
-    get: function(name, target) {
-      return OptionManager._get(this.options[name], target);
-    },
+      /**
+       * Returns the value of the option with the specified <code>name</code> on the <code>target</code> object provided.
+       *
+       * @param {string} name - the name of the {@link Option} whose value on <code>target</code> is to be returned
+       * @param {Object} target - the object from which the value of the named {@link Option} is to be returned
+       * @return {*} The value of the {@link Option} with <code>name</code> on <code>target</code>.
+       * @public
+       * @memberof OptionManager#
+       */
+      get: function (name, target) {
+        return OptionManager._get(this.options[name], target);
+      },
 
-    /**
-     * Returns a copy of all of the available options on the <code>target</code> object provided.
-     *
-     * @param {Object} target - the object from which the option name/value pairs are to be returned
-     * @return {Object.<string, *>} A hash containing the name/value pairs of all options on <code>target</code>.
-     * @public
-     * @memberof OptionManager#
-     */
-    getAll: function(target) {
-      var name;
-      var options = this.options;
-      var result = {};
+      /**
+       * Returns a copy of all of the available options on the <code>target</code> object provided.
+       *
+       * @param {Object} target - the object from which the option name/value pairs are to be returned
+       * @return {Object.<string, *>} A hash containing the name/value pairs of all options on <code>target</code>.
+       * @public
+       * @memberof OptionManager#
+       */
+      getAll: function (target) {
+        var name;
+        var options = this.options;
+        var result = {};
 
-      for (name in options) {
-        if (Utilities_1.hasOwn(options, name)) {
-          result[name] = OptionManager._get(options[name], target);
+        for (name in options) {
+          if (Utilities_1.hasOwn(options, name)) {
+            result[name] = OptionManager._get(options[name], target);
+          }
         }
-      }
 
-      return result;
-    },
+        return result;
+      },
 
-    /**
-     * Initializes the available options for the <code>target</code> object provided and then applies the initial values
-     * within the speciifed <code>options</code>.
-     *
-     * This method will throw an error if any of the names within <code>options</code> does not match an available option.
-     *
-     * This involves setting the default values and defining properties for all of the available options on
-     * <code>target</code> before finally calling {@link OptionMananger#setAll} with <code>options</code> and
-     * <code>target</code>. Any options that are configured to be modifiable will have a setter included in their defined
-     * property that will allow its corresponding value to be modified.
-     *
-     * If a change handler is specified, it will be called whenever the value changes on <code>target</code> for a
-     * modifiable option, but only when done so via the defined property's setter.
-     *
-     * @param {Object.<string, *>} options - the name/value pairs of the initial options to be set
-     * @param {Object} target - the object on which the options are to be initialized
-     * @param {Function} [changeHandler] - the function to be called whenever the value of an modifiable option changes on
-     * <code>target</code>
-     * @return {void}
-     * @throws {Error} If <code>options</code> contains an invalid option name.
-     * @public
-     * @memberof OptionManager#
-     */
-    init: function(options, target, changeHandler) {
-      if (typeof changeHandler !== 'function') {
-        changeHandler = Utilities_1.noop;
-      }
-
-      var name, option;
-
-      for (name in this.options) {
-        if (Utilities_1.hasOwn(this.options, name)) {
-          option = this.options[name];
-
-          OptionManager._set(option, option.defaultValue, target);
-          OptionManager._createAccessor(option, target, changeHandler);
+      /**
+       * Initializes the available options for the <code>target</code> object provided and then applies the initial values
+       * within the speciifed <code>options</code>.
+       *
+       * This method will throw an error if any of the names within <code>options</code> does not match an available option.
+       *
+       * This involves setting the default values and defining properties for all of the available options on
+       * <code>target</code> before finally calling {@link OptionMananger#setAll} with <code>options</code> and
+       * <code>target</code>. Any options that are configured to be modifiable will have a setter included in their defined
+       * property that will allow its corresponding value to be modified.
+       *
+       * If a change handler is specified, it will be called whenever the value changes on <code>target</code> for a
+       * modifiable option, but only when done so via the defined property's setter.
+       *
+       * @param {Object.<string, *>} options - the name/value pairs of the initial options to be set
+       * @param {Object} target - the object on which the options are to be initialized
+       * @param {Function} [changeHandler] - the function to be called whenever the value of an modifiable option changes on
+       * <code>target</code>
+       * @return {void}
+       * @throws {Error} If <code>options</code> contains an invalid option name.
+       * @public
+       * @memberof OptionManager#
+       */
+      init: function (options, target, changeHandler) {
+        if (typeof changeHandler !== 'function') {
+          changeHandler = Utilities_1.noop;
         }
-      }
 
-      this._setAll(options, target, true);
-    },
+        var name, option;
 
-    /**
-     * Sets the value of the option with the specified <code>name</code> on the <code>target</code> object provided to
-     * <code>value</code>.
-     *
-     * This method will throw an error if <code>name</code> does not match an available option or matches an option that
-     * cannot be modified.
-     *
-     * If <code>value</code> is <code>null</code> and the {@link Option} has a default value configured, then that default
-     * value will be used instead. If the {@link Option} also has a value transformer configured, it will be used to
-     * transform whichever value was determined to be used.
-     *
-     * This method returns whether the value of the underlying field on <code>target</code> was changed as a result.
-     *
-     * @param {string} name - the name of the {@link Option} whose value is to be set
-     * @param {*} value - the value to be set for the named {@link Option} on <code>target</code>
-     * @param {Object} target - the object on which <code>value</code> is to be set for the named {@link Option}
-     * @return {boolean} <code>true</code> if the underlying field on <code>target</code> was changed; otherwise
-     * <code>false</code>.
-     * @throws {Error} If <code>name</code> is invalid or is for an option that cannot be modified.
-     * @public
-     * @memberof OptionManager#
-     */
-    set: function(name, value, target) {
-      return this._set(name, value, target);
-    },
+        for (name in this.options) {
+          if (Utilities_1.hasOwn(this.options, name)) {
+            option = this.options[name];
 
-    /**
-     * Sets all of the specified <code>options</code> on the <code>target</code> object provided to their corresponding
-     * values.
-     *
-     * This method will throw an error if any of the names within <code>options</code> does not match an available option
-     * or matches an option that cannot be modified.
-     *
-     * If any value within <code>options</code> is <code>null</code> and the corresponding {@link Option} has a default
-     * value configured, then that default value will be used instead. If an {@link Option} also has a value transformer
-     * configured, it will be used to transform whichever value was determined to be used.
-     *
-     * This method returns whether the value for any of the underlying fields on <code>target</code> were changed as a
-     * result.
-     *
-     * @param {Object.<string, *>} options - the name/value pairs of options to be set
-     * @param {Object} target - the object on which the options are to be set
-     * @return {boolean} <code>true</code> if any of the underlying fields on <code>target</code> were changed; otherwise
-     * <code>false</code>.
-     * @throws {Error} If <code>options</code> contains an invalid option name or an option that cannot be modiifed.
-     * @public
-     * @memberof OptionManager#
-     */
-    setAll: function(options, target) {
-      return this._setAll(options, target);
-    },
-
-    _set: function(name, value, target, allowUnmodifiable) {
-      var option = this.options[name];
-      if (!option) {
-        throw new Error('Invalid option: ' + name);
-      }
-      if (!option.modifiable && !allowUnmodifiable) {
-        throw new Error('Option cannot be modified: ' + name);
-      }
-
-      return OptionManager._set(option, value, target);
-    },
-
-    _setAll: function(options, target, allowUnmodifiable) {
-      if (!options) {
-        return false;
-      }
-
-      var name;
-      var changed = false;
-
-      for (name in options) {
-        if (Utilities_1.hasOwn(options, name) && this._set(name, options[name], target, allowUnmodifiable)) {
-          changed = true;
+            OptionManager._set(option, option.defaultValue, target);
+            OptionManager._createAccessor(option, target, changeHandler);
+          }
         }
+
+        this._setAll(options, target, true);
+      },
+
+      /**
+       * Sets the value of the option with the specified <code>name</code> on the <code>target</code> object provided to
+       * <code>value</code>.
+       *
+       * This method will throw an error if <code>name</code> does not match an available option or matches an option that
+       * cannot be modified.
+       *
+       * If <code>value</code> is <code>null</code> and the {@link Option} has a default value configured, then that default
+       * value will be used instead. If the {@link Option} also has a value transformer configured, it will be used to
+       * transform whichever value was determined to be used.
+       *
+       * This method returns whether the value of the underlying field on <code>target</code> was changed as a result.
+       *
+       * @param {string} name - the name of the {@link Option} whose value is to be set
+       * @param {*} value - the value to be set for the named {@link Option} on <code>target</code>
+       * @param {Object} target - the object on which <code>value</code> is to be set for the named {@link Option}
+       * @return {boolean} <code>true</code> if the underlying field on <code>target</code> was changed; otherwise
+       * <code>false</code>.
+       * @throws {Error} If <code>name</code> is invalid or is for an option that cannot be modified.
+       * @public
+       * @memberof OptionManager#
+       */
+      set: function (name, value, target) {
+        return this._set(name, value, target);
+      },
+
+      /**
+       * Sets all of the specified <code>options</code> on the <code>target</code> object provided to their corresponding
+       * values.
+       *
+       * This method will throw an error if any of the names within <code>options</code> does not match an available option
+       * or matches an option that cannot be modified.
+       *
+       * If any value within <code>options</code> is <code>null</code> and the corresponding {@link Option} has a default
+       * value configured, then that default value will be used instead. If an {@link Option} also has a value transformer
+       * configured, it will be used to transform whichever value was determined to be used.
+       *
+       * This method returns whether the value for any of the underlying fields on <code>target</code> were changed as a
+       * result.
+       *
+       * @param {Object.<string, *>} options - the name/value pairs of options to be set
+       * @param {Object} target - the object on which the options are to be set
+       * @return {boolean} <code>true</code> if any of the underlying fields on <code>target</code> were changed; otherwise
+       * <code>false</code>.
+       * @throws {Error} If <code>options</code> contains an invalid option name or an option that cannot be modiifed.
+       * @public
+       * @memberof OptionManager#
+       */
+      setAll: function (options, target) {
+        return this._setAll(options, target);
+      },
+
+      _set: function (name, value, target, allowUnmodifiable) {
+        var option = this.options[name];
+        if (!option) {
+          throw new Error('Invalid option: ' + name);
+        }
+        if (!option.modifiable && !allowUnmodifiable) {
+          throw new Error('Option cannot be modified: ' + name);
+        }
+
+        return OptionManager._set(option, value, target);
+      },
+
+      _setAll: function (options, target, allowUnmodifiable) {
+        if (!options) {
+          return false;
+        }
+
+        var name;
+        var changed = false;
+
+        for (name in options) {
+          if (Utilities_1.hasOwn(options, name) && this._set(name, options[name], target, allowUnmodifiable)) {
+            changed = true;
+          }
+        }
+
+        return changed;
       }
 
-      return changed;
-    }
+    }, {
 
-  }, {
-
-    _createAccessor: function(option, target, changeHandler) {
-      var descriptor = {
-        get: function() {
-          return OptionManager._get(option, target);
-        }
-      };
-
-      if (option.modifiable) {
-        descriptor.set = function(value) {
-          if (OptionManager._set(option, value, target)) {
-            changeHandler(value, option);
+      _createAccessor: function (option, target, changeHandler) {
+        var descriptor = {
+          get: function () {
+            return OptionManager._get(option, target);
           }
         };
+
+        if (option.modifiable) {
+          descriptor.set = function (value) {
+            if (OptionManager._set(option, value, target)) {
+              changeHandler(value, option);
+            }
+          };
+        }
+
+        Object.defineProperty(target, option.name, descriptor);
+      },
+
+      _get: function (option, target) {
+        return target['_' + option.name];
+      },
+
+      _set: function (option, value, target) {
+        var fieldName = '_' + option.name;
+        var oldValue = target[fieldName];
+        var newValue = option.transform(value != null ? value : option.defaultValue);
+
+        target[fieldName] = newValue;
+
+        return newValue !== oldValue;
       }
 
-      Object.defineProperty(target, option.name, descriptor);
-    },
-
-    _get: function(option, target) {
-      return target['_' + option.name];
-    },
-
-    _set: function(option, value, target) {
-      var fieldName = '_' + option.name;
-      var oldValue = target[fieldName];
-      var newValue = option.transform(value != null ? value : option.defaultValue);
-
-      target[fieldName] = newValue;
-
-      return newValue !== oldValue;
-    }
-
-  });
+    });
 
   var OptionManager_1 = OptionManager;
 
@@ -2001,50 +2002,50 @@
    * @class
    * @extends Nevis
    */
-  var ServiceManager = lite.extend(function() {
+  var ServiceManager = lite.extend(function () {
     this._services = {};
   }, {
 
-    /**
-     * Returns the {@link Service} being managed with the specified <code>name</code>.
-     *
-     * @param {string} name - the name of the {@link Service} to be returned
-     * @return {Service} The {@link Service} is being managed with <code>name</code>.
-     * @throws {Error} If no {@link Service} is being managed with <code>name</code>.
-     * @public
-     * @memberof ServiceManager#
-     */
-    getService: function(name) {
-      var service = this._services[name];
-      if (!service) {
-        throw new Error('Service is not being managed with name: ' + name);
+      /**
+       * Returns the {@link Service} being managed with the specified <code>name</code>.
+       *
+       * @param {string} name - the name of the {@link Service} to be returned
+       * @return {Service} The {@link Service} is being managed with <code>name</code>.
+       * @throws {Error} If no {@link Service} is being managed with <code>name</code>.
+       * @public
+       * @memberof ServiceManager#
+       */
+      getService: function (name) {
+        var service = this._services[name];
+        if (!service) {
+          throw new Error('Service is not being managed with name: ' + name);
+        }
+
+        return service;
+      },
+
+      /**
+       * Sets the {@link Service} implementation to be managed for the specified <code>name</code> to the
+       * <code>service</code> provided.
+       *
+       * @param {string} name - the name of the {@link Service} to be managed with <code>name</code>
+       * @param {Service} service - the {@link Service} implementation to be managed
+       * @return {void}
+       * @throws {Error} If a {@link Service} is already being managed with the same <code>name</code>.
+       * @public
+       * @memberof ServiceManager#
+       */
+      setService: function (name, service) {
+        if (this._services[name]) {
+          throw new Error('Service is already managed with name: ' + name);
+        }
+
+        if (service) {
+          this._services[name] = service;
+        }
       }
 
-      return service;
-    },
-
-    /**
-     * Sets the {@link Service} implementation to be managed for the specified <code>name</code> to the
-     * <code>service</code> provided.
-     *
-     * @param {string} name - the name of the {@link Service} to be managed with <code>name</code>
-     * @param {Service} service - the {@link Service} implementation to be managed
-     * @return {void}
-     * @throws {Error} If a {@link Service} is already being managed with the same <code>name</code>.
-     * @public
-     * @memberof ServiceManager#
-     */
-    setService: function(name, service) {
-      if (this._services[name]) {
-        throw new Error('Service is already managed with name: ' + name);
-      }
-
-      if (service) {
-        this._services[name] = service;
-      }
-    }
-
-  });
+    });
 
   var ServiceManager_1 = ServiceManager;
 
@@ -2071,7 +2072,7 @@
    * @class
    * @extends Nevis
    */
-  var QRious = lite.extend(function(options) {
+  var QRious = lite.extend(function (options) {
     optionManager.init(options, this, this.update.bind(this));
 
     var element = optionManager.get('element', this);
@@ -2085,85 +2086,85 @@
     this.update();
   }, {
 
-    /**
-     * Returns all of the options configured for this {@link QRious}.
-     *
-     * Any changes made to the returned object will not be reflected in the options themselves or their corresponding
-     * underlying fields.
-     *
-     * @return {Object.<string, *>} A copy of the applied options.
-     * @public
-     * @memberof QRious#
-     */
-    get: function() {
-      return optionManager.getAll(this);
-    },
+      /**
+       * Returns all of the options configured for this {@link QRious}.
+       *
+       * Any changes made to the returned object will not be reflected in the options themselves or their corresponding
+       * underlying fields.
+       *
+       * @return {Object.<string, *>} A copy of the applied options.
+       * @public
+       * @memberof QRious#
+       */
+      get: function () {
+        return optionManager.getAll(this);
+      },
 
-    /**
-     * Sets all of the specified <code>options</code> and automatically updates this {@link QRious} if any of the
-     * underlying fields are changed as a result.
-     *
-     * This is the preferred method for updating multiple options at one time to avoid unnecessary updates between
-     * changes.
-     *
-     * @param {QRious~Options} options - the options to be set
-     * @return {void}
-     * @throws {Error} If any <code>options</code> are invalid or cannot be modified.
-     * @public
-     * @memberof QRious#
-     */
-    set: function(options) {
-      if (optionManager.setAll(options, this)) {
-        this.update();
+      /**
+       * Sets all of the specified <code>options</code> and automatically updates this {@link QRious} if any of the
+       * underlying fields are changed as a result.
+       *
+       * This is the preferred method for updating multiple options at one time to avoid unnecessary updates between
+       * changes.
+       *
+       * @param {QRious~Options} options - the options to be set
+       * @return {void}
+       * @throws {Error} If any <code>options</code> are invalid or cannot be modified.
+       * @public
+       * @memberof QRious#
+       */
+      set: function (options) {
+        if (optionManager.setAll(options, this)) {
+          this.update();
+        }
+      },
+
+      /**
+       * Returns the image data URI for the generated QR code using the <code>mime</code> provided.
+       *
+       * @param {string} [mime] - the MIME type for the image
+       * @return {string} The image data URI for the QR code.
+       * @public
+       * @memberof QRious#
+       */
+      toDataURL: function (mime) {
+        return this.canvas.toDataURL(mime || this.mime);
+      },
+
+      /**
+       * Updates this {@link QRious} by generating a new {@link Frame} and re-rendering the QR code.
+       *
+       * @return {void}
+       * @protected
+       * @memberof QRious#
+       */
+      update: function () {
+        var frame = new Frame_1({
+          level: this.level,
+          value: this.value
+        });
+
+        this._canvasRenderer.render(frame);
+        this._imageRenderer.render(frame);
       }
-    },
 
-    /**
-     * Returns the image data URI for the generated QR code using the <code>mime</code> provided.
-     *
-     * @param {string} [mime] - the MIME type for the image
-     * @return {string} The image data URI for the QR code.
-     * @public
-     * @memberof QRious#
-     */
-    toDataURL: function(mime) {
-      return this.canvas.toDataURL(mime || this.mime);
-    },
+    }, {
 
-    /**
-     * Updates this {@link QRious} by generating a new {@link Frame} and re-rendering the QR code.
-     *
-     * @return {void}
-     * @protected
-     * @memberof QRious#
-     */
-    update: function() {
-      var frame = new Frame_1({
-        level: this.level,
-        value: this.value
-      });
+      /**
+       * Configures the <code>service</code> provided to be used by all {@link QRious} instances.
+       *
+       * @param {Service} service - the {@link Service} to be configured
+       * @return {void}
+       * @throws {Error} If a {@link Service} has already been configured with the same name.
+       * @public
+       * @static
+       * @memberof QRious
+       */
+      use: function (service) {
+        serviceManager.setService(service.getName(), service);
+      }
 
-      this._canvasRenderer.render(frame);
-      this._imageRenderer.render(frame);
-    }
-
-  }, {
-
-    /**
-     * Configures the <code>service</code> provided to be used by all {@link QRious} instances.
-     *
-     * @param {Service} service - the {@link Service} to be configured
-     * @return {void}
-     * @throws {Error} If a {@link Service} has already been configured with the same name.
-     * @public
-     * @static
-     * @memberof QRious
-     */
-    use: function(service) {
-      serviceManager.setService(service.getName(), service);
-    }
-
-  });
+    });
 
   Object.defineProperties(QRious.prototype, {
 
@@ -2176,7 +2177,7 @@
        * @memberof QRious#
        * @alias canvas
        */
-      get: function() {
+      get: function () {
         return this._canvasRenderer.getElement();
       }
     },
@@ -2190,7 +2191,7 @@
        * @memberof QRious#
        * @alias image
        */
-      get: function() {
+      get: function () {
         return this._imageRenderer.getElement();
       }
     }
@@ -2235,7 +2236,7 @@
      * @abstract
      * @memberof Service#
      */
-    getName: function() {}
+    getName: function () { }
 
   });
 
@@ -2260,7 +2261,7 @@
      * @abstract
      * @memberof ElementService#
      */
-    createCanvas: function() {},
+    createCanvas: function () { },
 
     /**
      * Creates an instance of a image element.
@@ -2272,12 +2273,12 @@
      * @abstract
      * @memberof ElementService#
      */
-    createImage: function() {},
+    createImage: function () { },
 
     /**
      * @override
      */
-    getName: function() {
+    getName: function () {
       return 'element';
     },
 
@@ -2292,7 +2293,7 @@
      * @abstract
      * @memberof ElementService#
      */
-    isCanvas: function(element) {},
+    isCanvas: function (element) { },
 
     /**
      * Returns whether the specified <code>element</code> is an image.
@@ -2305,7 +2306,7 @@
      * @abstract
      * @memberof ElementService#
      */
-    isImage: function(element) {}
+    isImage: function (element) { }
 
   });
 
@@ -2323,28 +2324,28 @@
     /**
      * @override
      */
-    createCanvas: function() {
+    createCanvas: function () {
       return document.createElement('canvas');
     },
 
     /**
      * @override
      */
-    createImage: function() {
+    createImage: function () {
       return document.createElement('img');
     },
 
     /**
      * @override
      */
-    isCanvas: function(element) {
+    isCanvas: function (element) {
       return element instanceof HTMLCanvasElement;
     },
 
     /**
      * @override
      */
-    isImage: function(element) {
+    isImage: function (element) {
       return element instanceof HTMLImageElement;
     }
 

@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>我的二维码</title>
+    <style>
+        #mycode {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,7 +21,7 @@
 
     <script src="__VENDOR__/qrious/qrious.js"></script>
     <script>
-        var url = '{$url}';
+        var url = '{$openid}';
 
 
         var q = new QRious({
@@ -25,8 +31,6 @@
             value: url,
             size: 200
         });
-
-        console.warn(url);
 
 
     </script>

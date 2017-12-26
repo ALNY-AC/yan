@@ -400,7 +400,6 @@ class UseController extends CommonController{
         $this->assign('url',$url);
         $this->assign('openid',$openid);
         
-        
         $this->display();
         
     }
