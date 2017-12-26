@@ -177,10 +177,9 @@ class UseController extends CommonController{
         $where=[];
         $where['paper_id']=$paper_id;
         $paper=$model->where($where)->find();
+        $paper['add_time']=data('Y-m-d H:i:s', $paper['add_time']);
         
         $this->assign('paper',$paper);
-        
-        
         $this->display();
         
     }
