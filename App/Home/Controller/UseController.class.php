@@ -61,6 +61,8 @@ class UseController extends CommonController{
             
         }
         
+        $user=$model->select($where);
+        
         //=========判断=========
         if($user){
             $res['res']=1;
