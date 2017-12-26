@@ -70,7 +70,9 @@ class UseController extends CommonController{
             $res['msg']=$user;
         }
         //=========判断end=========
-        
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========
         
     }
     
