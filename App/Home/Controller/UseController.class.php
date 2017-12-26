@@ -20,11 +20,8 @@ class UseController extends CommonController{
     
     public function login(){
         
-        $res=    baseAuth();
         
-        //=========输出json=========
-        echo json_encode($res);
-        //=========输出json=========
+        
         
         // $code=I('code');
         
@@ -33,6 +30,10 @@ class UseController extends CommonController{
         // $url= "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$secret&js_code=$code&grant_type=authorization_code";
         
         
+        $res=    baseAuth();
+        //=========输出json=========
+        echo json_encode($res);
+        //=========输出json=========
         
         return;
         $openid=I('openid');

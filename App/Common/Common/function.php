@@ -84,7 +84,7 @@ function baseAuth(){
     $secret='3d036697d1e220c8536fb2db312980fe';
     $url= "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$secret&js_code=$code&grant_type=authorization_code";
     
-    $content =_request($curl);
+    $content =_request($url);
     $result = json_decode($content,true);
     
     return $result;
