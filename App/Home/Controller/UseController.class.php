@@ -521,7 +521,7 @@ class UseController extends CommonController{
         
         $local_count=I('local_count');
         $is_res=I('res');
-        // $local_count=5;
+        $local_count=2;
         
         $model=M('paper');
         $where=[];
@@ -539,7 +539,7 @@ class UseController extends CommonController{
         }
         
         
-        for ($i=0; $i < ($server_count-$local_count); $i++) {
+        for ($i=($server_count-$local_count); $i >=0; $i--) {
             
             $result[$i]['class']='no-read';
             

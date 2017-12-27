@@ -8,31 +8,54 @@
     <title>我的二维码</title>
     <style>
         #mycode {
+            position: absolute;
+            display: block;
+            width: 40%;
+            height: 25%;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .code-box {
+            position: absolute;
             display: block;
             margin: 0 auto;
+            width: 100%;
+            height: 100%;
+        }
+
+        #img {
+            /* position: fixed; */
+            width: 100%;
+            height: 8.%;
         }
     </style>
 </head>
 
 <body>
+    <div class="code-box">
+        <canvas id='mycode'></canvas>
+        <img src="__ASSETS__/img/code-bg.png" id="img" alt="">
+    </div>
 
-    <canvas id='mycode'></canvas>
-
+    <!-- code-bg.png -->
 
     <script src="__VENDOR__/qrious/qrious.js"></script>
     <script>
-        var url = '{$openid}';
 
+        var url = '{$openid}';
 
         var q = new QRious({
             background: 'transparent',
             foreground: '#333',
             element: document.getElementById('mycode'),
             value: url,
-            size: 200
+            size: 500
         });
 
 
+        // img.style.top = '200%';
     </script>
 
 </body>
