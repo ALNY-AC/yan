@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="/yan/Public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
-    <title>测试</title>
+    <title>CTOS接口测试中心</title>
     <style>
         /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 
@@ -67,6 +67,8 @@
             top: 37px;
             bottom: 0;
             overflow: auto;
+            transition: all 0.3s;
+
         }
 
         .item {
@@ -75,7 +77,7 @@
             outline-color: rgb(63, 63, 70);
             color: #cccccc;
             font-size: 14px;
-
+            white-space: nowrap;
         }
 
         .item .fa-log {
@@ -131,6 +133,7 @@
             top: 0;
             bottom: 0;
             right: 0;
+            transition: all 0.3s;
         }
 
         .code-view:after {
@@ -146,6 +149,7 @@
             height: 100%;
             background-color: rgb(30, 30, 30);
             z-index: 1;
+            transition: all 0.3s;
         }
 
 
@@ -218,7 +222,7 @@
         }
 
         .line-box:before {
-            content: "";
+            content: " ";
         }
 
 
@@ -237,10 +241,6 @@
 
 
 
-        .code-ul-1 li:hover {
-            background-color: #333;
-        }
-
 
         .code-ul-1 li {
             display: block;
@@ -248,8 +248,27 @@
             width: 100%;
             font-size: 14px;
             line-height: 20px;
+            transition: all 0.2s;
+            border-right-width: 0px;
 
         }
+
+        .code-ul-1 li:hover {
+            background-color: #333;
+            border-right: solid 5px #587c0c;
+            border-left-width: 10px !important;
+            margin-left: -4px;
+            right: 0;
+            padding-left: 7px;
+        }
+
+        .code-ul-1 li:hover::after {
+            position: absolute;
+            right: 0;
+            border-right: solid 5px #587c0c;
+            content: " ";
+        }
+
 
         .code-ul-2 {
             /* 序号 */
@@ -266,7 +285,7 @@
 
         .code-ul-2 li {
             line-height: 20px;
-            border-right: 3px solid #0c7d9d;
+            /* border-right: 3px solid #0c7d9d; */
         }
 
         .code-ul-2 li .i {
@@ -278,13 +297,49 @@
         }
 
         .item.item-nav {
+            display: block;
             position: relative;
             background-color: rgba(128, 128, 128, 0.2);
             padding: 5px;
-            box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.2);
+            /* box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.2); */
             color: #ffffff;
             margin-top: 10px;
             font-weight: bold;
+        }
+
+        .item.item-nav:hover .fa-log:before,
+        .item.item-nav.active .fa-log:before {
+            content: " ";
+        }
+
+        .item.item-nav:before {
+            font-weight: 400;
+            position: absolute;
+            /* content: "\f02d"; */
+            content: "\f1b2";
+
+            padding-left: 3px;
+        }
+
+        .code-ul-1 li.active {
+            background-color: #333;
+            border-right: solid 5px #587c0c;
+            border-left-width: 10px !important;
+            margin-left: -4px;
+            right: 0;
+            padding-left: 7px;
+        }
+
+        .item-box.w {
+            width: 0;
+        }
+
+        .code-view.w {
+            left: 0;
+        }
+
+        .code-view.w>* {
+            width: 50%;
         }
     </style>
 </head>
@@ -299,9 +354,9 @@
             CTOS接口测试工具
         </div>
 
-        <div v-bind:class="[{active:item.is_active},{'item-nav':item.type=='nav'},'item']" v-for='(item,index) in items' @click='show(item,index)'
+        <div v-bind:class="[{active:item.is_active},{'item-nav fa':item.type=='nav'},'item']" v-for='(item,index) in items' @click='show(item,index)'
             @mouseover='hover(item,index)' target="_blank">
-            <i v-bind:class="[{'fa-spin':!item.is_active},'fa fa-fw fa-log']"></i>
+            <i v-bind:class="[{'fa-spin':!item.is_active && item.type!='nav'},'fa fa-fw fa-log']"></i>
             {{item.title}}
         </div>
 
@@ -351,7 +406,10 @@
                         title: '取服务器地址',
                         is_active: true
                     },
-
+                    {
+                        title: '首页相关接口',
+                        type: 'nav'
+                    },
                     {
                         href: useUrl,
                         where: {
@@ -369,6 +427,14 @@
                             table: 'carousel'
                         },
                         title: '取轮播图',
+                        is_active: false
+                    },
+                    {
+                        href: '<?php echo U("Use/getPaperUp","",null,true);?>',
+                        where: {
+
+                        },
+                        title: '取推荐文章',
                         is_active: false
                     },
                     {
@@ -460,12 +526,11 @@
                         type: 'nav'
                     },
                     {
-                        href: getPaper,
+                        href: '<?php echo U("Use/getNotice","",null,true);?>',
                         where: {
-                            table: 'paper',
-                            paper_type: 'notice'
+                            local_count: 1
                         },
-                        title: '通过 [ paper_type ] 取公告',
+                        title: '取公告',
                         is_active: false
                     },
                     {
@@ -492,8 +557,16 @@
                         title: '取个人信息',
                         is_active: false
                     },
-
-
+                    {
+                        href: '<?php echo U("use/myCode","openid=110");?>',
+                        where: {
+                            openid: '110'
+                        },
+                        type: 'open',
+                        title: '取个人二维码',
+                        is_active: false,
+                        ajax: false
+                    },
                     {
                         href: '<?php echo U("Use/linkList","",null,true);?>',
                         where: {
@@ -514,6 +587,50 @@
                             openid_m: '自己的id'
                         },
                         title: '成为某某某的下线',
+                        // type: 'open',
+                        is_active: false,
+                        ajax: false
+                    },
+                    {
+                        href: '<?php echo U("Use/upFile","",null,true);?>',
+                        where: {
+                            // file: '上线的id',
+                        },
+                        title: '上传文件',
+                        is_active: false,
+                        ajax: false
+                    },
+                    {
+                        href: '<?php echo U("Use/queryPaper","",null,true);?>',
+                        where: {
+                            key: '美容 公告',
+                        },
+                        title: '搜索',
+                        is_active: false,
+                    },
+                    {
+                        href: '<?php echo U("Use/feedback","",null,true);?>',
+                        where: {
+                            openid: '用户id',
+                            feedback_contact: '反馈说明',
+                            feedback_info: '联系方式',
+                        },
+                        title: '问题反馈',
+                        is_active: false,
+                        ajax: false
+                    },
+                    {
+                        href: '<?php echo U("Use/saveUser","",null,true);?>',
+                        where: {
+                            '请求类型': 'post',
+                            '备注': 'save中可以任意一个或多个。',
+                            openid: '110',
+                            save: {
+                                user_name: '想要修改的昵称。',
+                                user_head: '想要修改的头像，由上传接口返回。',
+                            }
+                        },
+                        title: '修改用户信息',
                         is_active: false,
                         ajax: false
                     },
@@ -526,7 +643,7 @@
                         where: {
                             url: '直接的url'
                         },
-                        title: '查看文档',
+                        title: '查看文章',
                         type: 'open',
                         is_active: false,
                         ajax: false
@@ -549,7 +666,6 @@
                     var url = item.href;
                     var where = item.where;
 
-                    where['debug'] = this.debug;
 
                     var formatWhere = formatJson(where);
 
@@ -579,7 +695,6 @@
                         });
 
                     }
-
                 },
                 hover: function (item, index) {
 
@@ -601,8 +716,6 @@
             aApp.show(aApp.items[localStorage.ajaxIndex], localStorage.ajaxIndex);
         }
 
-
-
         function psCode(res) {
 
 
@@ -612,7 +725,7 @@
             var $ul1 = $('<ul/>').addClass('code-ul-1');
             for (let i = 0; i < res.length; i++) {
                 const item = res[i];
-                $ul1.append(`<li>${item}</li>`);
+                $ul1.append(`<li style='border-left: 3px solid #0c7d9d;'>${item}</li>`);
             }
 
 
@@ -627,6 +740,25 @@
 
         }
 
+        $(document).on('click', '.code-ul-1 li', function () {
+            $('.code-ul-1 li').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $(document).on('keyup', function (e) {
+
+            if (e.key == 'c') {
+                $('.item-box').toggleClass('w');
+                $('.code-view').toggleClass('w');
+                localStorage.isw = localStorage.isw == 'w' ? 'no' : 'w'
+            }
+
+        });
+
+        if (localStorage.isw == 'w') {
+            $('.item-box').addClass('w');
+            $('.code-view').addClass('w');
+        }
 
     </script>
 
