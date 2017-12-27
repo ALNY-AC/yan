@@ -528,9 +528,18 @@
                     {
                         href: '{:U("Use/getNotice","",null,true)}',
                         where: {
-                            local_count: 1
+                            local_count: 1,
                         },
                         title: '取公告',
+                        is_active: false
+                    },
+                    {
+                        href: '{:U("Use/getNotice","",null,true)}',
+                        where: {
+                            local_count: 1,
+                            res: 'false'
+                        },
+                        title: '取未读消息数',
                         is_active: false
                     },
                     {

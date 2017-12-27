@@ -520,6 +520,7 @@ class UseController extends CommonController{
     public function getNotice(){
         
         $local_count=I('local_count');
+        $is_res=I('res');
         // $local_count=5;
         
         $model=M('paper');
@@ -559,7 +560,16 @@ class UseController extends CommonController{
         //=========输出json=========
         // dump($res);
         // die;
+        if($is_res=='false'){
+            $res=[];
+            $res['res']=$server_count-$local_count;
+            $res['msg']=$server_count-$local_count;
+        }
         echo json_encode($res);
+        
         //=========输出json=========`
     }
+    
+    
+    
 }
