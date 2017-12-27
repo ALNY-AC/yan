@@ -457,25 +457,37 @@ class UseController extends CommonController{
         $openid=I('openid');//这个是想关注的用户的id
         $openid_m=I('openid_m');//这个是自己的id
         
-        //=========添加数据=========
         $model=M('follow');
-        //=========添加数据区
-        $add=[];
-        $add['follow_id']=md5('follow'.time().__KEY__.rand());//id
-        $add['openid']=$openid;//想要关注用户的id
-        $add['openid_m']=$openid_m;//自己的id
-        $add['add_time']=time();
-        $add['edit_time']=time();
-        //=========sql区
-        $result=$model->add($add);
-        //=========判断=========
+        
+        $where=[];
+        $where['openid']=$openid;
+        $where['openid_m']=$openid_m;
+        $result=$model->where($where)->find();
+        
         if($result){
-            $res['res']=1;
+            //有数据就不添加
+            $res['res']=0;
+            
         }else{
-            $res['res']=-1;
-            $res['msg']=$result;
+            //没有数据就添加
+            //=========添加数据区
+            $add=[];
+            $add['follow_id']=md5('follow'.time().__KEY__.rand());//id
+            $add['openid']=$openid;//想要关注用户的id
+            $add['openid_m']=$openid_m;//自己的id
+            $add['add_time']=time();
+            $add['edit_time']=time();
+            //=========sql区
+            $result=$model->add($add);
+            //=========判断=========
+            if($result){
+                $res['res']=1;
+            }else{
+                $res['res']=-1;
+                $res['msg']=$result;
+            }
+            //=========判断end=========
         }
-        //=========判断end=========
         
         //=========输出json=========
         echo json_encode($res);
