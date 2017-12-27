@@ -533,7 +533,6 @@ class UseController extends CommonController{
         
         $local_count=I('local_count');
         $is_res=I('res');
-        $local_count=2;
         
         $model=M('paper');
         $where=[];
@@ -549,14 +548,6 @@ class UseController extends CommonController{
             // ec('有新消息');
             // ec("新消息条数：".($server_count-$local_count));
         }
-        
-        
-        for ($i=($server_count-$local_count); $i >=0; $i--) {
-            
-            $result[$i]['class']='no-read';
-            
-        }
-        
         
         $result=toTime($result,'Y-m-d');
         
