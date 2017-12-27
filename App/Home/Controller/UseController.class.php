@@ -546,7 +546,7 @@ class UseController extends CommonController{
         }
         
         
-        $result=toTime($result);
+        $result=toTime($result,'Y-m-d');
         
         //=========判断=========
         if($result){
