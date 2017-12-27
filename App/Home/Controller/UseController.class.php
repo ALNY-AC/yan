@@ -515,4 +515,51 @@ class UseController extends CommonController{
         //=========输出json=========
         
     }
+    
+    //取公告
+    public function getNotice(){
+        
+        $local_count=I('local_count');
+        $local_count=5;
+        
+        $model=M('paper');
+        $where=[];
+        $where['paper_type']='notice';
+        $result=$model->where($where)->order('add_time desc')->select();
+        
+        
+        $server_count=count($result);
+        
+        if($local_count<$server_count){
+            // ec("服务器总条数：$server_count");
+            // ec("客户端条数：$local_count");
+            // ec('有新消息');
+            // ec("新消息条数：".($server_count-$local_count));
+        }
+        
+        
+        for ($i=0; $i < ($server_count-$local_count); $i++) {
+            
+            $result[$i]['class']='no-read';
+            
+        }
+        
+        
+        $result=toTime($result);
+        
+        //=========判断=========
+        if($result){
+            $res['res']=count($result);
+            $res['msg']=$result;
+        }else{
+            $res['res']=-1;
+            $res['msg']=$result;
+        }
+        //=========判断end=========
+        //=========输出json=========
+        // dump($res);
+        // die;
+        echo json_encode($res);
+        //=========输出json=========`
+    }
 }

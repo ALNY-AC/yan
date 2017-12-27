@@ -322,7 +322,12 @@
         }
 
         .code-ul-1 li.active {
-            background-color: #333333;
+            background-color: #333;
+            border-right: solid 5px #587c0c;
+            border-left-width: 10px !important;
+            margin-left: -4px;
+            right: 0;
+            padding-left: 7px;
         }
 
         .item-box.w {
@@ -521,12 +526,10 @@
                         type: 'nav'
                     },
                     {
-                        href: getPaper,
+                        href: '{:U("Use/getNotice","",null,true)}',
                         where: {
-                            table: 'paper',
-                            paper_type: 'notice'
                         },
-                        title: '通过 [ paper_type ] 取公告',
+                        title: '取公告',
                         is_active: false
                     },
                     {

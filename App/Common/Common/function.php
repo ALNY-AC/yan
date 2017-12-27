@@ -262,3 +262,13 @@ function getLinkQuery($key){
     
     return $where;
 }
+
+function ec($res){
+    
+    echo("<div style='font-size:14px;color:#333'>");
+    
+    echo($res);
+    
+    echo('</div>');
+    
+}
