@@ -520,7 +520,7 @@ class UseController extends CommonController{
     public function getNotice(){
         
         $local_count=I('local_count');
-        $local_count=5;
+        // $local_count=5;
         
         $model=M('paper');
         $where=[];
