@@ -408,18 +408,21 @@ class UseController extends CommonController{
         $result=$model->field('paper_title,paper_id,paper_info,paper_head,add_time,paper_type')->where($where)->order('add_time desc')->select();
         
         $arr=[];
-        $a=[];
         $num=0;
         
+        
         for ($i=0; $i < count($result); $i++) {
+            
             
             $arr[$num][]=$result[$i];
             
             if( ($i+1)%3==0 ){
+                
                 $num++;
             }
             
         }
+        
         
         //=========判断=========
         if($arr){
