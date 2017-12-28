@@ -242,13 +242,13 @@ class UseController extends CommonController {
             // die;
             
             
-            $res['count']=$model->where($where)->count();
+            // $res['count']=$model->where($where)->count();
             
             //
         }else{
             
-            $count= $model->count();
-            $res['count']=$count;
+            // $count= $model->count();
+            // $res['count']=$count;
             $result= $model->limit("$page,$limit")->order($order)->where($where)->select();
             $res['sql']=$model->_sql();
             
@@ -258,8 +258,12 @@ class UseController extends CommonController {
         //转换时间戳
         $result=   toTime($result);
         
+        // dump($result);
+        // die;
+        
         if($result){
-            $res['res']=$res['count'];
+            $res['count']=count($result);
+            $res['res']=count($result);
             $res['code']=1;
             $res['data']= $result;
             $res['msg']= $result;
