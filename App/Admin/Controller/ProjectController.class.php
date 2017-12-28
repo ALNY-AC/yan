@@ -21,9 +21,9 @@ class ProjectController extends CommonController{
     public function showList(){
         
         
+        
         $type=I('get.type');
         $super_id=I("get.".$type."_id");
-        
         
         $isTable = M()->query("SHOW TABLES LIKE 'y_$type'");
         if( $isTable ){

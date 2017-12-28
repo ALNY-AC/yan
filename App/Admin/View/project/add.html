@@ -46,10 +46,8 @@
             </div>
         </div>
         <div class="o-panel-body">
-
             <form class="layui-form">
                 <input type="hidden" name='super_id' id='super_id' value="{$super_id}">
-                <input type="hidden" name='type' id='type' value="{$type}">
 
                 <div class="form-group">
                     <label>项目名</label>
@@ -69,6 +67,24 @@
                     <img src="__ROOT__/{$project.project_head}" alt="" id="project_head_img" name="project_head">
                     <input type="hidden" name="project_head" value='{$project.project_head}' id="project_head">
                 </div>
+                <if condition=' $type == "career_learning" '>
+
+                    <!-- career_learning_1 -->
+
+                    <div class="form-group">
+                        <label>选择类型</label>
+                        <select name="type" lay-verify="">
+                            <option value="">选择类型</option>
+                            <option value="career_learning_1">事业学习-新人篇</option>
+                            <option value="career_learning_2">事业学习-进阶篇</option>
+                            <option value="career_learning_3">事业学习-高阶篇</option>
+                        </select>
+                    </div>
+
+                    <else/>
+                    <input type="text" name='type' id='type' value="{$type}">
+
+                </if>
 
                 <div class="form-group">
                     <label>项目简介</label>
@@ -188,6 +204,7 @@
             }
 
 
+            console.warn(data.field.super_id);
 
             var url = '__MODULE__/use/add';
             var obj = {

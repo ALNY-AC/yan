@@ -74,6 +74,8 @@
                     <label>简介</label>
                     <textarea cols="30" rows="10" class="o-form-control" name="paper_info" placeholder="文章简介（255字以内）">{$paper.paper_info}</textarea>
                 </div>
+                <!-- 文章的头像 -->
+
                 <div class="form-group">
                     <label>文章头像</label>
                     <button type='button' class="layui-btn layui-black" id="upload">
@@ -81,18 +83,16 @@
                         上传文章头像
                     </button>
                 </div>
-
                 <div class="form-group">
+
                     <label> </label>
+
                     <img src="__ROOT__/{$paper.paper_head}" alt="请上传文章头像" id="paper_head_img">
                     <input type="hidden" name="paper_head" value='{$paper.paper_head}' id="paper_head">
                 </div>
 
-
-
                 <!-- 文章的头像 -->
-
-
+             
                 <div class="form-group">
                     <label> </label>
                     <button type="button" class="btn btn-default o-btn" lay-submit lay-filter="save">保存</button>

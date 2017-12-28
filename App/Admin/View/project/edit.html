@@ -71,6 +71,22 @@
                     <input type="hidden" name="project_head" value='{$project.project_head}' id="project_head">
                 </div>
 
+                <if condition=' $project.super_id == "career_learning" '>
+                    <!-- career_learning_1 -->
+
+                    <div class="form-group">
+                        <label>选择类型</label>
+                        <select name="type" lay-verify="" id="project_type" value='{$project.type}'>
+                            <option value="">选择类型</option>
+                            <option value="career_learning_1">事业学习-新人篇</option>
+                            <option value="career_learning_2">事业学习-进阶篇</option>
+                            <option value="career_learning_3">事业学习-高阶篇</option>
+                        </select>
+                    </div>
+                    <else/>
+                    <input type="text" name='type' id='type' value="{$type}">
+
+                </if>
                 <div class="form-group">
                     <label>项目简介</label>
                     <textarea cols="30" rows="10" class="o-form-control" name="project_info" placeholder="项目简介（255字以内）">{$project.project_info}</textarea>
@@ -93,6 +109,13 @@
 
     <script src="__ADIST__/linkage/linkage.js" type="text/javascript" charset="utf-8"></script>
     <script>
+
+        $('option').each(function () {
+
+            if ($(this).val() == '{$project.type}') {
+                $(this).attr('selected', 'selected');
+            }
+        })
 
 
         layui.use(['form', 'upload'], function () {
