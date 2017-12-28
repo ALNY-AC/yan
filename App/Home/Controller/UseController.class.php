@@ -403,7 +403,9 @@ class UseController extends CommonController{
     public function getPaperUp(){
         
         $model=M('paper');
-        $result=$model->field('paper_title,paper_id,paper_info,paper_head,add_time')->order('add_time desc')->select();
+        $where=[];
+        $where['paper_type']='upPaper';
+        $result=$model->field('paper_title,paper_id,paper_info,paper_head,add_time')->where()->order('add_time desc')->select();
         $arr=[];
         
         for ($i=0; $i < count($result); $i++) {

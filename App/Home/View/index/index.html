@@ -204,26 +204,6 @@
             font-size: 10px;
         }
 
-        .line-box {
-            /* border-bottom: solid 1px rgb(64, 64, 64); */
-            padding: 8px 15px;
-            font-size: 14px;
-            color: #ccc;
-            z-index: 9999;
-            background-color: rgb(30, 30, 30);
-            position: absolute;
-            width: 100%;
-            box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .line-box:before {
-            content: " ";
-
-        }
-
-        .line-box:before {
-            content: " ";
-        }
 
 
         .code-ul-1 {
@@ -338,7 +318,37 @@
             left: 0;
         }
 
-        .code-view.w>* {
+        .code-view.w>.code {
+            width: 50%;
+        }
+
+        .line-box {
+            position: absolute;
+            color: #ccc;
+            z-index: 9999;
+            /* background-color: rgb(30, 30, 30); */
+            right: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+            height: 37px;
+            overflow: hidden;
+        }
+
+        .line-item {
+            display: inline-block;
+            width: 50%;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            font-size: 15px;
+        }
+
+        .line-item:nth-child(1) {
+            width: 40%;
+        }
+
+        .code-view.w .line-item {
             width: 50%;
         }
     </style>
@@ -363,15 +373,15 @@
     </div>
 
     <div class="code-view">
-
+        <div class="line-box">
+            <div class="line-item">url</div>
+            <div class="line-item">result</div>
+        </div>
         <div class="code code-1">
-            <div class="line-box">
-                url
-            </div>
+
             <pre></pre>
         </div>
         <div class="code code-2">
-            <div class="line-box">result</div>
             <pre></pre>
         </div>
 
@@ -560,7 +570,7 @@
                         where: {
                             table: 'user',
                             where: {
-                                openid: '110'
+                                openid: 'oAHn40DkaiJCPYAoxZu6jh_dZNSs'
                             }
                         },
                         title: '取个人信息',
@@ -756,7 +766,7 @@
 
         $(document).on('keyup', function (e) {
 
-            if (e.key == 'c') {
+            if (e.key == 'b') {
                 $('.item-box').toggleClass('w');
                 $('.code-view').toggleClass('w');
                 localStorage.isw = localStorage.isw == 'w' ? 'no' : 'w'

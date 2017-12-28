@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>推荐文章列表</title>
+    <include file="App/Admin/View/component/impot.comp.html" />
+    <style>
+        body {
+            padding: 0 15px
+        }
+
+        .img-box {
+            width: 100%;
+            display: block;
+        }
+
+        .img-hover {
+            max-width: 300px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="page-header">
+        <h1>
+            <small>推荐文章管理</small>
+        </h1>
+    </div>
+
+    <ol class="breadcrumb">
+        <li>
+            推荐文章列表
+        </li>
+        <li class="active">推荐文章列表</li>
+    </ol>
+
+    <div class="layui-row" style="padding-top:10px">
+
+        <div class="layui-btn-group">
+            <button class="layui-btn layui-btn-sm layui-black" title='添加推荐文章' id="add">
+                <i class="layui-icon">&#xe654;</i>
+            </button>
+            <button class="layui-btn layui-btn-sm layui-black" id="removeAll" data-color='rgb(253, 51, 51)' title='批量删除'>
+                <i class="layui-icon">&#xe640;</i>
+            </button>
+        </div>
+
+
+    </div>
+
+    <div class="form-black">
+        <table id="table" lay-filter="table_filter"></table>
+    </div>
+
+
+    <script type="text/html" id="bar1">
+      
+        <a class="layui-btn layui-btn-xs layui-black" lay-event="edit" data-id='{{d.paper_id}}' title='编辑' >
+            <i class="layui-icon">&#xe642;</i>
+        </a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" title='删除'  data-color='rgb(253, 51, 51)' lay-event="del">
+            <i class="layui-icon">&#xe640;</i>
+        </a>
+    </script>
+
+    <script>
+        var tableIns;
+        var table;
+        var upload;
+        layui.use(['table', 'form', 'upload'], function () {
+            upload = layui.upload;
+            table = layui.table;
+            form = layui.form;
+
+            tableIns = table.render({
+                id: 'table'
+                , elem: '#table'
+                , url: '__MODULE__/Use/getListWhere' //数据接口
+                , where: {
+                    table: 'paper',
+                    where: {
+                        paper_type: 'upPaper'
+                    }
+                }
+                , response: {
+                    statusCode: 1 //成功的状态码，默认：0
+                }
+                , page: true //开启分页
+                , limit: localStorage.limit == null ? 30 : localStorage.limit
+                // , limits: [5, 10]
+                , cols: [[ //表头
+                    { type: 'checkbox', width: 50, fixed: 'left' }
+                    , { field: 'paper_id', title: 'id', width: 100 }
+                    , { field: 'paper_title', title: '推荐文章标题', width: 500, edit: 'text', }
+                    , { field: 'add_time', title: '添加时间', width: 200, sort: true }
+                    , { field: 'edit_time', title: '最后修改时间', width: 200, sort: true }
+                    , { fixed: 'right', width: 130, align: 'center', title: '操作', toolbar: '#bar1' } //这里的toolbar值是模板元素的选择器
+
+                ]]
+            });
+
+
+            //监听工具条
+            table.on('tool(table_filter)', function (obj) {
+                //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+                if (layEvent === 'del') {
+                    //删除
+
+                    layer.confirm('真的删除此条数据吗？', function (index) {
+                        //删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+                        //向服务端发送删除指令
+
+                        var delObj = {
+                            table: 'paper',
+                            id: data.paper_id,
+                            del_file: data.paper_url
+                        };
+
+                        del(delObj, function () {
+                            obj.del();
+                        })
+
+                    });
+                }
+
+                if (layEvent === 'edit') {
+                    //编辑
+                    var url = '__MODULE__/Paper/edit/paper_id/' + data.paper_id;
+
+                    // window.location.href =
+                    window.open(url);
+                }
+            });
+
+
+            /**
+             * 监听单元格编辑
+            */
+            table.on('edit(table_filter)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+                console.log(obj.value); //得到修改后的值
+                console.log(obj.field); //当前编辑的字段名
+                console.log(obj.data); //所在行的所有相关数据  
+
+                var save = {
+                    table: 'paper',
+                    id: obj.data.paper_id,
+                    save: {}
+                };
+                save['save'][obj.field] = obj.value;
+                saveInfo(save);
+
+            });
+
+
+        });
+
+        /**
+        数据搜索
+        */
+        $(document).on('click', '#reload', function () {
+
+            var key = $('#key').val();
+            var key_where = 'paper_id|paper_title';
+            //执行重载
+            tableIns.reload({
+                page: {
+                    curr: 1 //重新从第 1 页s开始
+                }
+                , where: {
+                    table: 'paper',
+                    key: key,
+                    key_where: key_where
+                }
+                , done: function (res, curr, count) {
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    console.log(res);
+
+                    //得到当前页码
+                    console.log(curr);
+
+                    //得到数据总量
+                    console.log(count);
+                }
+            });
+
+        });
+
+        /**
+         * 批量删除
+         */
+        $(document).on('click', '#removeAll', function () {
+            // w('开始批量删除');
+            var o = table.checkStatus('table');
+            if (o.data.length <= 0) {
+                return;
+            }
+
+            layer.confirm('确定删除这些数据？', function (index) {
+
+                var id = [];
+                for (var i = 0; i < o.data.length; i++) {
+                    id[i] = o.data[i].paper_id;
+                }
+
+                var obj = {
+                    table: 'paper',
+                    id: id
+                };
+
+                delAll(obj, function (params) {
+                    tableIns.reload();
+                });
+
+            });
+
+        });
+
+        //添加
+        $(document).on('click', '#add', function () {
+
+            window.open('__MODULE__/paper/edit/type/upPaper');
+
+        });
+
+        hoverTitle();
+    </script>
+</body>
+
+</html>
