@@ -232,37 +232,26 @@ class UseController extends CommonController {
             'OR'
             );
             
-            
             $result= $model->limit("$page,$limit")->order($order)->where($where)->select();
-            $res['sql']=$model->_sql();
-            
-            // dump($where);
-            // dump($result);
-            // echo($model->_sql());
-            // die;
-            
-            
-            // $res['count']=$model->where($where)->count();
+            $res['count']=$model->order($order)->where($where)->count();
             
             //
         }else{
             
-            // $count= $model->count();
-            // $res['count']=$count;
+            $count= $model->order($order)->where($where)->count();
             $result= $model->limit("$page,$limit")->order($order)->where($where)->select();
             $res['sql']=$model->_sql();
             
         }
         
+        $res['count']=$count;
         
         //转换时间戳
         $result=   toTime($result);
         
-        // dump($result);
-        // die;
+        
         
         if($result){
-            $res['count']=count($result);
             $res['res']=count($result);
             $res['code']=1;
             $res['data']= $result;
@@ -271,7 +260,6 @@ class UseController extends CommonController {
             $res['code']=-1;
             $res['msg']='没有数据！';
         }
-        
         echo json_encode($res);
         
         
