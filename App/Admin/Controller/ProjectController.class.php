@@ -33,14 +33,11 @@ class ProjectController extends CommonController{
             $super=$model->where($where)->find();
             $type_title=$super[$type.'_title'];
             
-            
-            
         }else{
             //不存在
             
             $type_title=I('get.type_title');
             $super_id=$type;
-            
             
         }
         
