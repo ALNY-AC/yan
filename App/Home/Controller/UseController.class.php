@@ -405,22 +405,21 @@ class UseController extends CommonController{
         $model=M('paper');
         $where=[];
         $where['paper_type']='upPaper';
-        $result=$model->field('paper_title,paper_id,paper_info,paper_head,add_time')->where()->order('add_time desc')->select();
+        $result=$model->field('paper_title,paper_id,paper_info,paper_head,add_time,paper_type')->where($where)->order('add_time desc')->select();
+        
         $arr=[];
+        $a=[];
+        $num=0;
         
         for ($i=0; $i < count($result); $i++) {
             
-            if($i %3==0 && $i!==0){
-                $_arr=[];
-                $_arr[2]=$result[$i];
-                $_arr[1]=$result[$i-1];
-                $_arr[0]=$result[$i-2];
-                $_arr= toTime( $_arr,'Y-m-d');
-                $arr[]=$_arr;
+            $arr[$num][]=$result[$i];
+            
+            if( ($i+1)%3==0 ){
+                $num++;
             }
             
         }
-        
         
         //=========判断=========
         if($arr){
