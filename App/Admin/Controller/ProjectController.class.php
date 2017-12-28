@@ -21,7 +21,6 @@ class ProjectController extends CommonController{
     public function showList(){
         
         
-        
         $type=I('get.type');
         $super_id=I("get.".$type."_id");
         
@@ -33,6 +32,7 @@ class ProjectController extends CommonController{
             $where[$type.'_id']=$super_id;
             $super=$model->where($where)->find();
             $type_title=$super[$type.'_title'];
+            
             
             
         }else{
