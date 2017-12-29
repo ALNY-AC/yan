@@ -413,10 +413,9 @@ class UseController extends CommonController{
         
         for ($i=0; $i < count($result); $i++) {
             
-            
             $arr[$num][]=$result[$i];
             
-            if( ($i+1)%3==0 ){
+            if( ($i+1)%2==0 ){
                 
                 $num++;
             }

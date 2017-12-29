@@ -363,7 +363,6 @@
         <div class="box">
             CTOS接口测试工具
         </div>
-        <input type="text">
         <div v-bind:class="[{active:item.is_active},{'item-nav fa':item.type=='nav'},'item']" v-for='(item,index) in items' @click='show(item,index)'
             @mouseover='hover(item,index)' target="_blank">
             <i v-bind:class="[{'fa-spin':!item.is_active && item.type!='nav'},'fa fa-fw fa-log']"></i>
@@ -378,7 +377,6 @@
             <div class="line-item">result</div>
         </div>
         <div class="code code-1">
-
             <pre></pre>
         </div>
         <div class="code code-2">
@@ -454,21 +452,12 @@
                     {
                         href: useUrl,
                         where: {
-                            table: 'hosp'
-                        },
-                        title: '取大医美医院列表',
-                        is_active: false
-                    },
-                    {
-                        href: useUrl,
-                        where: {
                             table: 'project',
                             where: {
-                                super_id: '994595068839d632cb2081aa09fc5ee0',
-                                type: 'hosp'
+                                type: 'hosp',
                             }
                         },
-                        title: '根据医院取项目列表',
+                        title: '取大医美项目列表',
                         is_active: false
                     },
                     {
@@ -478,7 +467,6 @@
                             where: {
                                 type: 'healthy'
                             }
-
                         },
                         title: '取大健康项目列表',
                         is_active: false
@@ -758,7 +746,7 @@
         }
 
 
-      
+
     </script>
 
 

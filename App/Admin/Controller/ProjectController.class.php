@@ -41,7 +41,6 @@ class ProjectController extends CommonController{
             
         }
         
-        
         $this->assign('type_title',$type_title);
         $this->assign('super_id',$super_id);
         $this->assign('type',$type);
