@@ -80,8 +80,11 @@ function baseAuth(){
     //3.通过code换取网页授权access_token和openid
     // $curl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$appsecret.'&code='.$code.'&grant_type=authorization_code';
     $code=I('code');
-    $appid='wxf7a00ad5cbe5f514';
-    $secret='3d036697d1e220c8536fb2db312980fe';
+    // $appid='wxf7a00ad5cbe5f514';
+    // $secret='3d036697d1e220c8536fb2db312980fe';
+    $appid='wx87df0ed8c074e5c9';
+    $secret='cb5fce8929c6c93df8d80c6e4b700730';
+    
     $url= "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$secret&js_code=$code&grant_type=authorization_code";
     
     $content =_request($url);

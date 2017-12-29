@@ -363,7 +363,7 @@
         <div class="box">
             CTOS接口测试工具
         </div>
-
+        <input type="text">
         <div v-bind:class="[{active:item.is_active},{'item-nav fa':item.type=='nav'},'item']" v-for='(item,index) in items' @click='show(item,index)'
             @mouseover='hover(item,index)' target="_blank">
             <i v-bind:class="[{'fa-spin':!item.is_active && item.type!='nav'},'fa fa-fw fa-log']"></i>
@@ -758,7 +758,9 @@
         }
 
 
+      
     </script>
+
 
 
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #f00;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>窗口2</h1>
+
+    <script>
+        var hideCount = 0;
+        window.onblur = function (e) {
+            //失去焦点
+            // top.超厉害函数('窗口2隐藏：【计数】' + (++hideCount));
+        };
+        var showCount = 0;
+        window.onfocus = function (e) {
+            //获得焦点
+            top.超厉害函数('窗口2显示：【计数】' + (++showCount));
+        };
+
+
+
+        window.addEventListener('t', function (a) {
+
+            console.warn(a);
+        });
+
+    </script>
+
+</body>
+
+</html>

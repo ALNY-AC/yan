@@ -7,64 +7,123 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        .nav {
-            position: relative;
+        .f {
+            position: fixed;
+            display: block;
+            width: 100%;
+            top: 0;
+            bottom: 80px;
+            border: none;
+            display: none;
         }
 
-        .nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            text-align: center;
+        .f1 {
+            left: 0;
+        }
+
+        .f2 {
+            right: 0;
+        }
+
+        .nav {
+            position: fixed;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            color: #fff;
             white-space: nowrap;
             font-size: 0;
         }
 
-        .nav ul li {
-            display: inline-block;
-            /* 如果需要有间距 */
-            padding: 0 20px;
-            /* 或者： */
-            /* margin: 0 20px; */
-        }
-
-        .nav ul li a {
-            display: block;
+        .nav-item {
             font-size: 14px;
-            padding: 20px 80px;
-            background-color: #ff0000;
+            display: inline-block;
+            width: 50%;
+            padding: 20px 0;
+            text-align: center;
+            border-right: solid 1px #333;
+            background-color: #000000;
         }
 
-        .nav ul li a {
-            text-decoration: none;
-        }
-
-        .nav ul li a:active {
-            color: #00f;
+        .nav-item:hover {
+            background-color: #333;
+            border-right: solid 1px #000
         }
     </style>
 </head>
 
 <body>
+
+    <iframe src="t1.html" class="f f1" id="f0" name="f0"></iframe>
+    <iframe src="t2.html" class="f f2" id="f1"></iframe>
+
     <div class="nav">
-        <ul>
-            <li>
-                <a href="">栏目1</a>
-            </li>
-            <li>
-                <a href="">栏目2</a>
-            </li>
-            <li>
-                <a href="">栏目3</a>
-            </li>
-            <li>
-                <a href="">栏目4</a>
-            </li>
-            <li>
-                <a href="">栏目5</a>
-            </li>
-        </ul>
+        <div class="nav-item nav-1" onclick='show(0)'>
+            首页
+        </div>
+        <div class="nav-item nav-1" onclick='show(1)'>
+            个人中心
+        </div>
     </div>
+
+    <script>
+
+        function 超厉害函数(info) {
+
+
+            var style = 'color:#9cdcfe;font-size:20px';
+            var style2 = 'color:#ce9178;font-size:20px';
+
+            console.log("==============================================", style);
+            console.log("%c这里是子级窗口调用父级窗口的函数发出的消息：", style);
+            console.log('%c' + info, style2);
+        }
+
+
+        function show(index) {
+
+
+            localStorage.pagesIndex = index;
+
+            var fs = document.getElementsByTagName('iframe');
+            var f = document.getElementById('f' + 0);
+
+            // f.t('窗口' + index + '被调用');
+            f.window.abc();
+
+            if (f.style.display == 'block') {
+                //虽然失去了焦点，但是并不隐藏掉 
+                return;
+            }
+
+            for (let index = 0; index < fs.length; index++) {
+                var item = fs[index];
+                if (item != f) {
+                    item.style.display = 'none';
+                }
+            }
+
+            f.style.display = 'block';
+            f.focus();
+            f.a();
+
+
+        }
+        show(0);
+        window.onblur = function (e) {
+            //失去焦点
+        };
+        window.onfocus = function (e) {
+            //获得焦点
+            show(localStorage.pagesIndex);
+        };
+
+
+
+    </script>
+
+
+
 </body>
 
 </html>
